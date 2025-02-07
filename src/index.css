@@ -1,0 +1,16 @@
+@import url('https://fonts.googleapis.com/css2?family=Josefin+Sans:ital,wght@0,100..700;1,100..700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Lancelot&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Comfortaa:wght@300..700&display=swap');
+@import "tailwindcss";
+
+body{
+    font-family: "Josefin Sans", serif;
+}
+
+.comfortaa{
+    font-family: "Comfortaa", sans-serif;
+}
+
+.lancelot{
+    font-family: "Lancelot", sans-serif;
+}
