@@ -9,9 +9,7 @@ import 'swiper/css/pagination';
 import { Autoplay, Pagination } from 'swiper/modules';
 
 
-
 const Home = () => {
-
 
 
     return (
@@ -107,11 +105,11 @@ const Home = () => {
                             }
                         }}
                        >
+                        {/* <SwiperSlide className=''><ItemCards /></SwiperSlide>
                         <SwiperSlide className=''><ItemCards /></SwiperSlide>
                         <SwiperSlide className=''><ItemCards /></SwiperSlide>
                         <SwiperSlide className=''><ItemCards /></SwiperSlide>
-                        <SwiperSlide className=''><ItemCards /></SwiperSlide>
-                        <SwiperSlide className=''><ItemCards /></SwiperSlide>
+                        <SwiperSlide className=''><ItemCards /></SwiperSlide> */}
                     </Swiper>
                 </div>
             </div>
