@@ -3,10 +3,10 @@ import { BadgePercent, Candy, Drumstick, Salad } from 'lucide-react'
 import { useEffect, useState } from 'react'
 import ItemCards from '../components/ItemCards'
 import { useNavigate, useSearchParams } from 'react-router-dom'
-import { shopItems } from '../assets/Items'
 
-import { Item } from '../types/ItemsTypes';
 import { getItemsFromFirestore } from '../services/productService'
+import { useQuery } from '@tanstack/react-query'
+import { Cart } from '../components/Cart';
 
 
 
@@ -16,28 +16,22 @@ const Shop = () => {
     const navigate = useNavigate()
     const [searchParams] = useSearchParams();
     const tag = searchParams.get('tag');
-    const [items, setItems] = useState<Item[]>([]);
+   
 
-    const fetchItemsFromFirestore = async () => {
-        try {
-          const getitems = await getItemsFromFirestore();
-          
-          if (getitems) {
-            setItems(getitems);
-          }
-        } catch (error) {
-          console.error('Error fetching items from Firestore:', error);
-        }
-      };
-
+    const {data, isPending, error} = useQuery({
+        queryKey: ['items'],
+        queryFn: getItemsFromFirestore
+    })
+    console.log("data",data);
+    
     useEffect(()  => {
         navigate('/shop/?tag=top-picks');
-        fetchItemsFromFirestore();
+        
     }, [])
-    console.log(items);
+
     
     return (
-        <div className='bg-[#fff9f2]'>
+        <div className='bg-[#fff9f2] flex'>
 
             <div className='container  mx-auto'>
                 <div className='py-10'>
@@ -67,14 +61,18 @@ const Shop = () => {
                     {/* items container */}
                     <div className='flex flex-wrap lg:gap-10 gap-4 mt-10  justify-center '>
 
-                        {tag == 'top-picks' && shopItems.map((item, index) => <ItemCards key={index} item={item} />)}
-                        {tag == 'veg-meal' && shopItems.filter(item => item.veg).map((item, index) => <ItemCards key={index} item={item} />)}
-                        {tag == 'non-veg-meal' && shopItems.filter(item => !item.veg).map((item, index) => <ItemCards key={index} item={item} />)}
-                        {tag == 'chocolates' && shopItems.filter(item => item.chocolate).map((item, index) => <ItemCards key={index} item={item} />)}
+                        {tag == 'top-picks' && data?.map((item, index) => <ItemCards key={index} item={item} />)}
+                        {tag == 'veg-meal' && data?.filter(item => item.veg).map((item, index) => <ItemCards key={index} item={item} />)}
+                        {tag == 'non-veg-meal' && data?.filter(item => !item.veg).map((item, index) => <ItemCards key={index} item={item} />)}
+                        {tag == 'chocolates' && data?.filter(item => item.chocolate).map((item, index) => <ItemCards key={index} item={item} />)}
                     </div>
                 </div>
 
             </div>
+            <div className='border bg-white w-1/4'>
+                <h1 className='flex items-center text-4xl md:text-5xl text-center lancelot text-gray-800 '>Cart Items</h1>
+            </div>
+            
         </div>
     )
 }
