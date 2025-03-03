@@ -3,11 +3,17 @@ import Button, { IconButton } from './Button'
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
 import { motion, AnimatePresence } from "framer-motion";
+import { useAuthStore } from '../store/authStore';
 
 const Navbar = () => {
 
     const [isOpen, setIsOpen] = useState(false)
+
+    const user = useAuthStore((state) => state.user)
+
     
+
+
     return (
         <nav className=' flex lg:justify-around justify-between shadow-sm p-4 lg:py-6 lg:px-0 items-center bg-white'>
 
@@ -23,15 +29,18 @@ const Navbar = () => {
                 <Link to={'/'}><p className='comfortaa font-bold tracking-tighter text-2xl lg:text-3xl text-orange-600'><span className=' text-green-500'>go</span>treats</p></Link>
             </div>
             <div className='flex gap-4 items-center'>
-               <Link to={'/checkout'}> <IconButton>
+                <Link to={'/checkout'}> <IconButton>
                     <ShoppingCart strokeWidth={1.4} />
                 </IconButton></Link>
-                <IconButton>
+               {user && <IconButton>
                     <UserRound strokeWidth={1.4} />
-                </IconButton>
-                <Link to={'/Register'}>
-                    <Button className='hidden lg:block'>Sign Up</Button>
-                </Link>
+                    {user.displayName}
+                </IconButton>}
+                {!user &&
+                    <Link to={'/Register'}>
+                        <Button className='hidden lg:block'>Sign Up</Button>
+                    </Link>
+                }
             </div>
             <AnimatePresence>
                 {isOpen && <motion.div

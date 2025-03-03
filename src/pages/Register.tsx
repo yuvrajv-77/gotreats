@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import Button, { IconButton } from '../components/Button'
 import { useNavigate } from 'react-router-dom'
+import { handleEmailAccountCreation, handlesignInWithGoogle } from '../services/authService';
 
 const Register = () => {
 
@@ -10,6 +11,16 @@ const Register = () => {
     const [password, setPassword] = useState("");
 
     const navigate = useNavigate()
+
+    const handleSubmit = async (e: React.FormEvent) => {
+        e.preventDefault();
+        try {
+            await handleEmailAccountCreation(name, email, password);
+            navigate("/")
+        } catch (error) {
+            console.error(error);
+        }
+    };
 
     return (
         <div className='flex justify-center items-center h-[calc(100vh-150px)]'>
@@ -29,7 +40,7 @@ const Register = () => {
 
 
 
-                <form className='mt-10 w-74 space-y-4'>
+                <form className='mt-10 w-74 space-y-4' onSubmit={handleSubmit}>
                     <div>
                         <p className='mb-2 text-orange-600 text-sm'>Name</p>
                         <input 
@@ -71,7 +82,7 @@ const Register = () => {
                     </div> */}
                     <Button type='submit' className='w-full '>Register</Button>
                     <p className='text-center'>Or</p>
-                    <button className='w-full p-2 rounded-full bg-white border border-gray-300 text-gray-700 flex items-center justify-center'><img src="/google.svg" className='mr-2 w-6' alt="" />Sign Up With Google</button>
+                    <button type='button' onClick={() => handlesignInWithGoogle()} className='w-full p-2 rounded-full bg-white border border-gray-300 text-gray-700 flex items-center justify-center'><img src="/google.svg" className='mr-2 w-6' alt="" />Sign Up With Google</button>
                 </form>
 
             </div>

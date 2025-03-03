@@ -1,17 +1,10 @@
 
-import { BadgePercent, Candy, Drumstick, Salad } from 'lucide-react'
-import { useEffect, useState } from 'react'
-import ItemCards from '../components/ItemCards'
-import { useNavigate, useSearchParams } from 'react-router-dom'
-
-import { getItemsFromFirestore } from '../services/productService'
-import { useQuery } from '@tanstack/react-query'
-import CartItems from '../components/cartItems'
-import { useCartStore } from '../store/cartStore'
-import { Cart } from '../components/Cart'
-import { auth } from '../config/firebaseConfig'
-
-
+import { BadgePercent, Candy, Drumstick, Salad } from 'lucide-react';
+import { useEffect, useState } from 'react';
+import ItemCards from '../components/ItemCards';
+import { useNavigate, useSearchParams } from 'react-router-dom';
+import { getItemsFromFirestore } from '../services/productService';
+import { useQuery } from '@tanstack/react-query';
 
 
 
@@ -21,7 +14,7 @@ const Shop = () => {
     const [searchParams] = useSearchParams();
     const tag = searchParams.get('tag');
    
-    const { items, addItem, updateQuantity } = useCartStore()
+    // const { items, addItem, updateQuantity } = useCartStore()
 
     const {data, isPending, error} = useQuery({
         queryKey: ['items'],
@@ -34,7 +27,7 @@ const Shop = () => {
         
     }, [])
 
-    console.log(auth.currentUser);
+   
     
 
     
@@ -46,7 +39,6 @@ const Shop = () => {
                     <h1 className=' text-4xl md:text-5xl text-center lancelot text-gray-800 '>Shop our Homemade Products</h1>
                     <div className='mt-8'>
                         <div className=' text justify-center flex items-center flex-wrap gap-2 lg:gap-10 select-none'>
-
                             <span className={`whitespace-nowrap cursor-pointer px-4 py-2 rounded-lg ${tag == 'top-picks' ? 'bg-orange-600 text-white hover:text-white' : 'bg-white'}  hover:text-orange-600 inline-flex items-center shadow-xs transition-colors duration-100 ease-in  gap-2`}
                                 onClick={() => navigate('/shop/?tag=top-picks')}>
                                 <BadgePercent strokeWidth={1.5} />Top Picks
@@ -68,18 +60,13 @@ const Shop = () => {
 
                     {/* items container */}
                     <div className='flex flex-wrap lg:gap-10 gap-4 mt-10  justify-center '>
-
                         {tag == 'top-picks' && data?.map((item, index) => <ItemCards key={index} item={item} />)}
                         {tag == 'veg-meal' && data?.filter(item => item.veg).map((item, index) => <ItemCards key={index} item={item} />)}
                         {tag == 'non-veg-meal' && data?.filter(item => !item.veg).map((item, index) => <ItemCards key={index} item={item} />)}
                         {tag == 'chocolates' && data?.filter(item => item.chocolate).map((item, index) => <ItemCards key={index} item={item} />)}
                     </div>
                 </div>
-
-            </div>
-            
-            
-            
+            </div> 
         </div>
     )
 }

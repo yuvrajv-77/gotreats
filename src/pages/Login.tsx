@@ -49,7 +49,7 @@ const Login = () => {
             </div> */}
             <Button type='submit' className='w-full '>Log In</Button>
             <p className='text-center'>Or</p>
-            <button onClick={() => handlesignInWithGoogle()} className='w-full p-2 rounded-full bg-white border border-gray-300 text-gray-700 flex items-center justify-center'><img src="/google.svg" className='mr-2 w-6' alt="" />Sign Up With Google</button>
+            <button type='button' onClick={() => handlesignInWithGoogle()} className='w-full p-2 rounded-full bg-white border border-gray-300 text-gray-700 flex items-center justify-center'><img src="/google.svg" className='mr-2 w-6' alt="" />Sign Up With Google</button>
         </form>
 
     </div>
