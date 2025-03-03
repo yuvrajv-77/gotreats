@@ -6,7 +6,11 @@ import { useNavigate, useSearchParams } from 'react-router-dom'
 
 import { getItemsFromFirestore } from '../services/productService'
 import { useQuery } from '@tanstack/react-query'
-import { Cart } from '../components/Cart';
+import CartItems from '../components/cartItems'
+import { useCartStore } from '../store/cartStore'
+import { Cart } from '../components/Cart'
+import { auth } from '../config/firebaseConfig'
+
 
 
 
@@ -17,6 +21,7 @@ const Shop = () => {
     const [searchParams] = useSearchParams();
     const tag = searchParams.get('tag');
    
+    const { items, addItem, updateQuantity } = useCartStore()
 
     const {data, isPending, error} = useQuery({
         queryKey: ['items'],
@@ -29,11 +34,14 @@ const Shop = () => {
         
     }, [])
 
+    console.log(auth.currentUser);
+    
+
     
     return (
         <div className='bg-[#fff9f2] flex'>
 
-            <div className='container  mx-auto'>
+            <div className='container  mx-auto '>
                 <div className='py-10'>
                     <h1 className=' text-4xl md:text-5xl text-center lancelot text-gray-800 '>Shop our Homemade Products</h1>
                     <div className='mt-8'>
@@ -69,9 +77,8 @@ const Shop = () => {
                 </div>
 
             </div>
-            <div className='border bg-white w-1/4'>
-                <h1 className='flex items-center text-4xl md:text-5xl text-center lancelot text-gray-800 '>Cart Items</h1>
-            </div>
+            
+            
             
         </div>
     )

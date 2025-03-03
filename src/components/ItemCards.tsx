@@ -18,7 +18,7 @@ const ItemCards = ({ item }: { item: Item }) => {
     )
 
     const { items, addItem, updateQuantity } = useCartStore()
-    
+
     // Get quantity of this item from cart
     const cartItem = items.find(i => i.id === item.id)
     const quantity = cartItem?.quantity || 0
@@ -48,14 +48,14 @@ const ItemCards = ({ item }: { item: Item }) => {
                 <p className='text-gray-500 text-sm lg:text:base leading-5 line-clamp-2'>{item.description}</p>
                 <div className='flex justify-between items-center mt-5'>
                     <div className=' h-9 flex justify-between items-center bg-green-100 rounded-lg text-lg'>
-                        <button 
-                           onClick={handleDecrement}
+                        <button
+                            onClick={handleDecrement}
                             className='h-full flex items-center px-3 text-4xl text-green-600 cursor-pointer'
                         >
                             -
                         </button>
                         <p className='px-2 text-green-600 font-semibold'>{quantity}</p>
-                        <button 
+                        <button
                             onClick={handleIncrement}
                             className='h-full flex items-center px-3 text-3xl text-green-600 cursor-pointer hover:text-green-800'
                         >
@@ -63,8 +63,8 @@ const ItemCards = ({ item }: { item: Item }) => {
                         </button>
                     </div>
                     <div className='inline-flex items-center gap-2'>
-                        <p className='comfortaa text-lg line-through '> ${item.price} </p>
-                        <span className='px-[3px] py-[1px] flex items-center text-lg shadow-3xl bg-yellow-500'>${item.offerPrice}</span>
+                        <p className='comfortaa text-lg line-through '> ₹{item.price} </p>
+                        <span className='px-[3px] py-[1px] flex items-center text-lg shadow-3xl bg-yellow-500'>₹{item.offerPrice}</span>
                     </div>
                 </div>
             </div>
@@ -74,8 +74,8 @@ const ItemCards = ({ item }: { item: Item }) => {
                     {item.veg ? veg : nonVeg}
                     <h4 className='lancelot text-2xl font-bold mb-2'>{item.name}</h4>
                     <div className='inline-flex items-center gap-2 mb-2'>
-                        <p className='comfortaa text-lg line-through '> ${item.price} </p>
-                        <span className='px-[3px] py-[1px] flex items-center text-lg shadow-3xl bg-yellow-500'>${item.offerPrice}</span>
+                        <p className='comfortaa text-lg line-through '> ₹{item.price} </p>
+                        <span className='px-[3px] py-[1px] flex items-center text-lg shadow-3xl bg-yellow-500'>₹{item.offerPrice}</span>
                     </div>
                     <p className='comfortaa text-sm text-green-700 font-bold flex items-center gap-1 mb-3'><Star fill='green' size={13} />{item.rating}</p>
                     <p className=' text-gray-500 text-sm line-clamp-2 tracking-tight'>{item.description}</p>
@@ -83,15 +83,15 @@ const ItemCards = ({ item }: { item: Item }) => {
                 <div className='flex flex-col justify-between items-center  w-2/5'>
                     <img src={item.image} className='w-full mb-3  rounded-2xl  object-contain' alt="" />
                     <div className=' h-9 flex justify-between items-center bg-green-100 rounded-lg text-lg'>
-                        <button 
-                            
+                        <button
+                            onClick={handleDecrement}
                             className='h-full flex items-center px-3 text-4xl text-green-600 cursor-pointer'
                         >
                             -
                         </button>
-                        <p className='px-2 text-green-600 font-semibold'>3</p>
-                        <button 
-                          
+                        <p className='px-2 text-green-600 font-semibold'>{quantity}</p>
+                        <button
+                            onClick={handleIncrement}
                             className='h-full flex items-center px-3 text-3xl text-green-600 cursor-pointer hover:text-green-800'
                         >
                             +
