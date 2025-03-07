@@ -9,17 +9,28 @@ const Register = () => {
     const [phone, setPhone] = useState("");
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
+    const [address, setAddress] = useState("");
+    const [error, setError] = useState("");
+    const [errorMsg, setErrorMsg] = useState("");
 
     const navigate = useNavigate()
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
+        setError("");
+        setErrorMsg("");
+        
         try {
-            await handleEmailAccountCreation(name, email, password);
+            await handleEmailAccountCreation(name, email, password, phone, address);
+            setEmail("");
+            setPassword("");
             navigate("/")
         } catch (error) {
             console.error(error);
+            setErrorMsg(error?.message);
+            setError("Invalid email or password");
         }
+
     };
 
     return (
@@ -40,15 +51,15 @@ const Register = () => {
 
 
 
-                <form className='mt-10 w-74 space-y-4' onSubmit={handleSubmit}>
+                <form className='mt-4 sm:mt-10 w-74 space-y-2 sm:space-y-4' onSubmit={handleSubmit}>
                     <div>
                         <p className='mb-2 text-orange-600 text-sm'>Name</p>
-                        <input 
-                        type="text" 
-                        value={name}
-                        onChange={(e) => setName(e.target.value)} 
-                        className='border border-gray-300 rounded-xl p-2 w-full' 
-                        placeholder='Enter your name' />
+                        <input
+                            type="text"
+                            value={name}
+                            onChange={(e) => setName(e.target.value)}
+                            className='border border-gray-300 rounded-xl p-2 w-full'
+                            placeholder='Enter your name' />
                     </div>
                     <div>
                         <p className='mb-2 text-orange-600 text-sm'>Phone number</p>
@@ -60,29 +71,34 @@ const Register = () => {
                     </div>
                     <div>
                         <p className='mb-2 text-orange-600 text-sm'>Email</p>
-                        <input 
-                        type="email" 
-                        value={email}
-                        onChange={(e) => setEmail(e.target.value)}
-                        className='border border-gray-300 rounded-xl p-2 w-full' 
-                        placeholder='Enter your email' />
+                        <input
+                            type="email"
+                            value={email}
+                            onChange={(e) => setEmail(e.target.value)}
+                            className='border border-gray-300 rounded-xl p-2 w-full'
+                            placeholder='Enter your email' />
                     </div>
                     <div>
                         <p className='mb-2 text-orange-600 text-sm'>Create Password</p>
-                        <input 
-                        type="password" 
-                        value={password}
-                        onChange={(e) => setPassword(e.target.value)}
-                        className='border border-gray-300 rounded-xl p-2 w-full' 
-                        placeholder='Create a New password' />
+                        <input
+                            type="password"
+                            value={password}
+                            onChange={(e) => setPassword(e.target.value)}
+                            className='border border-gray-300 rounded-xl p-2 w-full'
+                            placeholder='Create a New password' />
                     </div>
-                    {/* <div>
+                    <div>
                         <p className='mb-2 text-orange-600 text-sm'>Address</p>
-                        <textarea rows={3} className='border border-gray-300 rounded-xl p-2 w-full' placeholder='Enter your full address' />
-                    </div> */}
+                        <textarea 
+                        value={address}
+                        onChange={(e) => setAddress(e.target.value)}
+                        rows={3} 
+                        className='border border-gray-300 rounded-xl p-2 w-full' placeholder='Enter your full address' />
+                    </div>
+                    {error && <p className='text-red-500 text-center'>{error} <br /> {errorMsg}</p>}
                     <Button type='submit' className='w-full '>Register</Button>
                     <p className='text-center'>Or</p>
-                    <button type='button' onClick={() => handlesignInWithGoogle()} className='w-full p-2 rounded-full bg-white border border-gray-300 text-gray-700 flex items-center justify-center'><img src="/google.svg" className='mr-2 w-6' alt="" />Sign Up With Google</button>
+                    <button type='button' onClick={() => {handlesignInWithGoogle(), navigate("/")}} className='w-full p-2 rounded-full bg-white border border-gray-300 text-gray-700 flex items-center justify-center'><img src="/google.svg" className='mr-2 w-6' alt="" />Sign Up With Google</button>
                 </form>
 
             </div>

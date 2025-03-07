@@ -28,8 +28,8 @@ export const useCartStore = create<CartStore>()(
         const existingItem = state.items.find((i) => i.id === item.id)
         const newItems = existingItem
           ? state.items.map((i) =>
-              i.id === item.id ? { ...i, quantity: i.quantity + 1 } : i
-            )
+            i.id === item.id ? { ...i, quantity: i.quantity + 1 } : i
+          )
           : [...state.items, { ...item, quantity: 1 }]
         return { items: newItems }
       }),
@@ -43,9 +43,13 @@ export const useCartStore = create<CartStore>()(
         ).filter((item) => item.quantity > 0)
         return { items: newItems }
       }),
-      clearCart: () => {
-        return { items: [] }
-      },
+      // Update the clearCart function in cartStore.ts
+      clearCart: () => set(() => ({
+        items: [],
+        grossTotalPrice: 0,
+        totalPrice: 0
+      })),
+
       calculateGrossTotalPrice: () => set((state) => ({
         grossTotalPrice: state.items.reduce((total, item) => total + item.offerPrice * item.quantity, 0),
       })),

@@ -4,6 +4,8 @@ import Button from '../components/Button';
 import { Cart } from '../components/Cart';
 import { useCartStore } from '../store/cartStore';
 import { Link, useNavigate } from 'react-router-dom';
+import { useAuthStore } from '../store/authStore';
+import { handleCheckout } from '../services/orderService';
 
 const DELIVERY_PRICE = 40;
 const TAX_RATE = 0.18;
@@ -30,6 +32,34 @@ const Checkout = () => {
         // Add more addresses as needed
     ];
 
+
+    const handlePaymentClick = async () => {
+        const {user, userDetails } = useAuthStore.getState();
+        
+    
+        if (!user) {
+            alert('Please login to place order');
+            navigate('/login');
+            return;
+        }
+    
+        const orderDetails = {
+            items: items,
+            totalAmount: totalPrice,
+            deliveryAddress: userDetails?.address,
+            customer:userDetails
+            
+        };
+    
+        const success = await handleCheckout(orderDetails);
+        
+        if (success) {
+            useCartStore.getState().clearCart();
+            alert('Order placed successfully!');
+            navigate('/');
+        }
+    };
+
     if (items.length === 0) {
         return (
             <div className='flex md:bg-gray-100   items-center justify-center h-[80vh] '>
@@ -50,7 +80,7 @@ const Checkout = () => {
 
                     {/* box 1 */}
                     <div className=' md:p-6  bg-white w-full'>
-                        <h3 className='text-xl mb-4 font-bold'>View Cart</h3>
+                        <h3 className='text-xl mb-4 font-bold'>Cart ({items.reduce((total, item) => total + item.quantity, 0)})</h3>
                         <Cart />
                     </div>
                     <hr className='md:hidden block' />
@@ -60,7 +90,7 @@ const Checkout = () => {
                         <p className='text-gray-500 mb-4 text-sm'>Please select a saved delivery address</p>
 
                         {/* Addresses */}
-                        <div className="flex md:flex-row flex-col gap-2 ">
+                        <div className="flex md:flex-row flex-col gap-2 flex-wrap ">
 
                             {addresses.map((address, index) => (
                                 <div className="flex items-start" key={address.id}>
@@ -118,7 +148,7 @@ const Checkout = () => {
                                 <p>₹{totalPrice}</p>
                             </div>
 
-                            <Button className='w-full'>Continue to Payment</Button>
+                            <Button onClick={handlePaymentClick} className='w-full'>Continue to Payment</Button>
                         </div>
                     </div>
                 </div>

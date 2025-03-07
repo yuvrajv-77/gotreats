@@ -1,31 +1,42 @@
 import { doc, getDoc, setDoc } from "firebase/firestore";
 import { auth, db } from "../config/firebaseConfig";
 import { createUserWithEmailAndPassword, GoogleAuthProvider, signInWithEmailAndPassword, signInWithPopup } from "firebase/auth";
+import { useAuthStore } from "../store/authStore";
+import { signOut } from "firebase/auth";
+
 
 export const handleEmailAccountCreation = async (
     name: string,
     email: string,
-    password: string) => {
-
+    password: string,
+    phoneNumber: string,
+    address: string
+    ) => {
     try {
-        const userCredential = await createUserWithEmailAndPassword(auth, email, password); // creating new account
-        const newUser = userCredential.user; // Get the user from the result
-        await setDoc(doc(db, "users", newUser.uid), { // setting a new document in the users collection
+        const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+        const newUser = userCredential?.user;
+        await setDoc(doc(db, "users", newUser.uid), {
             displayName: name,
             email: newUser.email,
             uid: newUser.uid,
-            phoneNumber: null,
+            phoneNumber: phoneNumber,
             photoURL: newUser.photoURL,
+            address: address
         });
-        console.log("Account created successfully with  email");
+        const userDetails = await getUserFromDb(newUser.uid);
+        useAuthStore.getState().setUserDetails(userDetails);
+        console.log("Account created successfully with email");
     } catch (err) {
         throw err
     }
 }
 
+
 export const handleEmailAccountLogin = async (email: string, password: string) => {
     try {
-        await signInWithEmailAndPassword(auth, email, password);
+        const result = await signInWithEmailAndPassword(auth, email, password);
+        const userDetails = await getUserFromDb(result.user.uid);
+        useAuthStore.getState().setUserDetails(userDetails);
     } catch (err) {
         throw (err instanceof Error ? err : new Error('Failed to sign in with email'));
     }
@@ -64,13 +75,21 @@ export const handlesignInWithGoogle = async () => {
 }
 
 
-async function getUserFromDb(uid: string) {
+export async function getUserFromDb(uid: string) {
     try {
         const docSnap = await getDoc(doc(db, "users", uid));
-        console.log("docSnap", docSnap.data());
-
+        // console.log("docSnap", docSnap.data());
         return (docSnap.data());
     } catch (e) {
         console.log(e);
+    }
+}
+
+
+export const handleLogout = async () => {
+    try {
+        await signOut(auth);
+    } catch (err) {
+        throw err;
     }
 }

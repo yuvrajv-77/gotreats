@@ -7,10 +7,14 @@ import 'swiper/css';
 import 'swiper/css/navigation';
 import 'swiper/css/pagination';
 import { Autoplay, Pagination } from 'swiper/modules';
+import { useAuthStore } from '../store/authStore';
 
 
 const Home = () => {
 
+const userDetails = useAuthStore((state) => state.userDetails)
+
+console.log("userDetails", userDetails);
 
     return (
         <div className="min-h-[calc(100vh-64px)] w-full">
