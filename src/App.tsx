@@ -10,56 +10,18 @@ import Login from "./pages/Login"
 import Profile from "./pages/Profile"
 import Orders from "./pages/Orders"
 import ProtectedRoute from "./components/ProtectedRoute"
+import { router } from "./router"
 
 function App() {
- 
-const router = createBrowserRouter([
-  {
-    path: "/",
-    element: <Layout/>,
-    children:[
-      {
-        path:"/",
-        element:<Home/>
-      },
-      {
-        path:"/login",
-        element:<Login/>
-      },
-      {
-        path:"/register",
-        element:<Register/>
-      },
-      {
-        path:"/shop",
-        element:<Shop/>
-      },
-      {
-        path:"/contact",
-        element:<Contact/>
-      },
-      {
-        path:"/checkout",
-        element: <ProtectedRoute><Checkout/></ProtectedRoute>
-      },
-      {
-        path:"/profile",
-        element: <ProtectedRoute><Profile/></ProtectedRoute>
-      },
-      {
-        path:"/orders",
-        element: <ProtectedRoute><Orders/></ProtectedRoute>
-      }
-    ]
-  }
-])
 
-const queryClient = new QueryClient()
+ 
+
+  const queryClient = new QueryClient()
   return (
     <>
-    <QueryClientProvider client={queryClient}>
-      <RouterProvider router={router} />
-    </QueryClientProvider>
+      <QueryClientProvider client={queryClient}>
+        <RouterProvider router={router} />
+      </QueryClientProvider>
     </>
   )
 }

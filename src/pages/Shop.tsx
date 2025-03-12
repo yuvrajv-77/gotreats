@@ -5,6 +5,7 @@ import ItemCards from '../components/ItemCards';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import { getItemsFromFirestore } from '../services/productService';
 import { useQuery } from '@tanstack/react-query';
+import { useProductStore } from '../store/productStore';
 
 
 
@@ -15,12 +16,21 @@ const Shop = () => {
     const tag = searchParams.get('tag');
    
     // const { items, addItem, updateQuantity } = useCartStore()
+    const products = useProductStore((state) => state.products)
 
-    const {data, isPending, error} = useQuery({
-        queryKey: ['items'],
-        queryFn: getItemsFromFirestore
-    })
-    console.log("data",data);
+
+    // const {data} = useQuery({
+    //     queryKey: ['items'],
+    //     queryFn: getItemsFromFirestore
+    // })
+    
+    // useEffect(() => {
+    //     if (data) {
+    //         useProductStore.getState().setProducts(data)
+    //     }
+    // }, [data])
+    
+    
     
     useEffect(()  => {
         navigate('/shop/?tag=top-picks');
@@ -60,15 +70,14 @@ const Shop = () => {
 
                     {/* items container */}
                     <div className='flex flex-wrap lg:gap-10 gap-4 mt-10  justify-center '>
-                        {tag == 'top-picks' && data?.map((item, index) => <ItemCards key={index} item={item} />)}
-                        {tag == 'veg-meal' && data?.filter(item => item.veg).map((item, index) => <ItemCards key={index} item={item} />)}
-                        {tag == 'non-veg-meal' && data?.filter(item => !item.veg).map((item, index) => <ItemCards key={index} item={item} />)}
-                        {tag == 'chocolates' && data?.filter(item => item.chocolate).map((item, index) => <ItemCards key={index} item={item} />)}
+                        {tag == 'top-picks' && products?.map((item, index) => <ItemCards key={index} item={item} />)}
+                        {tag == 'veg-meal' && products?.filter(item => item.veg).map((item, index) => <ItemCards key={index} item={item} />)}
+                        {tag == 'non-veg-meal' && products?.filter(item => !item.veg).map((item, index) => <ItemCards key={index} item={item} />)}
+                        {tag == 'chocolates' && products?.filter(item => item.chocolate).map((item, index) => <ItemCards key={index} item={item} />)}
                     </div>
                 </div>
             </div> 
         </div>
     )
 }
-
 export default Shop

@@ -52,20 +52,7 @@ const Orders = () => {
                                 <p>{"12:00 PM"}</p>
                             </div>
 
-                            {/* <div className='space-y-3'>
-                                <div className='flex items-center gap-4'>
-                                    <img className='size-9 rounded-lg object-cover' src="https://images.unsplash.com/photo-1511485977113-f34c92461ad9?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80" alt="" />
-                                    <h2 className='text-lg '>Butter Chicken Meal  <span className='font-semibold'>X {"2"}</span></h2>
-                                </div>
-                                <div className='flex items-center gap-4'>
-                                    <img className='size-9 rounded-lg object-cover' src="https://images.unsplash.com/photo-1511485977113-f34c92461ad9?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80" alt="" />
-                                    <h2 className='text-lg '>Paneer Tikka Masala <span className='font-semibold'>X {"1"}</span></h2>
-                                </div>
-                                <div className='flex items-center gap-4'>
-                                    <img className='size-9 rounded-lg object-cover' src="https://images.unsplash.com/photo-1511485977113-f34c92461ad9?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80" alt="" />
-                                    <h2 className='text-lg'>Dal Makhani Combo  <span className='font-semibold'>X {"1"}</span></h2>
-                                </div>
-                            </div> */}
+
                         </div>
                         <hr className='my-3' />
                         <div className='flex justify-between'>
