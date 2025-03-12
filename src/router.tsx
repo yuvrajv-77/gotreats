@@ -12,6 +12,8 @@ import ProtectedRoute from "./components/ProtectedRoute"
 import AdminRoute from "./admin/AdminRoutes"
 import AdminRoutes from "./admin/AdminRoutes"
 import AdminLayout from "./pages/admin/AdminLayout"
+import Products from "./pages/admin/Products"
+import Dashboard from "./pages/admin/Dashboard"
 
 
 export const router = createBrowserRouter([
@@ -63,11 +65,12 @@ export const router = createBrowserRouter([
       element:<AdminRoutes/>,
       children:[
         {
+          
           element: <AdminLayout/>,
           children: [
             {
               index: true,
-              element
+              element:<Dashboard/>
             }
           ]
         }
