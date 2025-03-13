@@ -1,11 +1,13 @@
 export type Item = {
-    id: string;
-    name: string;
-    veg: boolean;
-    description: string;
-    chocolate?: boolean;
-    rating: number;
-    price: number;
+    id?: string;
+    productName: string;
+    productDescription: string;
+    isNonVeg: boolean;
+    isTiffin: boolean;
+    isChocolate?: boolean;
+    originalPrice: number;
     offerPrice: number;
-    image: string;
+    imageUrl: string;
+    rating: number;
+    isAvailable: boolean;
 }

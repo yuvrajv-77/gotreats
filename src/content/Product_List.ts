@@ -22,7 +22,7 @@
       "rating": 4.8,
       "price": 280,
       "offerPrice": 250,
-      "image": "https://example.com/butter-paneer.jpg"
+      "image": "https://images.pexels.com/photos/1410235/pexels-photo-1410235.jpeg?auto=compress&cs=tinysrgb&w=600"
     },
     {
       "id": "2", 
@@ -32,7 +32,7 @@
       "rating": 4.9,
       "price": 350,
       "offerPrice": 299,
-      "image": "https://example.com/chicken-biryani.jpg"
+      "image": "https://images.pexels.com/photos/1410235/pexels-photo-1410235.jpeg?auto=compress&cs=tinysrgb&w=600"
     },
     {
       "id": "3",
@@ -43,7 +43,7 @@
       "rating": 4.7,
       "price": 399,
       "offerPrice": 349,
-      "image": "https://example.com/chocolate-cake.jpg"
+      "image": "https://images.pexels.com/photos/1410235/pexels-photo-1410235.jpeg?auto=compress&cs=tinysrgb&w=600"
     },
     {
       "id": "4",
@@ -53,7 +53,7 @@
       "rating": 4.6,
       "price": 250,
       "offerPrice": 199,
-      "image": "https://example.com/dal-makhani.jpg"
+      "image": "https://images.pexels.com/photos/699953/pexels-photo-699953.jpeg?auto=compress&cs=tinysrgb&w=600"
     },
     {
       "id": "5",
@@ -63,7 +63,7 @@
       "rating": 4.5,
       "price": 320,
       "offerPrice": 280,
-      "image": "https://example.com/fish-curry.jpg"
+      "image": "https://images.pexels.com/photos/1199957/pexels-photo-1199957.jpeg?auto=compress&cs=tinysrgb&w=600"
     },
     {
       "id": "6",
@@ -74,7 +74,7 @@
       "rating": 4.8,
       "price": 180,
       "offerPrice": 150,
-      "image": "https://example.com/brownie.jpg"
+      "image": "https://images.pexels.com/photos/376464/pexels-photo-376464.jpeg?auto=compress&cs=tinysrgb&w=600"
     },
     {
       "id": "7",
@@ -105,7 +105,7 @@
       "rating": 4.6,
       "price": 220,
       "offerPrice": 180,
-      "image": "https://example.com/chocolate-mousse.jpg"
+      "image": "https://images.pexels.com/photos/699953/pexels-photo-699953.jpeg?auto=compress&cs=tinysrgb&w=600"
     },
     {
       "id": "10",
@@ -115,7 +115,7 @@
       "rating": 4.8,
       "price": 180,
       "offerPrice": 150,
-      "image": "https://example.com/chole-bhature.jpg"
+      "image": "https://images.pexels.com/photos/1199957/pexels-photo-1199957.jpeg?auto=compress&cs=tinysrgb&w=600"
     }
   ]
   

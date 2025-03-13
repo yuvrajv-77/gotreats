@@ -1,4 +1,5 @@
 import { useCartStore } from '../store/cartStore'
+import { Item } from '../types/ItemsTypes'
 import Button from './Button'
 
 export const Cart = () => {
@@ -6,7 +7,7 @@ export const Cart = () => {
 
 
 
-  const handleIncrement = (item: any) => {
+  const handleIncrement = (item: Item) => {
     const quantity = items.find(i => i.id === item.id)?.quantity || 0
     if (quantity === 0) {
       addItem(item)
@@ -38,7 +39,7 @@ export const Cart = () => {
           <div className='flex  justify-between md:justify-between md:px-20 items-center w-full rounded-xl  cursor-pointer bg-white transition-color duration-500 '>
 
             <div>
-              <h4 className='lancelot md:text-xl'>{item.name}</h4>
+              <h4 className='lancelot md:text-xl'>{item.productName}</h4>
               <span className='px-[3px] py-[1px] flex items-center  '>
                 ${item.offerPrice}
               </span>

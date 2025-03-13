@@ -84,6 +84,34 @@ export async function getUserFromDb(uid: string) {
         console.log(e);
     }
 }
+export const updateUserAddress = async (uid: string, address: string) => {
+    try {
+        await setDoc(doc(db, "users", uid), {
+            address: address
+        }, { merge: true });
+        
+        const updatedUserDetails = await getUserFromDb(uid);
+        useAuthStore.getState().setUserDetails(updatedUserDetails);
+        return updatedUserDetails;
+    } catch (err) {
+        throw err;
+    }
+}
+
+export const updateUserPhone = async (uid: string, phoneNumber: string) => {
+    try {
+        await setDoc(doc(db, "users", uid), {
+            phoneNumber: phoneNumber
+        }, { merge: true });
+        
+        const updatedUserDetails = await getUserFromDb(uid);
+        useAuthStore.getState().setUserDetails(updatedUserDetails);
+        return updatedUserDetails;
+    } catch (err) {
+        throw err;
+    }
+}
+
 
 
 export const handleLogout = async () => {
@@ -93,3 +121,5 @@ export const handleLogout = async () => {
         throw err;
     }
 }
+
+

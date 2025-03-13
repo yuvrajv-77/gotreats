@@ -7,6 +7,7 @@ import { useAuthStore } from '../store/authStore';
 import { handleLogout } from '../services/authService';
 import { Dropdown, DropdownTrigger, DropdownMenu, DropdownItem } from "@heroui/dropdown";
 import { useCartStore } from '../store/cartStore';
+import toast, { Toaster } from 'react-hot-toast';
 
 const Navbar = () => {
 
@@ -30,7 +31,7 @@ const Navbar = () => {
             </ul>
             <div className='flex items-center gap-3'>
                 <IconButton className='lg:hidden block' onClick={() => setIsOpen((prev) => !prev)}><AlignLeft strokeWidth={1.6} /></IconButton>
-                <Link to={'/'}><p className='comfortaa font-bold tracking-tighter text-2xl lg:text-3xl text-orange-600'><span className=' text-green-500'>go</span>treats</p></Link>
+                <Link to={'/'}><p className='comfortaa font-bold tracking-tighter text-2xl lg:text-3xl text-orange-600'><span className='text-green-500'>go</span>treats</p></Link>
             </div>
             <div className='flex gap-4 items-center'>
 
@@ -62,6 +63,7 @@ const Navbar = () => {
                                     localStorage.removeItem('cart-storage');
                                     useCartStore.getState().clearCart();
                                     handleLogout();
+                                    toast.success('Logout successful');
                                     navigate('/');
                                 }}>Log Out</DropdownItem>
 
@@ -104,6 +106,7 @@ const Navbar = () => {
                     </ul>
                 </motion.div>}
             </AnimatePresence>
+            <Toaster/>
         </nav>
     )
 }

@@ -12,8 +12,10 @@ import ProtectedRoute from "./components/ProtectedRoute"
 import AdminRoute from "./admin/AdminRoutes"
 import AdminRoutes from "./admin/AdminRoutes"
 import AdminLayout from "./pages/admin/AdminLayout"
-import Products from "./pages/admin/Products"
+import ManageProducts from "./pages/admin/ManageProducts"
 import Dashboard from "./pages/admin/Dashboard"
+import ProductFrom from "./pages/admin/ProductFrom"
+import ManageOrders from "./pages/admin/ManageOrders"
 
 
 export const router = createBrowserRouter([
@@ -71,6 +73,22 @@ export const router = createBrowserRouter([
             {
               index: true,
               element:<Dashboard/>
+            },
+            {
+              path: "view-all-products",
+              element:<ManageProducts/>,
+            },
+            {
+              path: "product-form",
+              element:<ProductFrom/>
+            },
+            {
+              path: "product-form/:productId",
+              element:<ProductFrom/>
+            },
+            {
+              path: "view-all-orders",
+              element:<ManageOrders/>
             }
           ]
         }

@@ -19,16 +19,7 @@ const Shop = () => {
     const products = useProductStore((state) => state.products)
 
 
-    // const {data} = useQuery({
-    //     queryKey: ['items'],
-    //     queryFn: getItemsFromFirestore
-    // })
-    
-    // useEffect(() => {
-    //     if (data) {
-    //         useProductStore.getState().setProducts(data)
-    //     }
-    // }, [data])
+
     
     
     
@@ -71,8 +62,8 @@ const Shop = () => {
                     {/* items container */}
                     <div className='flex flex-wrap lg:gap-10 gap-4 mt-10  justify-center '>
                         {tag == 'top-picks' && products?.map((item, index) => <ItemCards key={index} item={item} />)}
-                        {tag == 'veg-meal' && products?.filter(item => item.veg).map((item, index) => <ItemCards key={index} item={item} />)}
-                        {tag == 'non-veg-meal' && products?.filter(item => !item.veg).map((item, index) => <ItemCards key={index} item={item} />)}
+                        {tag == 'veg-meal' && products?.filter(item => !item.isNonVeg).map((item, index) => <ItemCards key={index} item={item} />)}
+                        {tag == 'non-veg-meal' && products?.filter(item => item.isNonVeg).map((item, index) => <ItemCards key={index} item={item} />)}
                         {tag == 'chocolates' && products?.filter(item => item.chocolate).map((item, index) => <ItemCards key={index} item={item} />)}
                     </div>
                 </div>

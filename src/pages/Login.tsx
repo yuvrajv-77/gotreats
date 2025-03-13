@@ -3,6 +3,7 @@ import Button from '../components/Button'
 import { useNavigate } from 'react-router-dom'
 import { handleEmailAccountLogin, handlesignInWithGoogle } from '../services/authService'
 import { useAuthStore } from '../store/authStore'
+import toast, { Toaster } from 'react-hot-toast'
 
 const Login = () => {
    
@@ -12,13 +13,16 @@ const Login = () => {
     const [errorMsg, setErrorMsg] = useState("");
 
     const user = useAuthStore((state) => state.user)
+    const userDetails = useAuthStore((state) => state.user)
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
         setError("");
         try {
             await handleEmailAccountLogin( email, password);
-            navigate("/")
+            toast.success("Welcome Back");
+           navigate("/")
+           
         } catch (error) {
             console.error(error?.message);
             setErrorMsg(error?.message);
@@ -71,9 +75,15 @@ const Login = () => {
             <Button type='submit' className='w-full '>Log In</Button>
             <p className='text-center'>Or</p>
         </form>
-            <button type='button'  onClick={() => {handlesignInWithGoogle(); navigate("/")}} className='w-full p-2 rounded-full bg-white border border-gray-300 text-gray-700 flex items-center justify-center'><img src="/google.svg" className='mr-2 w-6' alt="" />Sign Up With Google</button>
+            <button type='button'  onClick={async() => {
+                await handlesignInWithGoogle(); 
+                toast.success("Login successful")
+                navigate("/");
+
+                }} className='w-full p-2 rounded-full bg-white border border-gray-300 text-gray-700 flex items-center justify-center'><img src="/google.svg" className='mr-2 w-6' alt="" />Sign Up With Google</button>
 
     </div>
+   
 </div>
   )
 }

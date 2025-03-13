@@ -14,6 +14,7 @@ import { getItemsFromFirestore } from '../services/productService';
 import { reviewData } from '../content/Review_Data';
 import NavigationButton from '../components/NavigationButton';
 import { Link, useNavigate } from 'react-router-dom';
+import { Toaster } from 'react-hot-toast';
 
 
 
@@ -111,7 +112,7 @@ const Home = () => {
                             disableOnInteraction: false,
                         }}
 
-                        onSlideChange={() => console.log('slide change')}>
+                        >
 
                         {reviewData.map((review, index) => (
                             <SwiperSlide key={index}>
@@ -222,6 +223,7 @@ const Home = () => {
                     </div>
                 </div>
             </section>
+           
         </main>
 
     )
