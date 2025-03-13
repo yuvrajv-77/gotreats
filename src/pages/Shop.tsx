@@ -1,10 +1,9 @@
 
 import { BadgePercent, Candy, Drumstick, Salad } from 'lucide-react';
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import ItemCards from '../components/ItemCards';
 import { useNavigate, useSearchParams } from 'react-router-dom';
-import { getItemsFromFirestore } from '../services/productService';
-import { useQuery } from '@tanstack/react-query';
+
 import { useProductStore } from '../store/productStore';
 
 

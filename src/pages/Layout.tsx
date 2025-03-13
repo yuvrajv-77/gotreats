@@ -1,8 +1,8 @@
-import React, { useEffect } from 'react'
+import { useEffect } from 'react'
 import Navbar from '../components/Navbar'
 import { Outlet } from 'react-router-dom'
 import { useProductStore } from '../store/productStore'
-import ProductList from '../content/Product_List'
+
 import { useQuery } from '@tanstack/react-query'
 import { getItemsFromFirestore } from '../services/productService'
 import {Toaster} from 'react-hot-toast'

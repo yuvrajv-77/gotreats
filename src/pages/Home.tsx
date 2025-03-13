@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import  {  useState } from 'react'
 import Button, { IconButton } from '../components/Button'
 import { Phone } from 'lucide-react'
 import ItemCards from '../components/ItemCards';
@@ -6,15 +6,14 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/css';
 import 'swiper/css/navigation';
 import 'swiper/css/pagination';
-import { Autoplay, Navigation, Pagination } from 'swiper/modules';
+import { Autoplay, Navigation } from 'swiper/modules';
 import { useAuthStore } from '../store/authStore';
 import { useProductStore } from '../store/productStore';
-import { useQuery } from '@tanstack/react-query';
-import { getItemsFromFirestore } from '../services/productService';
+
 import { reviewData } from '../content/Review_Data';
 import NavigationButton from '../components/NavigationButton';
 import { Link, useNavigate } from 'react-router-dom';
-import { Toaster } from 'react-hot-toast';
+
 
 
 

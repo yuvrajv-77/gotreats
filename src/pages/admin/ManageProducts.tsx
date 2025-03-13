@@ -1,12 +1,10 @@
-import React from 'react'
+
 import Button, { IconButton } from '../../components/Button'
-import { Eye, EyeOff, Pen, Plus, Trash, Triangle } from 'lucide-react'
-import { addProduct, deleteProduct, getItemsFromFirestore, updateProduct } from '../../services/productService';
+import { Eye, EyeOff, Pen, Plus, Trash} from 'lucide-react'
+import { deleteProduct, getItemsFromFirestore, updateProduct } from '../../services/productService';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { useNavigate } from 'react-router-dom';
 import VegSymbol from '../../assets/VegSymbol';
-import { doc, updateDoc } from 'firebase/firestore';
-import { db } from '../../config/firebaseConfig';
 
 export default function ManageProducts() {
     const queryClient = useQueryClient()

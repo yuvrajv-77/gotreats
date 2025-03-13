@@ -1,5 +1,5 @@
-import { Loader, MailIcon, Phone, Store } from 'lucide-react'
-import React from 'react'
+import {  MailIcon, Phone, Store } from 'lucide-react'
+
 
 const Contact = () => {
     return (

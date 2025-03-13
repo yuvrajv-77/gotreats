@@ -1,11 +1,11 @@
 
-import React, { useEffect } from 'react'
+import { useEffect } from 'react'
 import Button, { IconButton } from '../components/Button';
 import { Cart } from '../components/Cart';
 import { useCartStore } from '../store/cartStore';
-import { Link, useNavigate } from 'react-router-dom';
+import {  useNavigate } from 'react-router-dom';
 import { useAuthStore } from '../store/authStore';
-import { initializeRazorpayPayment } from '../services/razorpay';
+
 import { handleCheckout } from '../services/orderService';
 import toast from 'react-hot-toast';
 import { Trash } from 'lucide-react';
@@ -15,12 +15,10 @@ const TAX_RATE = 0.18;
 
 const Checkout = () => {
     const { items, grossTotalPrice, totalPrice, calculateGrossTotalPrice, calculateTotalPrice } = useCartStore()
-    const user = useAuthStore((state) => state.user)
+    
     const navigate = useNavigate()
     const userDetails = useAuthStore((state) => state.userDetails)
-    const [address, setAddress] = React.useState(userDetails?.address || '');
-    const [isEditing, setIsEditing] = React.useState(false);
-    const [loading, setLoading] = React.useState(false);
+
 
     useEffect(() => {
         calculateGrossTotalPrice();

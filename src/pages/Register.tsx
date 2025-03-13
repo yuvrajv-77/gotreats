@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import Button, { IconButton } from '../components/Button'
+import Button from '../components/Button'
 import { useNavigate } from 'react-router-dom'
 import { handleEmailAccountCreation, handlesignInWithGoogle } from '../services/authService';
 import toast from 'react-hot-toast';

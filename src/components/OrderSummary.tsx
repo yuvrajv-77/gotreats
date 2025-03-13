@@ -1,6 +1,5 @@
 import { CheckCircle, Home, Store } from "lucide-react";
-import { IconButton } from "./Button";
-import { useState } from "react";
+
 
 export default function OrderSummary({detailOpen,setDetailOpen}:{detailOpen:boolean,setDetailOpen:Function}) {
     

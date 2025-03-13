@@ -3,7 +3,7 @@ import Button from '../components/Button'
 import { useNavigate } from 'react-router-dom'
 import { handleEmailAccountLogin, handlesignInWithGoogle } from '../services/authService'
 import { useAuthStore } from '../store/authStore'
-import toast, { Toaster } from 'react-hot-toast'
+import toast from 'react-hot-toast'
 
 const Login = () => {
    

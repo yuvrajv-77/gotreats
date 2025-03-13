@@ -1,6 +1,5 @@
 import React from 'react'
 import { useAuthStore } from '../store/authStore';
-import { useCartStore } from '../store/cartStore';
 import Button from '../components/Button';
 import { useNavigate } from 'react-router-dom';
 import { handleLogout, updateUserAddress, updateUserPhone } from '../services/authService';
