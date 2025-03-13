@@ -1,6 +1,6 @@
 import { ArrowLeft, ArrowRight } from 'lucide-react'
 
-const NavigationButton = ({swiper}) => {
+const NavigationButton = ({swiper}:{swiper:any}) => {
     // const swiper = useSwiper()
     return (
         <div className='flex items-center gap-4 '>

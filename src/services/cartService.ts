@@ -1,4 +1,4 @@
-  import { collection, doc, getDoc, setDoc, updateDoc, deleteDoc } from 'firebase/firestore'
+  import { doc, getDoc, updateDoc} from 'firebase/firestore'
   import { Item } from '../types/ItemsTypes'
   import { getTempUserId } from '../utils/tempUserId'
   import { db } from '../config/firebaseConfig'
@@ -88,7 +88,7 @@ const updateCartItems = async (userId: string, updateFn: (items: CartItem[]) => 
     const cartDoc = await getDoc(cartRef)
     const cart = cartDoc.data()
 
-    const updatedItems = updateFn(cart.items)
+    const updatedItems = updateFn(cart?.items)
     await updateDoc(cartRef, { items: updatedItems })
 }
 

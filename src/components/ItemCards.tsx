@@ -1,7 +1,5 @@
 import { Star, Triangle } from 'lucide-react'
 import { Item } from '../types/ItemsTypes'
-
-import { CartItem } from '../services/cartService'
 import { useCartStore } from '../store/cartStore'
 import { useAuthStore } from '../store/authStore'
 import { useNavigate } from 'react-router-dom'

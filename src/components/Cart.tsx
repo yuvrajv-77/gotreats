@@ -1,6 +1,6 @@
 import { useCartStore } from '../store/cartStore'
 import { Item } from '../types/ItemsTypes'
-import Button from './Button'
+
 
 export const Cart = () => {
   const { items, addItem, updateQuantity } = useCartStore()
