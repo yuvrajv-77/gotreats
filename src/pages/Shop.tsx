@@ -63,7 +63,7 @@ const Shop = () => {
                         {tag == 'top-picks' && products?.map((item, index) => <ItemCards key={index} item={item} />)}
                         {tag == 'veg-meal' && products?.filter(item => !item.isNonVeg).map((item, index) => <ItemCards key={index} item={item} />)}
                         {tag == 'non-veg-meal' && products?.filter(item => item.isNonVeg).map((item, index) => <ItemCards key={index} item={item} />)}
-                        {tag == 'chocolates' && products?.filter(item => item.chocolate).map((item, index) => <ItemCards key={index} item={item} />)}
+                        {tag == 'chocolates' && products?.filter(item => item.isChocolate).map((item, index) => <ItemCards key={index} item={item} />)}
                     </div>
                 </div>
             </div> 
