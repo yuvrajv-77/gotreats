@@ -16,6 +16,7 @@ import ManageProducts from "./pages/admin/ManageProducts"
 import Dashboard from "./pages/admin/Dashboard"
 import ProductFrom from "./pages/admin/ProductFrom"
 import ManageOrders from "./pages/admin/ManageOrders"
+import TermsConditions from "./pages/TermsConditions"
 
 
 export const router = createBrowserRouter([
@@ -42,6 +43,10 @@ export const router = createBrowserRouter([
         {
           path: "/contact",
           element: <Contact />
+        },
+        {
+          path: "/terms-and-conditions",
+          element: <TermsConditions />
         },
         {
           element: <ProtectedRoute />,

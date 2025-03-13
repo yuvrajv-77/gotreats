@@ -24,9 +24,9 @@ const Navbar = () => {
 
             <ul className=' gap-6 hidden lg:flex'>
                 <Link to={'/shop'}><li className='hover:underline cursor-pointer'>Shop</li></Link>
-                <li className='hover:underline cursor-pointer'>Services</li>
-                <li className='hover:underline cursor-pointer'>About Us</li>
-                <li className='hover:underline cursor-pointer'>Contact Us</li>
+                <Link to={'/terms-and-conditions'}><li className='hover:underline cursor-pointer'>Terms and Conditions</li></Link>
+                <Link to={'/contact'}><li className='hover:underline cursor-pointer'>Contact</li></Link>
+                
                 {/* <li className='hover:underline cursor-pointer'>Contact Us</li> */}
             </ul>
             <div className='flex items-center gap-3'>
@@ -98,7 +98,7 @@ const Navbar = () => {
                             <Link to={"/shop"} onClick={() => setIsOpen(false)} className='text-xl  px-10'>Shop</Link>
                         </li>
                         <li className=''>
-                            <Link to={"/about"} onClick={() => setIsOpen(false)} className='text-xl  px-10'>About Us</Link>
+                            <Link to={"/terms-and-conditions"} onClick={() => setIsOpen(false)} className='text-xl  px-10'>Terms and Conditions</Link>
                         </li>
                         <li className=''>
                             <Link to={"/contact"} onClick={() => setIsOpen(false)} className='text-xl px-10'>Contact Us</Link>
