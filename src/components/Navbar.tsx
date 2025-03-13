@@ -60,7 +60,7 @@ const Navbar = () => {
                             <DropdownItem className=' hover:bg-gray-100 ' key="new" onPress={() => navigate('/Orders')}>Orders</DropdownItem>
                             <DropdownItem className=' hover:bg-gray-100 text-red-500' key="logout"
                                 onPress={() => {
-                                    localStorage.removeItem('cart-storage');
+                                    // localStorage.removeItem('cart-storage');
                                     useCartStore.getState().clearCart();
                                     handleLogout();
                                     toast.success('Logout successful');

@@ -1,9 +1,10 @@
 import { create } from 'zustand'
-import { Product } from '../types/product'
+
+import { Item } from '../types/ItemsTypes'
 
 interface ProductStore {
-  products: Product[]
-  setProducts: (products: Product[]) => void
+  products: Item[]
+  setProducts: (products: Item[]) => void
 }
 
 export const useProductStore = create<ProductStore>((set) => ({

@@ -59,11 +59,13 @@ const ProductFrom = () => {
 
 
     const productMutation = useMutation({
-        mutationFn: (data: Item) => {
+        mutationFn: async (data: Item) => {
             if (productId) {
-                return updateProduct(productId, data)
+                const result = await updateProduct(productId, data)
+                return result ? 'Product updated successfully' : 'Failed to update product'
             }
-            return addProduct(data)
+            const result = await addProduct(data)
+            return result ? 'Product added successfully' : 'Failed to add product'
         },
         onSuccess: () => {
             queryClient.invalidateQueries({ queryKey: ['products'] })
@@ -266,5 +268,4 @@ const ProductFrom = () => {
         </div>
     )
 }
-
 export default ProductFrom;
