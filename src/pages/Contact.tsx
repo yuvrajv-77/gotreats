@@ -12,7 +12,7 @@ const Contact = () => {
         <div className=''>
             <div className='bg-green-200 text-center mt-10 py-10 px-5'>
                 <h1 className=' lancelot text-5xl text- mb-4'>Get In Touch</h1>
-                <p>Hi! 👋🏻 Its Govinda Prakash Shah. If you have any query just contact me</p>
+                <p>Hi! 👋🏻 Its Govinda Jayprakash Shah. If you have any query just contact me</p>
             </div>
             <div className='container mx-auto flex lg:flex-row px-10 flex-col justify-evenly gap-7 lg:gap-0 mt-10'>
                 <div className=' group border h-46 md:h-56 w-full lg:w-86 group flex flex-col justify-between p-6 gap-5  rounded-xl'>

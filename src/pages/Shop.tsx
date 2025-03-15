@@ -1,73 +1,159 @@
-
-import { BadgePercent, Candy, Drumstick, Salad } from 'lucide-react';
-import { useEffect } from 'react';
+import { BadgePercent, Candy, Dessert, Drumstick, Salad, Soup, Utensils } from 'lucide-react';
+import { useEffect, useState } from 'react';
 import ItemCards from '../components/ItemCards';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 
 import { useProductStore } from '../store/productStore';
-
-
+import Button from '../components/Button';
+import { useCartStore } from '../store/cartStore';
 
 const Shop = () => {
-
-    const navigate = useNavigate()
-    const [searchParams] = useSearchParams();
+    const navigate = useNavigate();
+    const [searchParams, setSearchParams] = useSearchParams();
     const tag = searchParams.get('tag');
-   
-    // const { items, addItem, updateQuantity } = useCartStore()
-    const products = useProductStore((state) => state.products)
+    const [foodType, setFoodType] = useState('all'); // 'all', 'veg', 'non-veg'
 
+    const products = useProductStore((state) => state.products);
+    const items = useCartStore((state) => state.items);
+    const itemQuantity = useCartStore((state) => state.itemCount);
 
+    useEffect(() => {
+        if (!tag) {
+            navigate('/shop/?tag=top-picks');
+        }
+        window.scrollTo(0, 0);
+    }, []);
 
-    
-    
-    
-    useEffect(()  => {
-        navigate('/shop/?tag=top-picks');
-        
-    }, [])
+    const toggleFoodType = (type) => {
+        if (foodType === type) {
+            setFoodType('all'); // Toggle off if already selected
+        } else {
+            setFoodType(type); // Set to the selected type
+        }
+    };
 
-   
-    
+    // Filter products based on food type and tag
+    const getFilteredProducts = () => {
+        let filteredProducts = products;
 
-    
+        // First filter by food type
+        if (foodType === 'veg') {
+            filteredProducts = products?.filter(item => !item.isNonVeg);
+        } else if (foodType === 'non-veg') {
+            filteredProducts = products?.filter(item => item.isNonVeg);
+        }
+
+        // Then filter by tag
+        if (tag === 'top-picks') {
+            return filteredProducts;
+        } else if (tag === 'meals') {
+            return filteredProducts?.filter(item => item.category === 'Meals');
+        } else if (tag === 'pasta') {
+            return filteredProducts?.filter(item => item.category === 'Pasta');
+        } else if (tag === 'maggi') {
+            return filteredProducts?.filter(item => item.category === 'Maggi');
+        } else if (tag === 'paav-bhaaji') {
+            return filteredProducts?.filter(item => item.category === 'Paav Bhaaji');
+        } else if (tag === 'desserts') {
+            return filteredProducts?.filter(item => item.category === 'Desserts');
+        }
+        return filteredProducts;
+    };
+
     return (
         <div className='bg-[#fff9f2] flex'>
-
-            <div className='container  mx-auto '>
+            <div className='container mx-auto'>
                 <div className='py-10'>
-                    <h1 className=' text-4xl md:text-5xl text-center lancelot text-gray-800 '>Shop our Homemade Products</h1>
-                    <div className='mt-8'>
-                        <div className=' text justify-center flex items-center flex-wrap gap-2 lg:gap-10 select-none'>
-                            <span className={`whitespace-nowrap cursor-pointer px-4 py-2 rounded-lg ${tag == 'top-picks' ? 'bg-orange-600 text-white hover:text-white' : 'bg-white'}  hover:text-orange-600 inline-flex items-center shadow-xs transition-colors duration-100 ease-in  gap-2`}
+                    <h1 className='text-4xl md:text-5xl text-center lancelot text-gray-800'>Shop our Homemade Products</h1>
+                    <div className='text justify-center flex items-center flex-wrap gap-2 lg:gap-10 mt-5 select-none'>
+                        <div className='flex gap-2'>
+                            <span
+                                className={`whitespace-nowrap cursor-pointer px-4 py-2 rounded-lg ${foodType === 'veg' ? 'bg-green-600 text-white hover:text-white' : 'bg-white'}  hover:text-green-600 inline-flex items-center shadow-xs gap-2 transition-colors duration-100 ease-in`}
+                                onClick={() => toggleFoodType('veg')}>
+                                <Salad strokeWidth={1.5} />Veg
+                            </span>
+                            <span
+                                className={`whitespace-nowrap cursor-pointer px-4 py-2 rounded-lg ${foodType === 'non-veg' ? 'bg-orange-800 text-white hover:text-white' : 'bg-white'}  hover:text-orange-800 inline-flex items-center shadow-xs gap-2 transition-colors duration-100 ease-in`}
+                                onClick={() => toggleFoodType('non-veg')}>
+                                <Drumstick strokeWidth={1.5} />Non-Veg
+                            </span>
+                        </div>
+                    </div>
+                    <div className='relativ flex justify-center mx-4 mt-5'>
+
+
+                        <div className=' flex items-center overflow-x-auto scrollbar-hide py-2  mx-auto  gap-2 lg:gap-5 select-none'>
+                            {/* -------Categories------- */}
+                            <span
+                                className={`whitespace-nowrap cursor-pointer px-4 py-2 rounded-lg ${tag == 'top-picks' ? 'bg-orange-600 text-white hover:text-white' : 'bg-white'}  hover:text-orange-600 inline-flex items-center shadow-xs transition-colors duration-100 ease-in gap-2`}
                                 onClick={() => navigate('/shop/?tag=top-picks')}>
                                 <BadgePercent strokeWidth={1.5} />Top Picks
                             </span>
-                            <span className={`whitespace-nowrap cursor-pointer px-4 py-2 rounded-lg ${tag == 'veg-meal' ? 'bg-orange-600 text-white hover:text-white' : 'bg-white'}  hover:text-orange-600 inline-flex items-center shadow-xs gap-2 transition-colors duration-100 ease-in`}
-                                onClick={() => navigate('/shop/?tag=veg-meal')}>
-                                <Salad strokeWidth={1.5} />Veg Meal
-                            </span>
-                            <span className={`whitespace-nowrap cursor-pointer px-4 py-2 rounded-lg ${tag == 'non-veg-meal' ? 'bg-orange-600 text-white hover:text-white' : 'bg-white'}  hover:text-orange-600 inline-flex items-center shadow-xs gap-2 transition-colors duration-100 ease-in`}
-                                onClick={() => navigate('/shop/?tag=non-veg-meal')}>
-                                <Drumstick strokeWidth={1.5} />Non-Veg Meal
-                            </span>
-                            <span className={`whitespace-nowrap cursor-pointer px-4 py-2 rounded-lg ${tag == 'chocolates' ? 'bg-orange-600 text-white hover:text-white' : 'bg-white'}  hover:text-orange-600 inline-flex items-center shadow-xs gap-2 transition-colors duration-100 ease-in`}
-                                onClick={() => navigate('/shop/?tag=chocolates')}>
-                                <Candy strokeWidth={1.5} /> Chocolates
-                            </span>
+
+                            {/* Only show relevant categories based on food type */}
+                            {(foodType === 'all' || foodType === 'veg') && (
+                                <>
+                                    <span
+                                        className={`whitespace-nowrap cursor-pointer px-4 py-2 rounded-lg ${tag == 'meals' ? 'bg-orange-600 text-white hover:text-white' : 'bg-white'}  hover:text-orange-600 inline-flex items-center shadow-xs gap-2 transition-colors duration-100 ease-in`}
+                                        onClick={() => navigate('/shop/?tag=meals')}>
+                                        <Utensils strokeWidth={1.5} /> Meals
+                                    </span>
+                                    <span
+                                        className={`whitespace-nowrap cursor-pointer px-4 py-2 rounded-lg ${tag == 'paav-bhaaji' ? 'bg-orange-600 text-white hover:text-white' : 'bg-white'}  hover:text-orange-600 inline-flex items-center shadow-xs gap-2 transition-colors duration-100 ease-in`}
+                                        onClick={() => navigate('/shop/?tag=paav-bhaaji')}>
+                                        Paav Bhaaji
+                                    </span>
+                                    <span
+                                        className={`whitespace-nowrap cursor-pointer px-4 py-2 rounded-lg ${tag == 'pasta' ? 'bg-orange-600 text-white hover:text-white' : 'bg-white'}  hover:text-orange-600 inline-flex items-center shadow-xs gap-2 transition-colors duration-100 ease-in`}
+                                        onClick={() => navigate('/shop/?tag=pasta')}>
+                                        Pasta
+                                    </span>
+                                    <span
+                                        className={`whitespace-nowrap cursor-pointer px-4 py-2 rounded-lg ${tag == 'maggi' ? 'bg-orange-600 text-white hover:text-white' : 'bg-white'}  hover:text-orange-600 inline-flex items-center shadow-xs gap-2 transition-colors duration-100 ease-in`}
+                                        onClick={() => navigate('/shop/?tag=maggi')}>
+                                        <Soup strokeWidth={1.5} />Maggi
+                                    </span>
+                                    <span
+                                        className={`whitespace-nowrap cursor-pointer px-4 py-2 rounded-lg ${tag == 'desserts' ? 'bg-orange-600 text-white hover:text-white' : 'bg-white'}  hover:text-orange-600 inline-flex items-center shadow-xs gap-2 transition-colors duration-100 ease-in`}
+                                        onClick={() => navigate('/shop/?tag=desserts')}>
+                                        <Dessert strokeWidth={1.5} /> Desserts
+                                    </span>
+                                </>
+                            )}
+
+                            {(foodType === 'non-veg') && (
+                                <>
+                                    <span
+                                        className={`whitespace-nowrap cursor-pointer px-4 py-2 rounded-lg ${tag == 'meals' ? 'bg-orange-600 text-white hover:text-white' : 'bg-white'}  hover:text-orange-600 inline-flex items-center shadow-xs gap-2 transition-colors duration-100 ease-in`}
+                                        onClick={() => navigate('/shop/?tag=meals')}>
+                                        <Utensils strokeWidth={1.5} /> Meals
+                                    </span>
+                                </>
+                            )}
                         </div>
                     </div>
 
                     {/* items container */}
-                    <div className='flex flex-wrap lg:gap-10 gap-4 mt-10  justify-center '>
-                        {tag == 'top-picks' && products?.map((item, index) => <ItemCards key={index} item={item} />)}
-                        {tag == 'veg-meal' && products?.filter(item => !item.isNonVeg).map((item, index) => <ItemCards key={index} item={item} />)}
-                        {tag == 'non-veg-meal' && products?.filter(item => item.isNonVeg).map((item, index) => <ItemCards key={index} item={item} />)}
-                        {tag == 'chocolates' && products?.filter(item => item.isChocolate).map((item, index) => <ItemCards key={index} item={item} />)}
+                    <div className='flex flex-wrap lg:gap-10 gap-4 mt-10 justify-center'>
+                        {getFilteredProducts()?.map((item, index) => (
+                            <ItemCards key={index} item={item} />
+                        ))}
                     </div>
+
                 </div>
-            </div> 
+            </div>
+            {itemQuantity > 0 &&
+                <div className='fixed bottom-4 left-0 right-0 flex justify-center w-full'>
+                    <span onClick={() => {
+                        window.scrollTo(0, 0);
+                        navigate('/checkout')
+                    }} className='flex items-center w-76 justify-between gap-2 border-3 border-orange-400 px-4 py-3 bg-black rounded-2xl text-white hover:bg-white hover:text-black cursor-pointer'>
+                        <p>{itemQuantity} Items Added</p>View Cart {'>'}
+                    </span>
+                </div>
+            }
         </div>
-    )
-}
-export default Shop
+    );
+};
+
+export default Shop;

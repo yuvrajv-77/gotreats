@@ -73,7 +73,7 @@ const ItemCards = ({ item }: { item: Item }) => {
                     }
                     <div className='inline-flex items-center gap-2'>
                         <p className='comfortaa text-lg line-through '> ₹{item.originalPrice} </p>
-                        <span className='px-[3px] py-[1px] flex items-center text-lg shadow-3xl bg-yellow-500 animate-bounce'>₹{item.offerPrice}</span>
+                        <span className='px-[3px] py-[1px] flex items-center text-lg shadow-3xl bg-yellow-500 '>₹{item.offerPrice}</span>
                     </div>
                 </div>
             </div>
@@ -84,7 +84,7 @@ const ItemCards = ({ item }: { item: Item }) => {
                     <h4 className='lancelot text-2xl font-bold mb-2'>{item.productName}</h4>
                     <div className='inline-flex items-center gap-2 mb-2'>
                         <p className='comfortaa text-lg line-through '> ₹{item.originalPrice} </p>
-                        <span className='px-[3px] py-[1px] flex items-center text-lg shadow-3xl bg-yellow-500 animate-spin'>₹{item.offerPrice}</span>
+                        <span className='px-[3px] py-[1px] flex items-center text-lg shadow-3xl bg-yellow-500 '>₹{item.offerPrice}</span>
                     </div>
                     <p className='comfortaa text-sm text-green-700 font-bold flex items-center gap-1 mb-3'><Star fill='green' size={13} />{item.rating}</p>
                     <p className=' text-gray-500 text-sm line-clamp-2 tracking-tight'>{item.productDescription}</p>

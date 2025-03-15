@@ -39,9 +39,9 @@ export const Cart = () => {
           <div className='flex  justify-between md:justify-between md:px-20 items-center w-full rounded-xl  cursor-pointer bg-white transition-color duration-500 '>
 
             <div>
-              <h4 className='lancelot md:text-xl'>{item.productName}</h4>
+              <h4 className='lancelot text-xl'>{item.productName}</h4>
               <span className='px-[3px] py-[1px] flex items-center  '>
-                ${item.offerPrice}
+              ₹{item.offerPrice}
               </span>
             </div>
 
@@ -56,9 +56,6 @@ export const Cart = () => {
                 +
               </button>
             </span>
-
-
-
           </div>
         ))}
       </div>

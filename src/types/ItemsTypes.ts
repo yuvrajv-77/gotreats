@@ -4,7 +4,7 @@ export type Item = {
     productDescription: string;
     isNonVeg: boolean;
     isTiffin: boolean;
-    isChocolate?: boolean;
+    category: string;
     originalPrice: number;
     offerPrice: number;
     imageUrl: string;

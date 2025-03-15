@@ -6,6 +6,7 @@ import { useProductStore } from '../store/productStore'
 import { useQuery } from '@tanstack/react-query'
 import { getItemsFromFirestore } from '../services/productService'
 import {Toaster} from 'react-hot-toast'
+import Footer from './Footer'
 
 function Layout() {
 
@@ -25,6 +26,7 @@ useEffect(() => {
         <Navbar/>
         <Outlet/>
         <Toaster/>
+        <Footer/>
     </div>
   )
 }
