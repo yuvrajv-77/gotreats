@@ -35,6 +35,11 @@ const Navbar = () => {
             </div>
             <div className='flex gap-4 items-center'>
 
+                {
+                    userDetails?.phoneNumber === '7905146108' &&
+                    <Button onClick={() => navigate('/admin')}>Admin</Button>
+                }
+
                 {user && <Link to={'/checkout'}>
                     <IconButton>
                         <ShoppingCart strokeWidth={1.4} />
