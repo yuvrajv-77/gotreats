@@ -32,10 +32,11 @@ const Footer = () => {
                     <div>
                         <h4 className="text-lg font-semibold mb-4">Contact Us</h4>
                         <ul className="text-gray-400 space-y-2">
-                            <li>123 Shopping Street</li>
-                            <li>New York, NY 10001</li>
-                            <li>Phone: (555) 123-4567</li>
-                            <li>Email: info@shophub.com</li>
+                            <li>Room No.6,Ratnabai Chawl</li>
+                            <li>Saibaba Nagar,Behind Nehru Garden,</li>
+                            <li>Borivali West, Mumbai</li>
+                            <li>Maharashtra, PIN: 400092</li>
+                            <li>govindashah603@gmail.com</li>
                         </ul>
                     </div>
 

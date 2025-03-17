@@ -36,8 +36,8 @@ const Contact = () => {
                     <Store size={40} strokeWidth='1.4' className='group-hover:animate-bounce' />
                     <div>
                         <h2 className='text-gray-900 text-xl tracking-tight'>Visit Us</h2>
-                        <p className=' text-gray-500 text-sm group-hover:whitespace-normal transition-all duration-300 ease-in-out '>Operational Address</p>
-                        <p className=' text-orange-600 mt-3 group-hover:underline  group-hover:whitespace-normal transition-all duration-300 ease-in-out  '> Room No.6,Ratnabai Chawl,Saibaba Nagar,Behind Nehru Garden, Borivali West, 
+                        <p className=' text-gray-500 text-sm group-hover:whitespace-normal transition-all duration-300 ease-in-out '>Operational Address</p>Room No.6,Ratnabai Chawl,
+                        <p className=' text-orange-600 mt-3 group-hover:underline  group-hover:whitespace-normal transition-all duration-300 ease-in-out  '> Saibaba Nagar,Behind Nehru Garden, Borivali West, 
                         Maharashtra, PIN: 400092</p>
                     </div>
                 </div>
