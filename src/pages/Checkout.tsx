@@ -28,6 +28,7 @@
       const [address, setAddress] = useState(userDetails?.address || '');
       const [isEditingAddress, setIsEditingAddress] = useState(false);
       const [loading, setLoading] = useState(false);
+      const [note, setNote] = useState('');
 
 
 
@@ -80,7 +81,8 @@
               items: items,
               totalAmount: totalPrice,
               deliveryAddress: address,
-              customer: userDetails
+              customer: userDetails,
+              note: note
           };
 
 
@@ -129,6 +131,14 @@
                           <Cart />
                       </div>
                       <hr className='md:hidden block' />
+                      <div className='md:p-6 bg-white w-full'>
+                          <div className='flex items-center justify-between'>
+                             <input type="text" value={note} onChange={(e) => setNote(e.target.value)}
+                             className={`border border-gray-300 rounded-xl p-2 w-full bg-white`} placeholder='Add Cooking Note' />
+                          </div>
+                      </div>
+                      <hr className='md:hidden block' />
+
                       {/* box 2 */}
                       <div className='md:p-6 bg-white w-full'>
                           <div className='flex mb-2 items-center justify-between'>

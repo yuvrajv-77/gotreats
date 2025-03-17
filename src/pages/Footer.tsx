@@ -7,7 +7,7 @@ const Footer = () => {
     return (
         <footer className="bg-neutral-900 text-white pt-12 pb-8">
             <div className="container mx-auto px-4">
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
                     {/* Company Info */}
                     <div className=''>
                         <Link to={'/'}><p className='comfortaa font-bold tracking-tighter text-2xl lg:text-3xl text-orange-600'><span className='text-green-500'>go</span>treats</p></Link>
@@ -36,6 +36,16 @@ const Footer = () => {
                             <li>New York, NY 10001</li>
                             <li>Phone: (555) 123-4567</li>
                             <li>Email: info@shophub.com</li>
+                        </ul>
+                    </div>
+
+                    <div>
+                        <h4 className="text-lg font-semibold mb-4">Delivery Service</h4>
+                        <ul className="text-gray-400 space-y-2">
+                            <li>Kandivali</li>
+                            <li>Borivali</li>
+                            <li>Dahisar</li>
+                            <li>Malad</li>
                         </ul>
                     </div>
 
