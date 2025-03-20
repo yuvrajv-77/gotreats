@@ -101,10 +101,10 @@ const ProductFrom = () => {
                   }
                 
                   // Remove imageUrl from updatedData to avoid overwriting it if no new image
-                  if (!selectedFile) {
-                      const { imageUrl, ...dataWithoutImage } = updatedData;
-                      updatedData = dataWithoutImage;
-                  }
+                  // if (!selectedFile) {
+                  //     const { imageUrl, ...dataWithoutImage } = updatedData;
+                  //     updatedData = dataWithoutImage;
+                  // }
                 
                   const result = await updateProduct(productId, updatedData);
                   return result ? 'Product updated successfully' : 'Failed to update product';
