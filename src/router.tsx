@@ -17,6 +17,10 @@ import Dashboard from "./pages/admin/Dashboard"
 import ProductFrom from "./pages/admin/ProductFrom"
 import ManageOrders from "./pages/admin/ManageOrders"
 import TermsConditions from "./pages/TermsConditions"
+import Concept from "./pages/ConceptPage"
+import About from "./pages/About"
+import ManageReviews from "./pages/admin/ManageReviews"
+import ManageReview from "./pages/admin/ManageReview"
 
 
 export const router = createBrowserRouter([
@@ -35,6 +39,14 @@ export const router = createBrowserRouter([
         {
           path: "/register",
           element: <Register />
+        },
+        {
+          path: "/concept",
+          element: <Concept />
+        },
+        {
+          path: "/about",
+          element: <About />
         },
         {
           path: "/shop",
@@ -94,6 +106,10 @@ export const router = createBrowserRouter([
             {
               path: "view-all-orders",
               element:<ManageOrders/>
+            },
+            {
+              path: "manage-reviews",
+              element:<ManageReview/>
             }
           ]
         }

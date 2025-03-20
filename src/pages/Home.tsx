@@ -1,36 +1,51 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import Button, { IconButton } from '../components/Button'
 import { Phone } from 'lucide-react'
 import ItemCards from '../components/ItemCards';
 import { Swiper, SwiperSlide } from 'swiper/react';
-import { Autoplay, Navigation } from 'swiper/modules';
+import { Autoplay, Navigation, Pagination } from 'swiper/modules';
 import { useAuthStore } from '../store/authStore';
 import { useProductStore } from '../store/productStore';
 
-import { reviewData } from '../content/Review_Data';
 import NavigationButton from '../components/NavigationButton';
 import { Link, useNavigate } from 'react-router-dom';
+import { collection, getDocs } from 'firebase/firestore';
+import { db } from '../config/firebaseConfig';
+import { useQuery } from '@tanstack/react-query';
 
+// Define the Review interface
+interface Review {
+  id: string;
+  name: string;
+  work: string;
+  place: string;
+  review: string;
+  avatarUrl: string;
+}
 
-
-
+const fetchReviews = async (): Promise<Review[]> => {
+    const reviewsCollection = collection(db, 'reviews');
+    const reviewSnapshot = await getDocs(reviewsCollection);
+    return reviewSnapshot.docs.map(doc => ({
+      id: doc.id,
+      ...doc.data()
+    })) as Review[];
+  };
 
 const Home = () => {
-
-
     const userDetails = useAuthStore((state) => state.userDetails)
     const navigate = useNavigate()
-    // const { data } = useQuery({
-    //     queryKey: ['products'],
-    //     queryFn: getItemsFromFirestore
-    // })
-
-
-
     const products = useProductStore((state) => state.products)
-
-
     const [swiperRef, setSwiperRef] = useState(null);
+   
+    const [loading, setLoading] = useState(true);
+
+    const { data: reviews = [], isLoading, error } = useQuery({
+        queryKey: ['reviews'],
+        queryFn: fetchReviews,
+        staleTime: 5 * 60 * 1000, // 5 minutes
+        refetchOnWindowFocus: false
+    });
 
 
     const varieties = [
@@ -60,10 +75,6 @@ const Home = () => {
         }
     ]
 
-
-
-    console.log("userDetails", userDetails);
-
     return (
         <main className="min-h-[calc(100vh-64px)] w-full">
 
@@ -78,11 +89,11 @@ const Home = () => {
                             Meals
                         </h1>
                         <p className="text-gray-600 text-base sm:text-lg lg:text-2xl mb-6 sm:mb-8 max-w-lg animate-[fadeIn_0.5s_ease-in]">
-                            Order a healthy and well-balanced meal. It’s all homemade… "Ghar ka khana just the way you want.".
+                            Order a healthy and well-balanced meal. It's all homemade… "Ghar ka khana just the way you want.".
                         </p>
-                        <div className="flex items-center gap-4 animate-[fadeIn_0.6s_ease-in]">
-                            <Button onClick={() => navigate("/shop")}>Order Now</Button>
-                            <IconButton className='lg:block hidden'><Phone strokeWidth={1} size={20} color='gray' /></IconButton>
+                        <div className="flex items-center gap-4 animate-[fadeIn_0.6s_ease-in] ">
+                            <Button onClick={() => navigate("/shop")} className='animate-pulse'>Order Now</Button>
+                            {/* <IconButton className='lg:block hidden'><Phone strokeWidth={1} size={20} color='gray' /></IconButton> */}
                         </div>
                     </div>
 
@@ -101,34 +112,34 @@ const Home = () => {
             <section className='bg-white mt-20 w-full '>
                 <div className='container mx-auto py-14  md:py-20'>
                     <h1 className='text-center mb-10 lancelot text-5xl sm:text-6xl lg:text-7xl flex items-center justify-center'>Happy Customers</h1>
-                    <Swiper
-                        modules={[Autoplay, Navigation]}
-                        spaceBetween={10}
-                        centeredSlides={true}
-                        loop={true}
+                            <Swiper
+                                modules={[Autoplay, Navigation]}
+                                spaceBetween={10}
+                                centeredSlides={false}
+                                loop={true}
 
-                        autoplay={{
-                            delay: 3000,
-                            disableOnInteraction: false,
-                        }}
+                                autoplay={{
+                                    delay: 5000,
+                                    disableOnInteraction: false,
+                                }}
+                                
+                            >
 
-                    >
-
-                        {reviewData.map((review, index) => (
+                        {reviews.map((review, index) => (
                             <SwiperSlide key={index}>
                                 <div className='flex flex-col items-center justify-center md:mx-50 mx-3 bg-green-50 p-10'>
-
-                                    <img src={review.image} className='size-28 md:size-30 object-cover rounded-full' alt="" />
+                                            
+                                    <img src={review.avatarUrl} className='size-28 md:size-30 object-cover rounded-full' alt="" />
                                     <h2 className='text-xl md:text-2xl my-3 font-semibold'>{review.name}</h2>
-                                    <p className='text-gray-600 font-light'>{review.role}</p>
+                                    <p className='text-gray-600 font-light'>{review.work}</p>
 
-                                    <h1 className='text-2xl md:text-3xl tracking-wide lancelot text-center font-bold text-slate-800 my-10 leading-normal'>" {review.quote} "</h1>
+                                    <h1 className='text-2xl md:text-3xl tracking-wide lancelot text-center font-bold text-slate-800 my-10 leading-normal'>" {review.review} "</h1>
                                     <div className='flex items-center gap-5'>
-                                    </div>
-                                </div>
-                            </SwiperSlide>
-                        ))}
-                    </Swiper>
+                                            </div>
+                                        </div>
+                                    </SwiperSlide>
+                                ))}
+                            </Swiper>
                 </div>
             </section>
 
@@ -165,17 +176,18 @@ const Home = () => {
                     <div className=' grid grid-cols-2 md:grid-cols-4 gap-5'>
                         {
                             varieties.map(variety => (
-                                // <Link to={variety.link}>
-                                <div onClick={() => navigate(variety.link)} className=' p-2 flex flex-col items-center gap-4'>
+                                <div 
+                                    key={variety.id}
+                                    onClick={() => navigate(variety.link)} 
+                                    className='p-2 flex flex-col items-center gap-4 cursor-pointer'
+                                >
                                     <div className='hover:scale-105 transition-all duration-300 ease-in'>
-                                        <img className='rounded-full object-cover size-40 md:size-44' src={variety.img} alt="" />
+                                        <img className='rounded-full object-cover size-40 md:size-44' src={variety.img} alt={variety.name} />
                                     </div>
                                     <p className='text-2xl font-semibold lancelot'>{variety.name}</p>
                                 </div>
-                                // </Link>
                             ))
                         }
-
                     </div>
                 </div>
             </section>
@@ -201,19 +213,13 @@ const Home = () => {
                                 slidesPerView: 1
                             }
                         }}
-                        // slidesPerView={2}
-
                         onSwiper={setSwiperRef}>
-
 
                         {products?.slice(0, 5).map((item, index) => (
                             <SwiperSlide key={index}>
                                 <ItemCards item={item} key={index} />
                             </SwiperSlide>
                         ))}
-
-
-
                     </Swiper>
                     <div className='flex justify-center my-5'>
                         <NavigationButton swiper={swiperRef} />
@@ -223,9 +229,7 @@ const Home = () => {
                     </div>
                 </div>
             </section>
-
         </main>
-
     )
 }
 

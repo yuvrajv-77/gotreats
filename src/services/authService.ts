@@ -10,7 +10,7 @@ export const handleEmailAccountCreation = async (
     email: string,
     password: string,
     phoneNumber: string,
-    address: string
+    // address: string
     ) => {
     try {
         const userCredential = await createUserWithEmailAndPassword(auth, email, password);
@@ -21,7 +21,7 @@ export const handleEmailAccountCreation = async (
             uid: newUser.uid,
             phoneNumber: phoneNumber,
             photoURL: newUser.photoURL,
-            address: address
+            // address: address
         });
         const userDetails = await getUserFromDb(newUser.uid);
         useAuthStore.getState().setUserDetails(userDetails);

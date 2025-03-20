@@ -10,7 +10,7 @@ const Register = () => {
     const [phone, setPhone] = useState("");
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
-    const [address, setAddress] = useState("");
+    // const [address, setAddress] = useState("");
     const [error, setError] = useState("");
     const [errorMsg, setErrorMsg] = useState("");
 
@@ -22,7 +22,7 @@ const Register = () => {
         setErrorMsg("");
 
         try {
-            await handleEmailAccountCreation(name, email, password, phone, address);
+            await handleEmailAccountCreation(name, email, password, phone);
             toast.success("Account created successfully");
             setEmail("");
             setPassword("");
@@ -89,14 +89,14 @@ const Register = () => {
                             className='border border-gray-300 rounded-xl p-2 w-full'
                             placeholder='Create a New password' />
                     </div>
-                    <div>
+                    {/* <div>
                         <p className='mb-2 text-orange-600 text-sm'>Address</p>
                         <textarea
                             value={address}
                             onChange={(e) => setAddress(e.target.value)}
                             rows={3}
                             className='border border-gray-300 rounded-xl p-2 w-full' placeholder='Enter your full address' />
-                    </div>
+                    </div> */}
                     {error && <p className='text-red-500 text-center'>{error} <br /> {errorMsg}</p>}
                     <Button type='submit' className='w-full '>Register</Button>
                     <p className='text-center'>Or</p>

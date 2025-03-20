@@ -38,10 +38,6 @@
       }, [items, calculateGrossTotalPrice, calculateTotalPrice]);
 
 
-
-
-
-
       useEffect(() => {
           // Update address when userDetails changes
           if (userDetails?.address) {

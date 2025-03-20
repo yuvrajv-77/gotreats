@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 
 const Footer = () => {
     return (
-        <footer className="bg-neutral-900 text-white pt-12 pb-8">
+        <footer className="bg-neutral-900 text-white mt-20 pt-12 pb-8">
             <div className="container mx-auto px-4">
                 <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
                     {/* Company Info */}
@@ -23,7 +23,7 @@ const Footer = () => {
                         <ul className="space-y-2">
                             <li><Link to="/" className="text-gray-400 hover:text-white">Home</Link></li>
                             <li><Link to="/products" className="text-gray-400 hover:text-white">Products</Link></li>
-                            <li><Link to="/about" className="text-gray-400 hover:text-white">Terms and Conditions</Link></li>
+                            <li><Link to="/terms-and-conditions" className="text-gray-400 hover:text-white">Terms and Conditions</Link></li>
                             <li><Link to="/contact" className="text-gray-400 hover:text-white">Contact</Link></li>
                         </ul>
                     </div>
@@ -37,6 +37,7 @@ const Footer = () => {
                             <li>Borivali West, Mumbai</li>
                             <li>Maharashtra, PIN: 400092</li>
                             <li>govindashah603@gmail.com</li>
+                            <li>+91-7045617506</li>
                         </ul>
                     </div>
 

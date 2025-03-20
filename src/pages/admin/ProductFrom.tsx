@@ -332,9 +332,9 @@ const ProductFrom = () => {
                         </div>
                     </div>
 
-                    <pre className="bg-white p-4 rounded-xl shadow-sm overflow-auto">
+                    {/* <pre className="bg-white p-4 rounded-xl shadow-sm overflow-auto">
                         {JSON.stringify(formData, null, 2)}
-                    </pre>
+                    </pre> */}
                 </div>
             </div>
             {/* <Toaster/> */}

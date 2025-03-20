@@ -24,7 +24,8 @@ const Navbar = () => {
 
             <ul className=' gap-6 hidden lg:flex'>
                 <Link to={'/shop'}><li className='hover:underline cursor-pointer'>Shop</li></Link>
-                <Link to={'/terms-and-conditions'}><li className='hover:underline cursor-pointer'>Terms and Conditions</li></Link>
+                <Link to={'/concept'}><li className='hover:underline cursor-pointer'>Concept</li></Link>
+                <Link to={'/about'}><li className='hover:underline cursor-pointer'>About</li></Link>
                 <Link to={'/contact'}><li className='hover:underline cursor-pointer'>Contact</li></Link>
                 
                 {/* <li className='hover:underline cursor-pointer'>Contact Us</li> */}
