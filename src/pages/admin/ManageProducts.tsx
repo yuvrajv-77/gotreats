@@ -5,6 +5,7 @@ import { deleteProduct, getItemsFromFirestore, updateProduct } from '../../servi
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { useNavigate } from 'react-router-dom';
 import VegSymbol from '../../assets/VegSymbol';
+import toast from 'react-hot-toast';
 
 export default function ManageProducts() {
     const queryClient = useQueryClient()
@@ -21,14 +22,22 @@ export default function ManageProducts() {
     const deleteProductMutation = useMutation({
         mutationFn: deleteProduct,
         onSuccess: () => {
-            queryClient.invalidateQueries({ queryKey: ['products'] })
+            queryClient.invalidateQueries({ queryKey: ['products'] });
+            toast.success('Product deleted successfully 🗑️');
+        },  onError: (error) => {
+            toast.error(`Failed to delete product: ${error.message}`)
         }
     })
 
     const handleProductDelete = (id: string) => {
 
         if (window.confirm("Really delete this product with id: " + id + "?")) {
-            deleteProductMutation.mutate(id)
+            toast.loading('Deleting product...', { id: 'deleteProduct' })
+            deleteProductMutation.mutate(id, {
+                onSuccess: () => {
+                    toast.dismiss('deleteProduct')
+                }
+            })
         }
     };
 
@@ -38,6 +47,7 @@ const toggleAvailabilityMutation = useMutation({
         updateProduct(productId, updatedData),
     onSuccess: () => {
         queryClient.invalidateQueries({ queryKey: ['products'] })
+        
     }
 });
 

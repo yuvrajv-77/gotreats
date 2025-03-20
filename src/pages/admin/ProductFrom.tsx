@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from 'react'
 import Button from '../../components/Button'
 import VegSymbol from '../../assets/VegSymbol'
-import { Star } from 'lucide-react'
+import { Star, Upload } from 'lucide-react'
 import { Item } from '../../types/ItemsTypes'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
-import { addProduct, getProductById, updateProduct } from '../../services/productService'
+import { addProduct, getProductById, updateProduct, updateProductImage, uploadProductImage } from '../../services/productService'
 import { useNavigate, useParams } from 'react-router-dom'
+import toast, { Toaster } from 'react-hot-toast'
 
 
 const FOOD_CATEGORIES = [
@@ -15,13 +16,14 @@ const FOOD_CATEGORIES = [
     "Paav Bhaaji",
     "Maggi",
     "Pasta",
-
 ]
 
 const ProductFrom = () => {
     const { productId } = useParams()
     const queryClient = useQueryClient()
     const navigate = useNavigate()
+    const [selectedFile, setSelectedFile] = useState<File | null>(null)
+    const [imagePreview, setImagePreview] = useState<string | null>(null)
     const [formData, setFormData] = useState<Item>({
         id: '',
         productName: '',
@@ -41,6 +43,9 @@ const ProductFrom = () => {
                 const product = await getProductById(productId)
                 if (product) {
                     setFormData(product)
+                    if (product.imageUrl) {
+                        setImagePreview(product.imageUrl)
+                    }
                 }
             }
         }
@@ -55,13 +60,13 @@ const ProductFrom = () => {
             data.productDescription &&
             data.originalPrice > 0 &&
             data.offerPrice > 0 &&
-            data.imageUrl &&
+            // data.imageUrl &&
             data.rating !== 0 &&
             data.category
         )
     }
 
-    const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement> ) => {
+    const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
         const { name, value, type } = e.target;
         const checked = (e.target as HTMLInputElement).checked;
         setFormData(prevData => ({
@@ -70,31 +75,78 @@ const ProductFrom = () => {
         }))
     }
 
+    const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        if (e.target.files && e.target.files[0]) {
+            const file = e.target.files[0];
+            setSelectedFile(file);
 
-    const productMutation = useMutation({
-        mutationFn: async (data: Item) => {
-            if (productId) {
-                const result = await updateProduct(productId, data)
-                return result ? 'Product updated successfully' : 'Failed to update product'
-            }
-            const result = await addProduct(data)
-            return result ? 'Product added successfully' : 'Failed to add product'
-        },
-        onSuccess: () => {
-            queryClient.invalidateQueries({ queryKey: ['products'] })
-            alert(productId ? 'Product updated successfully!' : 'Product added successfully!')
-            navigate('/admin/view-all-products')
+            // Create a preview URL for the image
+            const previewUrl = URL.createObjectURL(file);
+            setImagePreview(previewUrl);
+
+            // Set the imageUrl field to the preview URL
+            
         }
-    })
+    }
+      const productMutation = useMutation({
+          mutationFn: async (data: Item) => {
+              if (productId) {
+                  // If updating an existing product
+                  let updatedData = { ...data };
+                
+                  // Handle image update separately if there's a new file
+                  if (selectedFile) {
+                      const newImageUrl = await updateProductImage(productId, selectedFile);
+                      updatedData.imageUrl = newImageUrl;
+                  }
+                
+                  // Remove imageUrl from updatedData to avoid overwriting it if no new image
+                  if (!selectedFile) {
+                      const { imageUrl, ...dataWithoutImage } = updatedData;
+                      updatedData = dataWithoutImage;
+                  }
+                
+                  const result = await updateProduct(productId, updatedData);
+                  return result ? 'Product updated successfully' : 'Failed to update product';
+              } else {
+                  // If adding a new product
+                  if (selectedFile) {
+                      const imageDownloadUrl = await uploadProductImage(selectedFile, 'ProductImages');
+                      data.imageUrl = imageDownloadUrl;
+                  }
+                
+                  const result = await addProduct(data);
+                  return result ? 'Product added successfully' : 'Failed to add product';
+              }
+          },
+          onSuccess: () => {
+              queryClient.invalidateQueries({ queryKey: ['products'] });
+           
+              navigate('/admin/view-all-products');
+          }
+      })
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault()
         if (!validateAllFields(formData)) {
-            alert('Please fill in all FIELDS.')
+            toast.error('Please fill in all fields.')
             return
         }
-        productMutation.mutate(formData)
+        
+        // Use toast.promise with your mutation
+        toast.promise(
+            new Promise((resolve, reject) => {
+                productMutation.mutate(formData, {
+                    onSuccess: () => resolve(null),
+                    onError: (error) => reject(error)
+                })
+            }),
+            {
+                loading: 'Saving...',
+                success: productId ? 'Product updated successfully!' : 'Product added successfully!',
+                error: 'Could not save product.'
+            }
+        )
     }
-
 
 
     return (
@@ -176,7 +228,7 @@ const ProductFrom = () => {
                         </label>
                     </div>
 
-                   
+
                     <div className='flex justify-between formDatas-center'>
                         <p className='mb-2 text-orange-600 text-sm'>Availiblity</p>
                         <label htmlFor="availibility-toggle" className="relative inline-block w-11 h-6 cursor-pointer">
@@ -192,17 +244,18 @@ const ProductFrom = () => {
                             <span className="absolute top-1/2 start-0.5 -translate-y-1/2 size-5 bg-white rounded-full shadow-xs transition-transform duration-200 ease-in-out peer-checked:translate-x-full"></span>
                         </label>
                     </div>
-                    <div className='flex justify-between formDatas-center  gap-5'>
+                    <div className='flex justify-between formDatas-center gap-5'>
                         <div className='w-full'>
-                            <p className='mb-2 text-orange-600 text-sm'>Product Image Link 🔗</p>
-                            <input
-                                type="text"
-                                name="imageUrl"
-                                value={formData.imageUrl}
-                                onChange={handleChange}
-                                className='border border-gray-300 rounded-xl p-2 w-full'
-                                placeholder='Khaane ki Tasvir'
-                            />
+                            <p className='mb-2 text-orange-600 text-sm'>Product Image</p>
+                            <div className="flex items-center gap-2">
+                                <input
+                                    type="file"
+                                    accept="image/*"
+                                    onChange={handleImageChange}
+                                    className="border border-gray-300 rounded-xl p-2 w-full"
+                                />
+                                <Upload size={20} className="text-blue-500" />
+                            </div>
                         </div>
                         <div className='w-full'>
                             <p className='mb-2 text-orange-600 text-sm'>Rating ⭐</p>
@@ -246,7 +299,7 @@ const ProductFrom = () => {
 
                     <Button
                         type="submit"
-                        className="w-full bg-blue-500 text-white py-2   transition-colors"
+                        className="w-full bg-blue-500 text-white py-2 transition-colors"
                     >
                         {productId ? 'Update Product' : 'Add Product'}
                     </Button>
@@ -254,8 +307,12 @@ const ProductFrom = () => {
                 <div className='mt-10 mx-auto'>
                     <p className='bg-green-500 p-2 text-white text-center rounded-xl mb-5'>Product Preview</p>
                     <div>
-                        <div className=' md:flex gap-2 flex-col hidden group w-64 lg:w-76 bg-pink-50 p-6 rounded-3xl shadow-xs cursor-pointer hover:bg-green-50 transition-color duration-500  border-orange-50'>
-                            <img src={formData.imageUrl} alt="" className='mb-5 size-64 object-cover rounded-3xl group-hover:scale-102 transition-all duration-500' />
+                        <div className='md:flex gap-2 flex-col hidden group w-64 lg:w-76 bg-pink-50 p-6 rounded-3xl shadow-xs cursor-pointer hover:bg-green-50 transition-color duration-500 border-orange-50'>
+                            <img 
+                                src={imagePreview || 'https://via.placeholder.com/300'} 
+                                alt="Product preview" 
+                                className='mb-5 size-64 object-cover rounded-3xl group-hover:scale-102 transition-all duration-500' 
+                            />
                             <VegSymbol isNonVeg={formData.isNonVeg} />
                             <h4 className='lancelot text-2xl lg:text-3xl font-medium'>{formData.productName}</h4>
                             <p className='comfortaa text-sm text-green-700 font-bold flex formDatas-center gap-1 items-center'><Star fill='green' size={13} />{formData.rating}</p>
@@ -263,7 +320,7 @@ const ProductFrom = () => {
                             <p className='text-gray-500 text-sm lg:text:base leading-5 line-clamp-2'>{formData.productDescription}</p>
                             <div className='flex justify-between formDatas-center mt-5'>
 
-                                <button className=' h-9 flex justify-between  formDatas-center p-2 text-green-600 text-sm font-semibold bg-green-100 rounded-lg'>
+                                <button className='h-9 flex justify-between formDatas-center p-2 text-green-600 text-sm font-semibold bg-green-100 rounded-lg'>
                                     Add To Cart
                                 </button>
 
@@ -273,7 +330,6 @@ const ProductFrom = () => {
                                 </div>
                             </div>
                         </div>
-
                     </div>
 
                     <pre className="bg-white p-4 rounded-xl shadow-sm overflow-auto">
@@ -281,6 +337,7 @@ const ProductFrom = () => {
                     </pre>
                 </div>
             </div>
+            {/* <Toaster/> */}
         </div>
     )
 }
