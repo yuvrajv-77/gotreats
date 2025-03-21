@@ -7,6 +7,8 @@ import { useProductStore } from '../store/productStore';
 import Button from '../components/Button';
 import { useCartStore } from '../store/cartStore';
 
+import { motion, AnimatePresence } from "framer-motion";
+
 const Shop = () => {
     const navigate = useNavigate();
     const [searchParams, setSearchParams] = useSearchParams();
@@ -56,7 +58,7 @@ const Shop = () => {
             return filteredProducts?.filter(item => item.category === 'Paav Bhaaji');
         } else if (tag === 'desserts') {
             return filteredProducts?.filter(item => item.category === 'Desserts');
-        }else if (tag === 'snacks') {
+        } else if (tag === 'snacks') {
             return filteredProducts?.filter(item => item.category === 'Snacks');
         }
         else if (tag === 'chocolate') {
@@ -158,14 +160,21 @@ const Shop = () => {
                 </div>
             </div>
             {itemQuantity > 0 &&
-                <div className='fixed bottom-4 left-0 right-0 flex justify-center w-full'>
-                    <span onClick={() => {
-                        window.scrollTo(0, 0);
-                        navigate('/checkout')
-                    }} className='flex items-center w-76 justify-between gap-2 border-3 border-orange-400 px-4 py-3 bg-black rounded-2xl text-white hover:bg-white hover:text-black cursor-pointer'>
-                        <p>{itemQuantity} Items Added</p>View Cart {'>'}
-                    </span>
-                </div>
+                <AnimatePresence>
+
+                    <motion.div
+                        initial={{ y: 200, opacity: 0 }}
+                        animate={{ y: 0, opacity: 1 }}
+                        exit={{ y: 200, opacity: 0 }}
+                        className='fixed bottom-4 left-0 right-0 flex justify-center w-full'>
+                        <span onClick={() => {
+                            window.scrollTo(0, 0);
+                            navigate('/checkout')
+                        }} className='flex items-center w-76 justify-between gap-2 border-3 border-orange-400 px-4 py-3 bg-black rounded-2xl text-white hover:bg-white hover:text-black cursor-pointer'>
+                            <p>{itemQuantity} Items Added</p>View Cart {'>'}
+                        </span>
+                    </motion.div>
+                </AnimatePresence>
             }
         </div>
     );
