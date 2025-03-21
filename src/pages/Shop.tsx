@@ -62,7 +62,7 @@ const Shop = () => {
             return filteredProducts?.filter(item => item.category === 'Snacks');
         }
         else if (tag === 'chocolate') {
-            return filteredProducts?.filter(item => item.category === 'chocolate');
+            return filteredProducts?.filter(item => item.category === 'Chocolate');
         }
         return filteredProducts;
     };
