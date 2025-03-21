@@ -5,28 +5,30 @@ import { useProductStore } from '../store/productStore'
 
 import { useQuery } from '@tanstack/react-query'
 import { getItemsFromFirestore } from '../services/productService'
-import {Toaster} from 'react-hot-toast'
+import { Toaster } from 'react-hot-toast'
 import Footer from './Footer'
 
 function Layout() {
 
-  const {data} = useQuery({
+  const { data } = useQuery({
     queryKey: ['items'],
     queryFn: getItemsFromFirestore
-})
+  })
 
-useEffect(() => {
+  useEffect(() => {
     if (data) {
-        const filteredItems = data.filter((item) => item.isAvailable);
-        useProductStore.getState().setProducts(filteredItems)
+      const filteredItems = data.filter((item) => item.isAvailable);
+      useProductStore.getState().setProducts(filteredItems)
     }
-}, [data])
+  }, [data])
   return (
     <div>
-        <Navbar/>
-        <Outlet/>
-        <Toaster/>
-        <Footer/>
+      <Navbar />
+      <div className='mt-21'>
+        <Outlet />
+      </div>
+      <Toaster />
+      <Footer />
     </div>
   )
 }

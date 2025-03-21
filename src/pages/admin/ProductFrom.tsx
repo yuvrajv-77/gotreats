@@ -16,6 +16,7 @@ const FOOD_CATEGORIES = [
     "Paav Bhaaji",
     "Maggi",
     "Pasta",
+    "Chocolate"
 ]
 
 const ProductFrom = () => {

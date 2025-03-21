@@ -1,4 +1,5 @@
 
+import { Instagram } from 'lucide-react';
 import React from 'react';
 
 import { Link } from 'react-router-dom';
@@ -15,6 +16,17 @@ const Footer = () => {
                         <p className="text-gray-400 mt-4">
                             Ghar ka khana just the way you want.
                         </p>
+
+                        <div className='flex gap-4 mt-10'>
+                            <Link to={'https://www.instagram.com/ig_govindashah/?hl=en'}>
+                                <button className='cursor-pointer'>
+                                    <Instagram />
+                                </button>
+                            </Link>
+                            <Link to={'https://www.google.co.in/search?sca_esv=7fef88c703f42cc5&kgmid=/g/11x2xwfrxy&q=Go+Treats&shndl=30&shem=lcuac,uaasie&source=sh/x/loc/uni/m1/1&kgs=1ad41eba5ded486b'}>
+                            <img width={25} src="/google.svg" alt="" />
+                            </Link>
+                        </div>
                     </div>
 
                     {/* Quick Links */}
@@ -24,6 +36,8 @@ const Footer = () => {
                             <li><Link to="/" className="text-gray-400 hover:text-white">Home</Link></li>
                             <li><Link to="/products" className="text-gray-400 hover:text-white">Products</Link></li>
                             <li><Link to="/terms-and-conditions" className="text-gray-400 hover:text-white">Terms and Conditions</Link></li>
+                            <li><Link to="/concept" className="text-gray-400 hover:text-white">Concept</Link></li>
+                            <li><Link to="/about" className="text-gray-400 hover:text-white">About</Link></li>
                             <li><Link to="/contact" className="text-gray-400 hover:text-white">Contact</Link></li>
                         </ul>
                     </div>
@@ -52,7 +66,7 @@ const Footer = () => {
                     </div>
 
                     {/* Social Media */}
-                    
+
                 </div>
 
                 {/* Copyright */}

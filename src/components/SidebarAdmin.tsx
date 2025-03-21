@@ -10,9 +10,9 @@ const SidebarAdmin = () => {
 
 
     return (
-        <aside className="fixed top-0 left-0 h-screen w-48 bg-white shadow-lg">
+        <aside className="fixed top-0 left-0 h-screen w-38 bg-white shadow-lg">
             <div className="p-6">
-                <Link to={'/'}><p className='comfortaa font-bold tracking-tighter text-2xl mt-3 text-center lg:text-3xl text-orange-600'><span className='text-green-500'>go</span>treats</p></Link>
+                <Link to={'/'}><p className='comfortaa font-bold tracking-tighter text-xl mt-3 text-center lg:text-2xl text-orange-600'><span className='text-green-500'>go</span>treats</p></Link>
 
                 <nav className=' mt-20'>
                     <ul className="space-y-10 ">
@@ -38,7 +38,7 @@ const SidebarAdmin = () => {
                         </li> */}
                       
                         <li className="hover:text-green-600 p-3 rounded ">
-                            <Link to="/admin" className="flex items-center">
+                            <Link to="/admin/manage-reviews" className="flex items-center">
                                 Reviews
                             </Link>
                         </li>

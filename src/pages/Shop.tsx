@@ -56,6 +56,11 @@ const Shop = () => {
             return filteredProducts?.filter(item => item.category === 'Paav Bhaaji');
         } else if (tag === 'desserts') {
             return filteredProducts?.filter(item => item.category === 'Desserts');
+        }else if (tag === 'snacks') {
+            return filteredProducts?.filter(item => item.category === 'Snacks');
+        }
+        else if (tag === 'chocolate') {
+            return filteredProducts?.filter(item => item.category === 'chocolate');
         }
         return filteredProducts;
     };
@@ -68,12 +73,12 @@ const Shop = () => {
                     <div className='text justify-center flex items-center flex-wrap gap-2 lg:gap-10 mt-5 select-none'>
                         <div className='flex gap-2'>
                             <span
-                                className={`whitespace-nowrap cursor-pointer px-4 py-2 rounded-lg ${foodType === 'veg' ? 'bg-green-600 text-white hover:text-white' : 'bg-white'}  hover:text-green-600 inline-flex items-center shadow-xs gap-2 transition-colors duration-100 ease-in`}
+                                className={`whitespace-nowrap cursor-pointer px-4 py-2 rounded-full ${foodType === 'veg' ? 'bg-green-600 text-white hover:text-white' : 'bg-white'}  hover:text-green-600 text-green-700 inline-flex items-center shadow-xs gap-2 transition-colors duration-100 ease-in`}
                                 onClick={() => toggleFoodType('veg')}>
                                 <Salad strokeWidth={1.5} />Veg
                             </span>
                             <span
-                                className={`whitespace-nowrap cursor-pointer px-4 py-2 rounded-lg ${foodType === 'non-veg' ? 'bg-orange-800 text-white hover:text-white' : 'bg-white'}  hover:text-orange-800 inline-flex items-center shadow-xs gap-2 transition-colors duration-100 ease-in`}
+                                className={`whitespace-nowrap cursor-pointer px-4 py-2 rounded-full ${foodType === 'non-veg' ? 'bg-orange-800 text-white hover:text-white' : 'bg-white'}  hover:text-orange-700 text-orange-900 inline-flex items-center shadow-xs gap-2 transition-colors duration-100 ease-in`}
                                 onClick={() => toggleFoodType('non-veg')}>
                                 <Drumstick strokeWidth={1.5} />Non-Veg
                             </span>
@@ -94,29 +99,39 @@ const Shop = () => {
                             {(foodType === 'all' || foodType === 'veg') && (
                                 <>
                                     <span
-                                        className={`whitespace-nowrap cursor-pointer px-4 py-2 rounded-lg ${tag == 'meals' ? 'bg-orange-600 text-white hover:text-white' : 'bg-white'}  hover:text-orange-600 inline-flex items-center shadow-xs gap-2 transition-colors duration-100 ease-in`}
+                                        className={`whitespace-nowrap cursor-pointer px-4 py-2 rounded-xl ${tag == 'meals' ? 'bg-orange-600 text-white hover:text-white' : 'bg-white'}  hover:text-orange-600 inline-flex items-center shadow-xs gap-2 transition-colors duration-100 ease-in`}
                                         onClick={() => navigate('/shop/?tag=meals')}>
                                         <Utensils strokeWidth={1.5} /> Meals
                                     </span>
                                     <span
-                                        className={`whitespace-nowrap cursor-pointer px-4 py-2 rounded-lg ${tag == 'paav-bhaaji' ? 'bg-orange-600 text-white hover:text-white' : 'bg-white'}  hover:text-orange-600 inline-flex items-center shadow-xs gap-2 transition-colors duration-100 ease-in`}
+                                        className={`whitespace-nowrap cursor-pointer px-4 py-2 rounded-xl ${tag == 'paav-bhaaji' ? 'bg-orange-600 text-white hover:text-white' : 'bg-white'}  hover:text-orange-600 inline-flex items-center shadow-xs gap-2 transition-colors duration-100 ease-in`}
                                         onClick={() => navigate('/shop/?tag=paav-bhaaji')}>
                                         Paav Bhaaji
                                     </span>
                                     <span
-                                        className={`whitespace-nowrap cursor-pointer px-4 py-2 rounded-lg ${tag == 'pasta' ? 'bg-orange-600 text-white hover:text-white' : 'bg-white'}  hover:text-orange-600 inline-flex items-center shadow-xs gap-2 transition-colors duration-100 ease-in`}
+                                        className={`whitespace-nowrap cursor-pointer px-4 py-2 rounded-xl ${tag == 'pasta' ? 'bg-orange-600 text-white hover:text-white' : 'bg-white'}  hover:text-orange-600 inline-flex items-center shadow-xs gap-2 transition-colors duration-100 ease-in`}
                                         onClick={() => navigate('/shop/?tag=pasta')}>
                                         Pasta
                                     </span>
                                     <span
-                                        className={`whitespace-nowrap cursor-pointer px-4 py-2 rounded-lg ${tag == 'maggi' ? 'bg-orange-600 text-white hover:text-white' : 'bg-white'}  hover:text-orange-600 inline-flex items-center shadow-xs gap-2 transition-colors duration-100 ease-in`}
+                                        className={`whitespace-nowrap cursor-pointer px-4 py-2 rounded-xl ${tag == 'maggi' ? 'bg-orange-600 text-white hover:text-white' : 'bg-white'}  hover:text-orange-600 inline-flex items-center shadow-xs gap-2 transition-colors duration-100 ease-in`}
                                         onClick={() => navigate('/shop/?tag=maggi')}>
                                         <Soup strokeWidth={1.5} />Maggi
                                     </span>
                                     <span
-                                        className={`whitespace-nowrap cursor-pointer px-4 py-2 rounded-lg ${tag == 'desserts' ? 'bg-orange-600 text-white hover:text-white' : 'bg-white'}  hover:text-orange-600 inline-flex items-center shadow-xs gap-2 transition-colors duration-100 ease-in`}
+                                        className={`whitespace-nowrap cursor-pointer px-4 py-2 rounded-xl ${tag == 'desserts' ? 'bg-orange-600 text-white hover:text-white' : 'bg-white'}  hover:text-orange-600 inline-flex items-center shadow-xs gap-2 transition-colors duration-100 ease-in`}
                                         onClick={() => navigate('/shop/?tag=desserts')}>
                                         <Dessert strokeWidth={1.5} /> Desserts
+                                    </span>
+                                    <span
+                                        className={`whitespace-nowrap cursor-pointer px-4 py-2 rounded-xl ${tag == 'snacks' ? 'bg-orange-600 text-white hover:text-white' : 'bg-white'}  hover:text-orange-600 inline-flex items-center shadow-xs gap-2 transition-colors duration-100 ease-in`}
+                                        onClick={() => navigate('/shop/?tag=snacks')}>
+                                        Snacks
+                                    </span>
+                                    <span
+                                        className={`whitespace-nowrap cursor-pointer px-4 py-2 rounded-xl ${tag == 'chocolate' ? 'bg-orange-600 text-white hover:text-white' : 'bg-white'}  hover:text-orange-600 inline-flex items-center shadow-xs gap-2 transition-colors duration-100 ease-in`}
+                                        onClick={() => navigate('/shop/?tag=chocolate')}>
+                                        Chocolate
                                     </span>
                                 </>
                             )}
