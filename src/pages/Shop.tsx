@@ -60,8 +60,7 @@ const Shop = () => {
             return filteredProducts?.filter(item => item.category === 'Desserts');
         } else if (tag === 'snacks') {
             return filteredProducts?.filter(item => item.category === 'Snacks');
-        }
-        else if (tag === 'chocolate') {
+        }else if (tag === 'chocolate') {
             return filteredProducts?.filter(item => item.category === 'Chocolate');
         }
         return filteredProducts;
@@ -161,7 +160,6 @@ const Shop = () => {
             </div>
             {itemQuantity > 0 &&
                 <AnimatePresence>
-
                     <motion.div
                         initial={{ y: 200, opacity: 0 }}
                         animate={{ y: 0, opacity: 1 }}

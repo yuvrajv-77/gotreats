@@ -1,6 +1,8 @@
 import { MailIcon, Phone, Store } from 'lucide-react'
 import Button from '../components/Button'
 import { useState } from 'react';
+import { useFormspark } from "@formspark/use-formspark";
+import toast from 'react-hot-toast';
 
 
 const Contact = () => {
@@ -8,6 +10,20 @@ const Contact = () => {
     const [phone, setPhone] = useState("");
     const [email, setEmail] = useState("");
     const [message, setMessage] = useState("");
+
+    const [submit, submitting] = useFormspark({
+        formId: import.meta.env.VITE_FORMSPARK_ID,
+      });
+
+      const onSubmit = async (e) => {
+        e.preventDefault();
+        await submit({ name, phone, email, message });
+        toast.success("Message Sent Successfully");
+        setEmail("");
+        setName("");
+        setPhone("");
+        setMessage("");
+      }
     return (
         <div className=''>
             <div className='bg-green-200 text-center mt-10 py-10 px-5'>
@@ -43,14 +59,14 @@ const Contact = () => {
                 </div>
             </div>
 
-            {/* <div className='flex justify-center  lg:mt-10 p-10 lg:p-0'>
+            <div className='flex justify-center  lg:mt-10 p-10 lg:p-0'>
 
-                <form className='mt-4 sm:mt-10 w-74 md:w-1/3 space-y-2 sm:space-y-4 '>
+                <form className='mt-4 sm:mt-10 w-74 md:w-1/3 space-y-2 sm:space-y-4 ' onSubmit={onSubmit}>
                     <div>
                         <p className='mb-2 text-orange-600 text-sm'>Name</p>
                         <input
                             type="text"
-                            value={name}
+                            value={name} required
                             onChange={(e) => setName(e.target.value)}
                             className='border border-gray-300 rounded-xl p-2 w-full'
                             placeholder='Enter your name' />
@@ -58,7 +74,7 @@ const Contact = () => {
                     <div>
                         <p className='mb-2 text-orange-600 text-sm'>Phone number</p>
                         <input type="number"
-                            value={phone}
+                            value={phone} required
                             onChange={(e) => setPhone(e.target.value)}
                             className='border border-gray-300 rounded-xl p-2 w-full'
                             placeholder='Enter your number' />
@@ -67,7 +83,7 @@ const Contact = () => {
                         <p className='mb-2 text-orange-600 text-sm'>Email</p>
                         <input
                             type="email"
-                            value={email}
+                            value={email} required
                             onChange={(e) => setEmail(e.target.value)}
                             className='border border-gray-300 rounded-xl p-2 w-full'
                             placeholder='Enter your email' />
@@ -78,14 +94,14 @@ const Contact = () => {
                         <textarea
                             value={message}
                             onChange={(e) => setMessage(e.target.value)}
-                            rows={3}
+                            rows={3} required
                             className='border border-gray-300 rounded-xl p-2 w-full' placeholder='Write your message' />
                     </div>
 
-                    <Button type='submit' className='w-full '>Submit</Button>
+                    <Button type='submit' disabled={submitting} className='w-full '>Submit</Button>
 
                 </form>
-            </div> */}
+            </div>
         </div>
     )
 }

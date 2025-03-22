@@ -20,11 +20,11 @@ const Footer = () => {
                         <div className='flex gap-4 mt-10'>
                             <Link to={'https://www.instagram.com/ig_govindashah/?hl=en'}>
                                 <button className='cursor-pointer'>
-                                    <Instagram />
+                                    <Instagram className='stroke-white hover:stroke-pink-400' />
                                 </button>
                             </Link>
                             <Link to={'https://www.google.co.in/search?sca_esv=7fef88c703f42cc5&kgmid=/g/11x2xwfrxy&q=Go+Treats&shndl=30&shem=lcuac,uaasie&source=sh/x/loc/uni/m1/1&kgs=1ad41eba5ded486b'}>
-                            <img width={25} src="/google.svg" alt="" />
+                            <img width={25} src="/google.svg" className='' alt="" />
                             </Link>
                         </div>
                     </div>
