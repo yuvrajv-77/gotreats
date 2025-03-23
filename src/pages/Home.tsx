@@ -6,7 +6,7 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 import { Autoplay, Navigation, Pagination } from 'swiper/modules';
 import { useAuthStore } from '../store/authStore';
 import { useProductStore } from '../store/productStore';
-
+import CountUp from 'react-countup';
 import NavigationButton from '../components/NavigationButton';
 import { Link, useNavigate } from 'react-router-dom';
 import { collection, getDocs } from 'firebase/firestore';
@@ -89,7 +89,7 @@ const Home = () => {
                             Meals
                         </h1>
                         <p className="text-gray-600 text-base sm:text-lg lg:text-2xl mb-6 sm:mb-8 max-w-lg animate-[fadeIn_0.5s_ease-in]">
-                            Order a healthy and well-balanced meal. It's all homemade… "Ghar ka khana just the way you want.".
+                            Order a healthy and well-balanced meal. It's all homemade‚Ä¶ "Ghar ka khana just the way you want.".
                         </p>
                         <div className="flex items-center gap-4 animate-[fadeIn_0.6s_ease-in] ">
                             <Button onClick={() => navigate("/shop")} className='animate-pulse'>Order Now</Button>
@@ -107,42 +107,104 @@ const Home = () => {
                     </div>
                 </div>
             </section>
+            
+            {/* -------- Impact / Metrics Section -------- */}
+<section className='bg-gradient-to-br from-green-50 to-green-100 py-20 mt-20 w-full'>
+  <div className='container mx-auto text-center px-4'>
+    <h2 className='text-4xl sm:text-5xl font-bold lancelot mb-12 text-green-800'>
+      Our Growing Presence
+    </h2>
 
-            {/* -----reviews----- */}
-            <section className='bg-white mt-20 w-full '>
-                <div className='container mx-auto py-14  md:py-20'>
-                    <h1 className='text-center mb-10 lancelot text-5xl sm:text-6xl lg:text-7xl flex items-center justify-center'>Happy Customers</h1>
-                    <Swiper
-                        modules={[Autoplay, Navigation]}
-                        spaceBetween={10}
-                        centeredSlides={false}
-                        loop={true}
+    <div className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-10'>
+      {/* Countries */}
+      <div className='bg-white rounded-xl shadow-md p-8 hover:scale-105 transition'>
+        <h3 className='text-6xl font-bold text-green-600'>
+          <CountUp end={24} duration={3} />+
+        </h3>
+        <p className='text-lg mt-3 text-gray-700'>Countries Served</p>
+      </div>
 
-                        autoplay={{
-                            delay: 5000,
-                            disableOnInteraction: false,
-                        }}
+      {/* Food Items */}
+      <div className='bg-white rounded-xl shadow-md p-8 hover:scale-105 transition'>
+        <h3 className='text-6xl font-bold text-green-600'>
+          <CountUp end={150} duration={3} />+
+        </h3>
+        <p className='text-lg mt-3 text-gray-700'>Food Varieties</p>
+      </div>
 
-                    >
+      {/* Customers */}
+      <div className='bg-white rounded-xl shadow-md p-8 hover:scale-105 transition'>
+        <h3 className='text-6xl font-bold text-green-600'>
+          <CountUp end={10000} duration={3} separator=',' />+
+        </h3>
+        <p className='text-lg mt-3 text-gray-700'>Happy Customers</p>
+      </div>
 
-                        {reviews.map((review, index) => (
-                            <SwiperSlide key={index}>
-                                <div className='flex flex-col items-center justify-center md:mx-50 mx-3 bg-green-50 p-10'>
+      {/* Orders Served (new metric example) */}
+      <div className='bg-white rounded-xl shadow-md p-8 hover:scale-105 transition'>
+        <h3 className='text-6xl font-bold text-green-600'>
+          <CountUp end={500000} duration={3} separator=',' />+
+        </h3>
+        <p className='text-lg mt-3 text-gray-700'>Orders Served</p>
+      </div>
+    </div>
+  </div>
+</section>
 
-                                    <img src={review.avatarUrl} className='size-28 border-2 border-green-600 p-1 md:size-30 object-cover rounded-full' alt="" />
-                                    <h2 className='text-xl md:text-2xl my-3 font-semibold'>{review.name}</h2>
-                                    <p className='text-gray-600 font-'>{review.work}</p>
+{/* -----reviews----- */}
+<section className='bg-white mt-20 w-full'>
+  <div className='container mx-auto py-14 md:py-20'>
+    <h1 className='text-center mb-10 lancelot text-5xl sm:text-6xl lg:text-7xl flex items-center justify-center'>
+      Happy Customers
+    </h1>
 
-                                    <h1 className='text-2xl md:text-3xl tracking-wide lancelot text-center font-bold text-slate-800 my-8 leading-normal'>" {review.review} "</h1>
-                                    <div className='flex items-center gap-5'>
-                                        <p className='text-orange-500 flex items-center gap-2'><MapPin /> {review.place}</p>
-                                    </div>
-                                </div>
-                            </SwiperSlide>
-                        ))}
-                    </Swiper>
-                </div>
-            </section>
+
+    {/* Navigation Arrows */}
+    <div className='relative'>
+      <div className='absolute left-0 top-1/2 -translate-y-1/2 z-10'>
+        <button className="swiper-button-prev-custom bg-green-600 hover:bg-green-700 text-white text-2xl px-4 py-2 rounded-full shadow-lg transition duration-300 ease-in-out hover:scale-110">
+          &lt;
+        </button>
+      </div>
+      <div className='absolute right-0 top-1/2 -translate-y-1/2 z-10'>
+        <button className="swiper-button-next-custom bg-green-600 hover:bg-green-700 text-white text-2xl px-4 py-2 rounded-full shadow-lg transition duration-300 ease-in-out hover:scale-110">
+          &gt;
+        </button>
+      </div>
+
+      <Swiper
+        modules={[Autoplay, Navigation]}
+        spaceBetween={10}
+        loop={true}
+        navigation={{
+          prevEl: '.swiper-button-prev-custom',
+          nextEl: '.swiper-button-next-custom',
+        }}
+        autoplay={{
+          delay: 5000,
+          disableOnInteraction: false,
+        }}
+      >
+        {reviews.map((review, index) => (
+          <SwiperSlide key={index}>
+            <div className='flex flex-col items-center justify-center md:mx-50 mx-3 bg-green-50 p-10 rounded-xl shadow-lg'>
+              <img src={review.avatarUrl} className='size-28 border-2 border-green-600 p-1 md:size-30 object-cover rounded-full' alt="" />
+              <h2 className='text-xl md:text-2xl my-3 font-semibold'>{review.name}</h2>
+              <p className='text-gray-600'>{review.work}</p>
+              <h1 className='text-2xl md:text-3xl tracking-wide lancelot text-center font-bold text-slate-800 my-8 leading-normal'>
+                " {review.review} "
+              </h1>
+              <div className='flex items-center gap-5'>
+                <p className='text-orange-500 flex items-center gap-2'><MapPin /> {review.place}</p>
+              </div>
+            </div>
+          </SwiperSlide>
+        ))}
+      </Swiper>
+    </div>
+  </div>
+</section>
+
 
             {/* -------info----- */}
             <section className='bg-[#fff9f2] '>
