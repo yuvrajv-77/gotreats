@@ -35,6 +35,9 @@ const Navbar = () => {
                 <li className='hover:underline cursor-pointer' onClick={() => navigate('/about')}>
                     <Link to='/about'>About</Link>
                 </li>
+                <li className='hover:underline cursor-pointer' onClick={() => navigate('/customers')}>
+                    <Link to='/customers'>Customers</Link>
+                </li>
                 <li className='hover:underline cursor-pointer' onClick={() => navigate('/contact')}>
                     <Link to='/contact'>Contact</Link>
                 </li>
@@ -136,6 +139,22 @@ const Navbar = () => {
                             <li className='w-full text-center'>
                                 <button 
                                     className='text-xl px-10 py-4 w-full' 
+                                    onClick={() => handleNavigation('/about')}
+                                >
+                                    About
+                                </button>
+                            </li>
+                            <li className='w-full text-center'>
+                                <button 
+                                    className='text-xl px-10 py-4 w-full' 
+                                    onClick={() => handleNavigation('/customers')}
+                                >
+                                    Customers
+                                </button>
+                            </li>
+                            <li className='w-full text-center'>
+                                <button 
+                                    className='text-xl px-10 py-4 w-full' 
                                     onClick={() => handleNavigation('/contact')}
                                 >
                                     Contact Us
@@ -147,14 +166,6 @@ const Navbar = () => {
                                     onClick={() => handleNavigation('/concept')}
                                 >
                                     Concept
-                                </button>
-                            </li>
-                            <li className='w-full text-center'>
-                                <button 
-                                    className='text-xl px-10 py-4 w-full' 
-                                    onClick={() => handleNavigation('/about')}
-                                >
-                                    About
                                 </button>
                             </li>
                         </ul>

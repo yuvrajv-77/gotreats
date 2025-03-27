@@ -20,6 +20,7 @@ import Concept from "./pages/ConceptPage"
 import About from "./pages/About"
 import ManageReviews from "./pages/admin/ManageReviews"
 import ManageReview from "./pages/admin/ManageReview"
+import Customers from "./pages/Customers"
 
 
 export const router = createBrowserRouter([
@@ -50,6 +51,10 @@ export const router = createBrowserRouter([
         {
           path: "/shop",
           element: <Shop />
+        },
+        {
+          path: "/customers",
+          element: <Customers />
         },
         {
           path: "/contact",

@@ -1,90 +1,129 @@
-
 import React from "react";
-import Button from "../components/Button";
 import { Link } from "react-router-dom";
+import Button from "../components/Button";
+import {
+  UtensilsCrossed,
+  PiggyBank,
+  Salad,
+  Leaf,
+  UserPlus,
+  LogIn,
+  ShoppingCart,
+  CreditCard,
+  Truck,
+  ArrowRight,
+  ArrowDown,
+} from "lucide-react";
 
 const Concept = () => {
+  const steps = [
+    { icon: <UserPlus size={28} />, title: "Register", desc: "Create an account" },
+    { icon: <LogIn size={28} />, title: "Login", desc: "Log into your account" },
+    { icon: <ShoppingCart size={28} />, title: "Select Meal", desc: "Choose your meal" },
+    { icon: <CreditCard size={28} />, title: "Payment", desc: "Securely checkout" },
+    { icon: <Truck size={28} />, title: "Delivery", desc: "Get it at your doorstep" },
+  ];
+
   return (
-    <div className="min-h-screen bg-white flex flex-col items-center p-6 text-gray-800">
-      <div className="max-w-6xl w-full text-center">
-        <h1 className="text-5xl font-bold mb-6 text-green-600 animate-pulse">Our Concept</h1>
-        <p className="text-lg mb-6 text-orange-500 transition duration-300 hover:text-orange-700">
-          At GoTreats, we believe in delivering fresh, homemade meals that are
-          healthy, delicious, and convenient. Our concept revolves around
-          providing nutritious food with a homely touch, ensuring every meal is
-          a delightful experience.
+    <div className="min-h-screen bg-gradient-to-br from-white via-lime-50 to-green-100 p-4 sm:p-8">
+      <div className="max-w-6xl mx-auto text-center space-y-8">
+        <h1 className="text-4xl sm:text-5xl font-extrabold text-green-700">Our Concept</h1>
+        <p className="text-lg text-gray-700">
+          At GoTreats, we deliver homemade meals that are fresh, healthy, and affordable – crafted with love and served with care.
         </p>
-        <div className="grid md:grid-cols-2 gap-10 mt-8">
-          <div className="bg-green-100 p-6 rounded-xl shadow-lg border-l-4 border-green-600 transform transition duration-300 hover:scale-105 hover:shadow-xl">
-            <h2 className="text-2xl font-semibold mb-4 text-green-700">Fresh & Hygienic Food</h2>
-            <p className="text-gray-700">
-              We use high-quality ingredients to prepare meals in a clean and
-              hygienic environment, ensuring freshness in every bite.
-            </p>
-          </div>
-          <div className="bg-orange-100 p-6 rounded-xl shadow-lg border-l-4 border-orange-600 transform transition duration-300 hover:scale-105 hover:shadow-xl">
-            <h2 className="text-2xl font-semibold mb-4 text-orange-700">Affordable & Convenient</h2>
-            <p className="text-gray-700">
-              Our meal plans are designed to be budget-friendly while offering
-              maximum convenience for students, professionals, and families.
-            </p>
-          </div>
-          <div className="bg-green-100 p-6 rounded-xl shadow-lg border-l-4 border-green-600 transform transition duration-300 hover:scale-105 hover:shadow-xl">
-            <h2 className="text-2xl font-semibold mb-4 text-green-700">Balanced Nutrition</h2>
-            <p className="text-gray-700">
-              We ensure that our meals provide the right balance of proteins,
-              carbs, and essential nutrients for a healthy lifestyle.
-            </p>
-          </div>
-          <div className="bg-orange-100 p-6 rounded-xl shadow-lg border-l-4 border-orange-600 transform transition duration-300 hover:scale-105 hover:shadow-xl">
-            <h2 className="text-2xl font-semibold mb-4 text-orange-700">Eco-Friendly Packaging</h2>
-            <p className="text-gray-700">
-              We care for the environment, so our packaging is eco-friendly,
-              biodegradable, and sustainable.
-            </p>
-          </div>
+
+        <div className="grid md:grid-cols-2 gap-6 text-left">
+        <ConceptCard
+  title="Fresh & Hygienic"
+  desc="Prepared with high-quality ingredients in a hygienic environment."
+  icon={<UtensilsCrossed size={36} className="text-orange-500" />}
+/>
+<ConceptCard
+  title="Affordable & Convenient"
+  desc="Meals for students, families, and professionals – all on a budget."
+  icon={<PiggyBank size={36} className="text-orange-500" />}
+/>
+<ConceptCard
+  title="Balanced Nutrition"
+  desc="Perfect balance of protein, carbs, and nutrients for your lifestyle."
+  icon={<Salad size={36} className="text-orange-500" />}
+/>
+<ConceptCard
+  title="Eco-Friendly Packaging"
+  desc="Delivered in biodegradable and sustainable containers."
+  icon={<Leaf size={36} className="text-orange-500" />}
+/>
+
         </div>
 
-        <h2 className="text-3xl font-bold mt-12 text-green-600">Ordering Process</h2>
-        <p className="text-lg mt-2 text-gray-700">
-          Follow these simple steps to get your meal:
-        </p>
-        <div className="grid grid-cols-5 gap-4 mt-6">
-          <div className="bg-green-600 text-white p-4 rounded-lg shadow-lg transform transition duration-300 hover:scale-105">
-            <h3 className="text-2xl font-bold">1</h3>
-            <p className="mt-2">Register / create an account</p>
-          </div>
-          <div className="bg-green-500 text-white p-4 rounded-lg shadow-lg transform transition duration-300 hover:scale-105">
-            <h3 className="text-2xl font-bold">2</h3>
-            <p className="mt-2">Log in</p>
-          </div>
-          <div className="bg-orange-500 text-white p-4 rounded-lg shadow-lg transform transition duration-300 hover:scale-105">
-            <h3 className="text-2xl font-bold">3</h3>
-            <p className="mt-2">Select your meal</p>
-          </div>
-          <div className="bg-orange-600 text-white p-4 rounded-lg shadow-lg transform transition duration-300 hover:scale-105">
-            <h3 className="text-2xl font-bold">4</h3>
-            <p className="mt-2">Make payment</p>
-          </div>
-          <div className="bg-green-700 text-white p-4 rounded-lg shadow-lg transform transition duration-300 hover:scale-105">
-            <h3 className="text-2xl font-bold">5</h3>
-            <p className="mt-2">Meal delivered to your doorstep</p>
-          </div>
+        <h2 className="text-3xl font-bold mt-12 text-green-700">How It Works</h2>
+        <p className="text-gray-700 mb-4">Just 5 steps to your meal!</p>
+
+        {/* Steps with Responsive Arrows */}
+        <div className="flex flex-col items-center gap-6 sm:flex-row sm:justify-center sm:flex-wrap">
+          {steps.map((step, idx) => (
+            <React.Fragment key={idx}>
+              <StepCard step={step} />
+              {idx < steps.length - 1 && (
+               <div className="text-orange-500">
+
+                  <span className="hidden sm:inline">
+                    <ArrowRight size={24} />
+                  </span>
+                  <span className="sm:hidden">
+                    <ArrowDown size={24} />
+                  </span>
+                </div>
+              )}
+            </React.Fragment>
+          ))}
         </div>
 
-        <p className="text-lg mt-8 font-semibold text-green-600 transition duration-300 hover:text-green-800">
-          GoTreats is not just a meal service; it's a lifestyle choice for those
-          who love good food and healthy living.
+        <p className="mt-10 text-lg text-green-800 font-medium">
+          GoTreats is not just a meal service – it's a lifestyle.
         </p>
-        <div className="flex justify-center mt-8 animate-bounce">
-          <Link to={'/shop'}>
-            <Button >
-              Start Ordering
-            </Button></Link>
-        </div>
+
+        <Link to="/shop" className="inline-block mt-6 group">
+        <Button className="px-6 py-3 rounded-xl font-bold text-white bg-gradient-to-r from-green-500 to-green-600 relative overflow-hidden group transition-transform transform hover:scale-105 duration-500">
+  <span className="relative z-10">Start Ordering →</span>
+  <span className="absolute inset-0 bg-gradient-to-r from-orange-400 via-orange-500 to-orange-600 -translate-x-full group-hover:translate-x-0 transition-transform duration-700 ease-in-out z-0"></span>
+</Button>
+
+
+        </Link>
       </div>
     </div>
   );
 };
+
+const ConceptCard = ({
+  icon,
+  title,
+  desc,
+}: {
+  icon: React.ReactNode;
+  title: string;
+  desc: string;
+}) => (
+  <div className="bg-white p-6 rounded-xl border-l-4 border-green-500 shadow-md hover:shadow-xl transition-all duration-300 transform hover:scale-105 hover:ring-2 hover:ring-green-400 group">
+    <div className="flex items-center gap-4 mb-3">
+      {icon}
+      <h3 className="text-xl font-semibold text-green-700 group-hover:text-green-800">{title}</h3>
+    </div>
+    <p className="text-gray-700 group-hover:text-gray-900">{desc}</p>
+  </div>
+);
+
+const StepCard = ({
+  step,
+}: {
+  step: { icon: React.ReactNode; title: string; desc: string };
+}) => (
+  <div className="bg-white border-2 border-green-600 rounded-lg shadow-md p-4 w-40 text-center hover:shadow-xl transition-all duration-300 transform hover:scale-105 hover:brightness-110">
+    <div className="text-orange-500 mb-2">{step.icon}</div>
+    <h3 className="font-semibold">{step.title}</h3>
+    <p className="text-sm text-gray-600">{step.desc}</p>
+  </div>
+);
 
 export default Concept;
