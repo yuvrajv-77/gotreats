@@ -5,7 +5,7 @@ import OrderSummary from '../components/OrderSummary';
 import { fetchUserOrders } from '../services/orderService';
 import { useAuthStore } from '../store/authStore';
 import { StatusBadge } from '../components/StatusBadge';
-import { ArrowLeft, ArrowRight, CheckCircle, Home, RefreshCcw, Store, XIcon } from 'lucide-react';
+import { ArrowLeft, ArrowRight, CheckCircle, CircleHelp, Home, RefreshCcw, Store, XIcon } from 'lucide-react';
 import { Drawer, DrawerContent, DrawerHeader, DrawerBody, DrawerFooter } from "@heroui/drawer";
 import { useDisclosure } from '@/hooks/useDisclosure';
 import { useCartStore } from '../store/cartStore'; // Import the cart store
@@ -83,11 +83,16 @@ const Orders = () => {
         }
     };
 
-
     return (
         <div className='md:bg-gray-100 min-h-screen'>
             <div className='max-w-3xl px-5 mx-auto'>
-                <h1 className='text-3xl md:text-4xl font-semibold lancelot py-5 md:py-10 text-gray-700'>Past Orders</h1>
+                <div className='flex justify-between items-center'>
+                    <h1 className='text-3xl md:text-4xl font-semibold lancelot py-5 md:py-10 text-gray-700'>Past Orders</h1>
+                    <button className='flex justify-between items-center gap-2 p-1 rounded-full hover:bg-gray-200 underline text-green-600 cursor-pointer'
+                        onClick={() => navigate('/contact')}>
+                        <CircleHelp size={18} />
+                    </button>
+                </div>
                 {sortedOrders.length === 0 ? (
                     <div className='flex flex-col items-center gap-5 py-10 text-gray-500'>
                         <p>You have not placed any order yet.</p>
@@ -136,8 +141,9 @@ const Orders = () => {
                                                 }}
                                                 className='text-orange-600 font-semibold inline-flex items-center gap-2 hover:underline cursor-pointer'
                                             >
-                                                View Detail <ArrowRight size={16} />
+                                                View Details <ArrowRight size={16} />
                                             </button>
+
                                         </div>
                                     </div>
                                 </motion.div>
@@ -177,6 +183,11 @@ const Orders = () => {
                                         </div>
 
                                         <StatusBadge status={selectedOrder?.orderStatus} />
+                                        {
+                                            selectedOrder?.orderStatus === 'cancelled' && (
+                                                <p className='text-sm text-red-500'>Order Cancelled | Refund will be initiated soon</p>
+                                            )
+                                        }
                                     </div>
 
                                     <div className="mt-4 border-b pb-4">

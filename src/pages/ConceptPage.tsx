@@ -136,7 +136,7 @@ const Concept = () => {
         </p>
 
         <Link to="/shop" className="inline-block mt-6 group">
-        <Button className="px-6 py-3 rounded-xl font-bold text-white bg-gradient-to-r from-green-500 to-green-600 relative overflow-hidden group transition-transform transform hover:scale-105 duration-500">
+        <Button variant="success" className="px-6 py-3 rounded-xl font-bold text-white bg-gradient-to-r from-green-500 to-green-600 relative overflow-hidden group transition-transform transform hover:scale-105 duration-500">
   <span className="relative z-10">Start Ordering →</span>
   <span className="absolute inset-0 bg-gradient-to-r from-orange-400 via-orange-500 to-orange-600 -translate-x-full group-hover:translate-x-0 transition-transform duration-700 ease-in-out z-0"></span>
 </Button>

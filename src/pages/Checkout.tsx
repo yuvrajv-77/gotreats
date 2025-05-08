@@ -142,7 +142,7 @@ const Checkout = () => {
             gst: grossTotalPrice * parseFloat(TAX_RATE.toFixed(2)),
             deliveryCharge: DELIVERY_PRICE,
             totalQuantity: items.reduce((total, item) => total + item.quantity, 0),
-            note: note || 'No special instructions',
+            note: note ,
             deliveryTime: preferredDeliveryTime + ' ' + preferredDeliveryPeriod,
             customer: {
                 uid: currentUser.uid,
@@ -178,7 +178,6 @@ const Checkout = () => {
             remember_customer: true,
             theme: {
                 color: '#22c55e',
-                backdrop_color: '#ffffff',
             },
             modal: {
                 ondismiss: function () {
@@ -338,7 +337,7 @@ const Checkout = () => {
                         <AddressSection uid={userDetails?.uid || ""} />
 
                         <div className='pt-6'>
-                            <label className='block text-sm font-medium text-gray-700 mb-1'>Preferred Delivery Time*</label>
+                        <h3 className=' text-orange-500 font-medium'>Preferred Delivery Time</h3>
                             <div className='flex gap-2 items-center'>
                                 <input
                                     type='time'

@@ -1,12 +1,12 @@
-import { ArrowLeft, ArrowRight, Check, Circle, Clock, Copy, Download, Eye, Home, Info, Loader, TriangleAlert, Truck, X } from 'lucide-react';
+import { ArrowLeft, ArrowRight, Banknote, Box, Check, Circle, Clock, Coins, CookingPot, Copy, Download, Eye, Home, Info, Loader, MapPin, ShoppingBasket, TriangleAlert, Truck, User, X } from 'lucide-react';
 import React, { useState } from 'react';
-import { Select, SelectSection, SelectItem, Drawer, useDisclosure, DrawerContent, DrawerHeader, DrawerBody, DrawerFooter } from "@heroui/react";
+import { Select, SelectSection, SelectItem, Drawer, useDisclosure, DrawerContent, DrawerHeader, DrawerBody, DrawerFooter, Tooltip } from "@heroui/react";
 import toast from 'react-hot-toast';
 import { motion } from 'framer-motion';
 import Button, { IconButton } from './Button';
 import { StatusBadge } from './StatusBadge';
 
-const OrderCard = ({ order, onUpdateStatus,i }) => {
+const OrderCard = ({ order, onUpdateStatus, i }) => {
     const [expanded, setExpanded] = useState(false);
     const [selectedStatus, setSelectedStatus] = useState(new Set([order.orderStatus]));
     const { isOpen, onOpen, onOpenChange } = useDisclosure();
@@ -15,7 +15,7 @@ const OrderCard = ({ order, onUpdateStatus,i }) => {
         const status = Array.from(newStatus)[0]; // Convert Set to array and get the first value
         onUpdateStatus(order.id, status); // Update the order status
         // toast.success(`Order for ${order.customer.name} is ${status}`);
-        
+
     };
     const address = `${order.address.flatNumber}, ${order.address.buildingName}, ${order.address.streetAddress}, ${order.address.area}, ${order.address.pincode}`;
 
@@ -87,7 +87,7 @@ const OrderCard = ({ order, onUpdateStatus,i }) => {
             initial={{ opacity: 0, x: -50 }} // Mount animation: from top
             animate={{ opacity: 1, x: 0 }}
             exit={{ opacity: 0, x: 50 }} // Unmount animation: fade out to the right
-            transition={{ duration: 0.3,delay: i*0.1 }}
+            transition={{ duration: 0.3, delay: i * 0.1 }}
             className={`border rounded-lg overflow-hidden shadow ${getBorderColor(
                 order.orderStatus
             )}`}
@@ -191,12 +191,19 @@ const OrderCard = ({ order, onUpdateStatus,i }) => {
                         </Select>
 
                         {/* Button to view order details */}
+
                         <Button size='sm' className='md:hidden'
                             variant='secondary' onClick={onOpen}
                         >
                             <Eye size={20} />
                             View</Button>
-                        <span onClick={() => setExpanded(!expanded)} className=' hidden p-2 hover:bg-gray-100 md:inline-flex justify-center items-center rounded-full focus:bg-gray-100'><Info size={20} /></span>
+                        <Tooltip content="View Order Details" color='secondary' >
+                            <span
+                                onClick={() => setExpanded(!expanded)}
+                                className=' hidden p-2 hover:bg-gray-100 md:inline-flex justify-center items-center rounded-full focus:bg-gray-100'>
+                                <Info size={20} />
+                            </span>
+                        </Tooltip>
                     </div>
                 </div>
                 {/* for desktop */}
@@ -208,7 +215,7 @@ const OrderCard = ({ order, onUpdateStatus,i }) => {
                             <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                                 {/* Customer Details */}
                                 <div>
-                                    <h3 className="font-semibold lancelot text-neutral-500 mb-2">Customer Details</h3>
+                                    <h3 className="font-semibold lancelot text-purple-700 mb-2 flex gap-2 item-center"><User size={19} /> Customer Details</h3>
                                     <p><strong>Name:</strong> {order.customer.name}</p>
                                     {/* <p><strong>Customer ID:</strong> {order.customer.uid}</p> */}
                                     <p><strong>Phone:</strong> {order.customer.phoneNumber}</p>
@@ -216,7 +223,7 @@ const OrderCard = ({ order, onUpdateStatus,i }) => {
                                 </div>
                                 {/* Address Breakdown */}
                                 <div>
-                                    <h3 className="font-semibold lancelot text-neutral-500 mb-2">Address</h3>
+                                    <h3 className="font-semibold lancelot text-purple-700 mb-2 flex gap-2 item-center"><MapPin size={19} /> Address</h3>
                                     <p><strong>Flat Number:</strong> {order.address.flatNumber}</p>
                                     <p><strong>Building Name:</strong> {order.address.buildingName}</p>
                                     <p><strong>Street Address:</strong> {order.address.streetAddress}</p>
@@ -226,7 +233,7 @@ const OrderCard = ({ order, onUpdateStatus,i }) => {
 
                                 {/* Payment Details */}
                                 <div>
-                                    <h3 className="font-semibold lancelot text-neutral-500 mb-2">Payment Details</h3>
+                                    <h3 className="font-semibold lancelot text-purple-700 mb-2 flex gap-2 item-center"><Banknote size={19} /> Payment Details</h3>
                                     <p><strong>Total Items:</strong> {order.totalQuantity}</p>
                                     <p><strong>Total Price:</strong> {order.totalAmount}</p>
                                     <p className='text-green-600'><strong>Payment ID:</strong> {order.razorpay_payment_id}</p>
@@ -235,7 +242,7 @@ const OrderCard = ({ order, onUpdateStatus,i }) => {
                                 </div>
                                 {/* Items */}
                                 <div className="">
-                                    <h3 className="font-semibold lancelot text-neutral-500">Items</h3>
+                                    <h3 className="font-semibold lancelot text-purple-700 flex gap-2 item-center"><ShoppingBasket size={19} /> Items</h3>
                                     <ul className="list-disc pl-5 space-y-1">
                                         {order.items.map((item, index) => (
                                             <li key={index}>
@@ -245,13 +252,13 @@ const OrderCard = ({ order, onUpdateStatus,i }) => {
                                     </ul>
                                 </div>
                                 <div>
-                                    <h3 className="font-bold lancelot text-neutral-500 mb-2">Order Details</h3>
+                                    <h3 className="font-bold lancelot text-purple-700 mb-2 flex gap-2 item-center"><Box size={19} /> Order Details</h3>
                                     <p><strong>Total Items:</strong> {order.totalQuantity}</p>
                                     <p><strong>Order Status:</strong> {order.orderStatus}</p>
                                     <p><strong>Order Created At:</strong> {formatOrderDateTime(order.createdAt)}</p>
                                 </div>
                                 <div>
-                                    <h3 className="font-bold lancelot text-neutral-500 mb-2">Cooking Instruction</h3>
+                                    <h3 className="font-bold lancelot text-purple-700 mb-2 flex gap-2 item-center">< CookingPot size={19} /> Instruction</h3>
                                     <p className='text-gray-600'>" {order.note} "</p>
 
 
@@ -390,10 +397,15 @@ const OrderCard = ({ order, onUpdateStatus,i }) => {
                     )}
                 </DrawerContent>
             </Drawer>
-            <div className='flex items-center justify-center gap-4 border-t py-1 bg-white'>
-                <p className='font-bold hidden md:block'>Cooking Instuctions: </p>
-                <p>"{order.note}"</p>
-            </div>
+            {
+                order.note && (
+                    <div className='hidden md:flex items-center justify-center gap-4 border-t text-pink-600 py-1 bg-white'>
+                        <CookingPot className='animate-pulse' size={20} />
+                        <p className='animate-pulse'>"{order.note}"</p>
+                    </div>
+                )
+            }
+
         </motion.div>
     );
 };

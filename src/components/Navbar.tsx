@@ -1,4 +1,4 @@
-import { Menu, X, ShoppingCart, UserRound, MapPin, LogOut, AlertTriangle, Box } from 'lucide-react'
+import { Menu, X, ShoppingCart, UserRound, MapPin, LogOut, AlertTriangle, Box, CircleHelp } from 'lucide-react'
 import Button, { IconButton } from './Button'
 import { useState, useEffect } from 'react'
 import { Link, useNavigate, useLocation } from 'react-router-dom'
@@ -142,12 +142,12 @@ const Navbar = () => {
                     {user &&
                         <Dropdown>
                             <DropdownTrigger>
-                                <Button variant='secondary' className='bg-white' >
+                                <Button variant='secondary' className='bg-wh' >
                                     <UserRound strokeWidth={1.4} />
                                     <p className='hidden lg:block'>{userDetails?.displayName}</p>
                                 </Button>
                             </DropdownTrigger>
-                            <DropdownMenu aria-label="Static Actions" className='bg-white shadow-xl rounded-xl p-4 border-gray-200 border'>
+                            <DropdownMenu aria-label="Static Actions" >
                                 <DropdownItem
                                     className='hover:bg-gray-100'
                                     key="profile"
@@ -158,12 +158,18 @@ const Navbar = () => {
                                         Profile
                                     </div>
                                 </DropdownItem>
-                                <DropdownItem className='hover:bg-gray-100' key="orders" onPress={() => navigate('/Orders')}>
-                                <div className="flex items-center gap-2">
+                                <DropdownItem key="orders" onPress={() => navigate('/orders')}>
+                                    <div className="flex items-center gap-2">
                                         <Box size={16} />
                                         Orders
                                     </div>
-                                    </DropdownItem>
+                                </DropdownItem>
+                                <DropdownItem key="orders" onPress={() => navigate('/contact')}>
+                                    <div className="flex items-center gap-2">
+                                        <CircleHelp size={16} />
+                                        Help
+                                    </div>
+                                </DropdownItem>
                                 <DropdownItem
                                     className='hover:bg-gray-100 text-red-500'
                                     key="logout"
