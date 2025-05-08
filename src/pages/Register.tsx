@@ -98,7 +98,7 @@ const Register = () => {
                             className='border border-gray-300 rounded-xl p-2 w-full' placeholder='Enter your full address' />
                     </div> */}
                     {error && <p className='text-red-500 text-center'>{error} <br /> {errorMsg}</p>}
-                    <Button type='submit' className='w-full '>Register</Button>
+                    <Button type='submit' variant='primary' className='w-full '>Register</Button>
                     <p className='text-center'>Or</p>
                     <button type='button'
                         onClick={async () => {

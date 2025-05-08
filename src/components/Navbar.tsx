@@ -5,7 +5,7 @@ import { Link, useNavigate, useLocation } from 'react-router-dom'
 import { motion, AnimatePresence } from "framer-motion";
 import { useAuthStore } from '../store/authStore';
 import { handleLogout } from '../services/authService';
-import { Dropdown, DropdownTrigger, DropdownMenu, DropdownItem } from "@heroui/dropdown";
+import { Dropdown, DropdownTrigger, DropdownMenu, DropdownItem } from "@heroui/react";
 import { useCartStore } from '../store/cartStore';
 import toast, { Toaster } from 'react-hot-toast';
 import DeliveryAreaChecker from './DeliveryAreaChecker';

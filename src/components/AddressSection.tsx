@@ -74,7 +74,7 @@ const AddressSection: React.FC<AddressSectionProps> = ({ uid }) => {
                 <h2 className="text text-orange-500 font-semibold">Delivery Address</h2>
                 <button
                     onClick={() => setIsEditing(true)}
-                    className="mr-2 text-sm text-orange-500 hover:text-orange-600 transition-colors font-medium"
+                    className=" text-sm text-orange-500 hover:text-orange-600 transition-colors font-medium"
                 >
                     Edit Address
                 </button>
@@ -214,7 +214,7 @@ const AddressSection: React.FC<AddressSectionProps> = ({ uid }) => {
                             <p className="text-gray-600">No address found. Please add your address.</p>
                             <Button
                                 onClick={() => setIsEditing(true)}
-                                variant="primary"
+                                variant="primary" size="sm"
                             >
                                 Add Address
                             </Button>

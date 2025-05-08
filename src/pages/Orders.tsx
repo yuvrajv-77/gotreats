@@ -9,12 +9,17 @@ import { ArrowLeft, ArrowRight, CheckCircle, Home, RefreshCcw, Store, XIcon } fr
 import { Drawer, DrawerContent, DrawerHeader, DrawerBody, DrawerFooter } from "@heroui/drawer";
 import { useDisclosure } from '@/hooks/useDisclosure';
 import { useCartStore } from '../store/cartStore'; // Import the cart store
+import { AnimatePresence, motion } from 'framer-motion';
+import { useNavigate } from 'react-router-dom';
 
 const Orders = () => {
     const [detailOpen, setDetailOpen] = useState(false);
     const [selectedOrder, setSelectedOrder] = useState<any>(null);
     const userDetails = useAuthStore((state) => state.userDetails);
     const { isOpen, onOpen, onClose } = useDisclosure();
+    const navigate = useNavigate()
+
+    useEffect(() => window.scrollTo(0, 0), [])
 
     // Use React Query to fetch orders
     const { data: orders = [], isLoading, isError } = useQuery({
@@ -77,60 +82,68 @@ const Orders = () => {
                 return 'bg-white'; // Gradient for other non-delivered orders
         }
     };
-    // useEffect(()=> window.scrollTo(0, 0), [])
+
 
     return (
         <div className='md:bg-gray-100 min-h-screen'>
             <div className='max-w-3xl px-5 mx-auto'>
                 <h1 className='text-3xl md:text-4xl font-semibold lancelot py-5 md:py-10 text-gray-700'>Past Orders</h1>
                 {sortedOrders.length === 0 ? (
-                    <div className='text-center py-10 text-gray-500'>No paid orders found.</div>
-                ) : (
-                    <div className='flex flex-col gap-5 border-green-300'>
-                        {sortedOrders.map((order) => (
-                            <div
-                                key={order.id}
-                                className={`md:p-8 p-5 w-full border rounded-xl border-l-5 ${getBorderColor(order.orderStatus)} ${getBackgroundColor(order.orderStatus)}`}
-                            >
-                                <div className='flex flex-col gap-4 justify-between'>
-                                    <div className='flex justify-between items-center'>
-                                        <div>
-                                            <h4 className='mb-1 text-lg font-semibold md:text-xl'>Order #{order.id.slice(-6)}</h4>
-                                            <div className='flex text-sm gap-2 text-neutral-500 items-center '>
-                                                <p>{new Date(order.createdAt).toLocaleDateString()}</p> |
-                                                <p>{new Date(order.createdAt).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}</p>
-                                            </div>
-                                        </div>
-                                        <StatusBadge status={order.orderStatus} />
-                                    </div>
-
-                                    <div className='text-neutral-700 md:px-20'>
-                                        {order.items.map((item: any, idx: number) => (
-                                            <h2 key={idx} className='text-sm flex justify-between'>
-                                                {item.productName} <span className='font-semibold'>X {item.quantity}</span>
-                                            </h2>
-                                        ))}
-                                    </div>
-
-                                    <div className='flex justify-between items-center'>
-                                        <p className='text-neutral-600 text-lg'>
-                                            Total Paid: <span className='font-bold text-neutral-800'>₹ {order.totalAmount}</span>
-                                        </p>
-                                        <button
-                                            onClick={() => {
-                                                setSelectedOrder(order);
-                                                // setDetailOpen(true);
-                                                onOpen();
-                                            }}
-                                            className='text-orange-600 font-semibold inline-flex items-center gap-2 hover:underline cursor-pointer'
-                                        >
-                                            View Detail <ArrowRight size={16} />
-                                        </button>
-                                    </div>
-                                </div>
-                            </div>
-                        ))}
+                    <div className='flex flex-col items-center gap-5 py-10 text-gray-500'>
+                        <p>You have not placed any order yet.</p>
+                        <Button variant='primary' onClick={() => navigate('/shop')}>Lets Order Now</Button>
                     </div>
+                ) : (
+                    <AnimatePresence>
+                        <div className='flex flex-col gap-5'>
+                            {sortedOrders.map((order, i) => (
+                                <motion.div
+                                    key={order.id}
+                                    initial={{ opacity: 0, x: -50 }} // Mount animation: from top
+                                    animate={{ opacity: 1, x: 0 }}
+                                    transition={{ duration: 0.2, delay: i * 0.1 }}
+                                    className={`md:p-8 p-5 w-full border rounded-xl border-l-5 ${getBorderColor(order.orderStatus)} ${getBackgroundColor(order.orderStatus)}`}
+                                >
+                                    <div className='flex flex-col gap-4 justify-between'>
+                                        <div className='flex justify-between items-center'>
+                                            <div>
+                                                <h4 className='mb-1 text-lg font-semibold md:text-xl'>Order #{order.id.slice(-6)}</h4>
+                                                <div className='flex text-sm gap-2 text-neutral-500 items-center '>
+                                                    <p>{new Date(order.createdAt).toLocaleDateString()}</p> |
+                                                    <p>{new Date(order.createdAt).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}</p>
+                                                </div>
+                                            </div>
+                                            <StatusBadge status={order.orderStatus} />
+                                        </div>
+
+                                        <div className='text-neutral-700 md:px-20'>
+                                            {order.items.map((item: any, idx: number) => (
+                                                <h2 key={idx} className='text-sm flex justify-between'>
+                                                    {item.productName} <span className='font-semibold'>X {item.quantity}</span>
+                                                </h2>
+                                            ))}
+                                        </div>
+
+                                        <div className='flex justify-between items-center'>
+                                            <p className='text-neutral-600 text-lg'>
+                                                Total Paid: <span className='font-bold text-neutral-800'>₹ {order.totalAmount}</span>
+                                            </p>
+                                            <button
+                                                onClick={() => {
+                                                    setSelectedOrder(order);
+                                                    // setDetailOpen(true);
+                                                    onOpen();
+                                                }}
+                                                className='text-orange-600 font-semibold inline-flex items-center gap-2 hover:underline cursor-pointer'
+                                            >
+                                                View Detail <ArrowRight size={16} />
+                                            </button>
+                                        </div>
+                                    </div>
+                                </motion.div>
+                            ))}
+                        </div>
+                    </AnimatePresence>
                 )}
             </div>
             {/* ----- order details for mobile ----- */}
@@ -228,35 +241,6 @@ const Orders = () => {
                                 <Button variant="secondary" className='w-full' onClick={onClose}>
                                     <XIcon size={16} /> Close
                                 </Button>
-                                {/* <Button
-                                    variant="primary"
-                                    className="w-full"
-                                    onClick={() => {
-                                        const addItem = useCartStore.getState().addItem; // Access the addItem function from the cart store
-
-                                        if (selectedOrder?.items) {
-                                            selectedOrder.items.forEach((item: any) => {
-                                                addItem({
-                                                    id: item.productId, // Map productId to id
-                                                    productName: item.productName,
-                                                    productDescription: item.productDescription || 'No description available', // Provide a default description
-                                                    offerPrice: item.offerPrice,
-                                                    originalPrice: item.originalPrice || item.offerPrice, // Optional fallback
-                                                    isNonVeg: item.isNonVeg || false, // Default to false if not provided
-                                                    isTiffin: item.isTiffin || false, // Default to false if not provided
-                                                    category: item.category || 'Uncategorized', // Default category
-                                                    imageUrl: item.imageUrl || '', // Default empty string
-                                                    rating: item.rating || 0, // Default rating
-                                                    isAvailable: item.isAvailable || true, // Default to true
-                                                });
-                                            });
-                                        }
-                                        onClose(); // Close the drawer after adding items to the cart
-                                    }}
-                                >
-                                    <RefreshCcw size={16} /> Order Again
-                                </Button> */}
-
                             </DrawerFooter>
                         </div>
                     )}

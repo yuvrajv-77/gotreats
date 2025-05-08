@@ -56,9 +56,8 @@ const AdminRoutes = () => {
         <p className='comfortaa font-bold tracking-tighter text-2xl lg:text-3xl text-orange-600'>
           <span className='text-green-500'>go</span>treats
         </p>
-        <h1 className='text-4xl lancelot '>Welcome {userDetails?.displayName}</h1>
-        <div className='flex flex-col gap-2 items-center'>
-          <label className='animate-pulse'>Authorization Password </label>
+        <div className='flex flex-col gap-3 items-center'>
+          <h1 className='text-4xl lancelot '>Welcome {userDetails?.displayName}</h1>
           <div className='flex flex-col items-center gap-3 relative'>
             <input
               autoFocus
@@ -82,9 +81,9 @@ const AdminRoutes = () => {
   }
 
   return (
-   
-      <Outlet />
-    
+
+    <Outlet />
+
   )
 }
 

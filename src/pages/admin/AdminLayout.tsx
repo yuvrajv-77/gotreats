@@ -4,7 +4,8 @@ import { Toaster } from 'react-hot-toast';
 import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar"
 import AppSidebar from '@/components/app-sidebar';
 import { Menu } from 'lucide-react';
-import { HeroUIProvider } from '@heroui/system';
+
+import { ToastProvider } from "@heroui/react";
 
 const CustomTrigger = () => {
     const { toggleSidebar } = useSidebar()
@@ -22,20 +23,31 @@ const CustomTrigger = () => {
 const AdminLayout = () => {
 
     return (
-        <div className='' >
 
+        <div className='' >
             <SidebarProvider >
                 <AppSidebar />
                 <main className="flex-1 mx-auto p-5 min-h-screen bg-zinc-800  md:flex items-start overflow-x-hidden">
                     <CustomTrigger />
+                    <Outlet />
+                    {/* <Toaster /> */}
                     
-                        <Outlet />
-                    
-                    <Toaster />
+                    <div className='hidden md:block'>
+                        <ToastProvider
+                            placement="bottom-left"
+                            toastProps={{
+                                variant: "flat",
+                            }} />
+                    </div>
+                    <div className='block md:hidden'>
+                        <ToastProvider
+                            placement="top-right"
+                            toastProps={{
+                                variant: "flat",
+                            }} />
+                    </div>
                 </main>
             </SidebarProvider>
-
-
         </div>
     );
 };

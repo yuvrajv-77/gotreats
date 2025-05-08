@@ -16,6 +16,7 @@ import { useState, useEffect } from 'react'
 import Loader from './components/Loader'
 import InternetStatus from './components/InternetStatus'
 import { HeroUIProvider } from "@heroui/system"
+import { ToastProvider } from "@heroui/react"
 
 function App() {
   const queryClient = new QueryClient({
@@ -58,9 +59,11 @@ function App() {
   return (
     <QueryClientProvider client={queryClient}>
       <HeroUIProvider>
+     
         <InternetStatus />
         {/* {isLoading && <Loader onLoadingComplete={handleLoadingComplete} />} */}
         <RouterProvider router={router} />
+      
       </HeroUIProvider>
       <Toaster
         position="top-center"

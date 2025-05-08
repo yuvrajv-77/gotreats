@@ -124,7 +124,8 @@ const Profile = () => {
                     </div>
                 </section>
 
-                <section>
+                <section className='flex justify-center gap-3 mt-10'>
+                    <Button variant='primary' onClick={() => navigate('/orders')}>Go To Orders</Button>
                     <Button variant='danger' onClick={() => setShowLogoutModal(true)}>Log Out</Button>
                 </section>
             </div>

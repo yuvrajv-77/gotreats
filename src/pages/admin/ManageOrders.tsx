@@ -1,19 +1,55 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { fetchAllOrders, updateOrderStatus } from '../../services/orderService';
 import OrderCard from '../../components/OrderCard';
 import { AnimatePresence } from 'framer-motion';
+import Button from '@/components/Button';
+import { addToast, cn } from '@heroui/react';
+import { Box, X } from 'lucide-react';
 
 const ManageOrders = () => {
   const [activeTab, setActiveTab] = useState<'Active' | 'Delivered' | 'Failed' | 'Cancelled' | 'All'>('Active');
+  const [previousOrderCount, setPreviousOrderCount] = useState(0); // Track previous order count
   const queryClient = useQueryClient();
 
   // Fetch all orders using React Query
   const { data: orders = [], isLoading, isError } = useQuery({
     queryKey: ['orders'],
     queryFn: fetchAllOrders,
-    refetchInterval: 5000,
+    refetchInterval: 5000, // Poll every 5 seconds
   });
+
+  useEffect(() => {
+    if (orders.length > previousOrderCount) {
+      addToast({
+        title: 'New Order Arrived !',
+        color: 'primary',
+        shouldShowTimeoutProgress: true,
+        timeout: 3000,
+        classNames: {
+          closeButton: "opacity-100 absolute right-4 top-1/2 -translate-y-1/2 stroke-2 text-orange-500",
+          base: cn([
+            "bg-orange-100 shadow-lg",
+            "flex flex-col items-start",
+            "p-4 rounded-lg",
+          ]),
+          title: cn([
+            "text-lg font-semibold text-orange-600",
+          ]),
+          icon: (
+            "fill-none animate-pulse stroke-2 text-orange-600"
+          )
+        },
+        closeIcon: (
+          <X size={32} />
+        ),
+        icon: (
+          <Box size={32} />
+        )
+      });
+    }
+    setPreviousOrderCount(orders.length); // Update the previous order count
+  }, [orders, previousOrderCount]);
 
   // Mutation for updating order status
   const mutation = useMutation({
@@ -22,6 +58,22 @@ const ManageOrders = () => {
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['orders'] }); // Refetch admin orders
       queryClient.invalidateQueries({ queryKey: ['userOrders'] }); // Refetch user orders
+      addToast({
+        title: 'Order Status Updated',
+        color: 'default',
+        shouldShowTimeoutProgress: true,
+        timeout: 2000,
+        hideIcon: true,
+        classNames: {
+          closeButton: "opacity-100 absolute right-4 top-1/2 -translate-y-1/2 stroke-2",
+         
+        
+        },
+        closeIcon: (
+          <X size={32} />
+        ),
+       
+      });
     },
   });
 
@@ -100,11 +152,44 @@ const ManageOrders = () => {
       </div>
       <div className="space-y-4">
         <AnimatePresence>
-          {filteredOrders.map(order => (
-            <OrderCard key={order.id} order={order} onUpdateStatus={handleUpdateStatus} />
+          {filteredOrders.map((order,i) => (
+            <OrderCard key={i} order={order} i={i} onUpdateStatus={handleUpdateStatus} />
           ))}
         </AnimatePresence>
       </div>
+      <Button
+        onClick={() => {
+          addToast({
+            title: 'New Order Arrived !',
+            color: 'primary',
+            shouldShowTimeoutProgress: true,
+            timeout: 3000,
+            classNames: {
+              closeButton: "opacity-100 absolute right-4 top-1/2 -translate-y-1/2 stroke-2 text-orange-500",
+              base: cn([
+                "bg-orange-100 shadow-lg",
+                "flex flex-col items-start",
+                "p-4 rounded-lg",
+              ]),
+              title: cn([
+                "text-lg font-semibold text-orange-500",
+
+              ]),
+              icon: (
+                "fill-none animate-pulse stroke-2 text-orange-500"
+              )
+            },
+            closeIcon: (
+              <X size={32} />
+            ),
+            icon: (
+              <Box size={32} />
+            )
+          });
+        }}
+        variant='primary'>
+        toast
+      </Button>
     </div>
   );
 };

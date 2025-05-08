@@ -6,7 +6,7 @@ import { motion } from 'framer-motion';
 import Button, { IconButton } from './Button';
 import { StatusBadge } from './StatusBadge';
 
-const OrderCard = ({ order, onUpdateStatus }) => {
+const OrderCard = ({ order, onUpdateStatus,i }) => {
     const [expanded, setExpanded] = useState(false);
     const [selectedStatus, setSelectedStatus] = useState(new Set([order.orderStatus]));
     const { isOpen, onOpen, onOpenChange } = useDisclosure();
@@ -14,7 +14,8 @@ const OrderCard = ({ order, onUpdateStatus }) => {
         setSelectedStatus(newStatus);
         const status = Array.from(newStatus)[0]; // Convert Set to array and get the first value
         onUpdateStatus(order.id, status); // Update the order status
-        toast.success(`Order for ${order.customer.name} is ${status}`);
+        // toast.success(`Order for ${order.customer.name} is ${status}`);
+        
     };
     const address = `${order.address.flatNumber}, ${order.address.buildingName}, ${order.address.streetAddress}, ${order.address.area}, ${order.address.pincode}`;
 
@@ -86,7 +87,7 @@ const OrderCard = ({ order, onUpdateStatus }) => {
             initial={{ opacity: 0, x: -50 }} // Mount animation: from top
             animate={{ opacity: 1, x: 0 }}
             exit={{ opacity: 0, x: 50 }} // Unmount animation: fade out to the right
-            transition={{ duration: 0.3 }}
+            transition={{ duration: 0.3,delay: i*0.1 }}
             className={`border rounded-lg overflow-hidden shadow ${getBorderColor(
                 order.orderStatus
             )}`}
@@ -105,7 +106,7 @@ const OrderCard = ({ order, onUpdateStatus }) => {
                             <p className="font-semibold text-xl">{order.customer.name}</p>
                             <StatusBadge status={order.orderStatus} />
                         </div>
-                        <p className="font-semibold text-xl">{order.customer.name}</p>
+                        <p className=" hidden md:block font-semibold text-xl">{order.customer.name}</p>
                         <p className="text-gray-800">{order.customer.phoneNumber}</p>
                         <p>{order.customer.email}</p>
                     </div>
