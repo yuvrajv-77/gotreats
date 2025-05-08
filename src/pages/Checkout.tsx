@@ -1,4 +1,11 @@
 import { useEffect, useState } from 'react'
+
+// Extend the Window interface to include Razorpay
+declare global {
+    interface Window {
+        Razorpay: any;
+    }
+}
 import Button, { IconButton } from '../components/Button'
 import { useCartStore } from '../store/cartStore'
 import { useNavigate } from 'react-router-dom'
