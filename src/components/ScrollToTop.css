@@ -1,0 +1,16 @@
+@keyframes wave {
+    0% {
+        transform: translateX(-100%) translateY(-50%);
+    }
+    100% {
+        transform: translateX(100%) translateY(-50%);
+    }
+}
+
+.wave-animation {
+    animation: wave 2s linear infinite;
+}
+
+.scroll-progress-fill {
+    transition: all 0.3s ease;
+} 

@@ -1,0 +1,32 @@
+@keyframes scroll {
+    0% {
+        transform: translateX(0);
+    }
+    100% {
+        transform: translateX(calc(-280px * 6 - 1.5rem * 6));
+    }
+}
+
+.scroll-container {
+    display: flex;
+    gap: 1.5rem;
+    padding: 0.5rem 0;
+    width: fit-content;
+}
+
+.animate-scroll {
+    animation: scroll 30s linear infinite;
+}
+
+.animate-scroll:hover {
+    animation-play-state: paused;
+}
+
+.hide-scrollbar {
+    -ms-overflow-style: none;  /* IE and Edge */
+    scrollbar-width: none;  /* Firefox */
+}
+
+.hide-scrollbar::-webkit-scrollbar {
+    display: none;  /* Chrome, Safari and Opera */
+} 
