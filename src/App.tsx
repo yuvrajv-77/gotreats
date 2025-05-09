@@ -60,7 +60,7 @@ function App() {
     <QueryClientProvider client={queryClient}>
       <HeroUIProvider>
      
-        <InternetStatus />
+        {/* <InternetStatus /> */}
         {/* {isLoading && <Loader onLoadingComplete={handleLoadingComplete} />} */}
         <RouterProvider router={router} />
       

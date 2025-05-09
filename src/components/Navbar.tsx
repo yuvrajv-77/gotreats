@@ -246,7 +246,7 @@ const Navbar = () => {
                                         <span className="bg-green-500 px-3 py-1 rounded-md text-sm">Check</span>
                                     </button>
                                 </motion.li>
-                                {menuItems.map((item, index) => (
+                                {menuItems.map((item) => (
                                     <motion.li
                                         key={item.path}
                                         className='w-full text-center'

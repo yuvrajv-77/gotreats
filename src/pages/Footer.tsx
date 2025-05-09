@@ -11,13 +11,13 @@ const Footer = () => {
           {/* Company Info */}
           <div>
             <Link to="/">
-            <p className="gotreats-button" data-text="GOTREATS">
-  <span className="hover-text">
-    <span className="go">GO</span>
-    <span className="treats">TREATS</span>
-  </span>
-  GOTREATS
-</p>
+              <p className="gotreats-button" data-text="GOTREATS">
+                <span className="hover-text">
+                  <span className="go">GO</span>
+                  <span className="treats">TREATS</span>
+                </span>
+                GOTREATS
+              </p>
 
             </Link>
             <p className="text-gray-400 dark:text-gray-300 mt-4">
@@ -140,7 +140,7 @@ const Footer = () => {
                 <MapPin className="text-orange-500 mt-1 group-hover:scale-110 transition-transform" size={20} />
                 <span className="text-gray-400 dark:text-gray-300 group-hover:text-white transition-colors leading-relaxed">
                   <strong className="text-white">Office Address:</strong><br />
-                  
+
                   Saibaba Nagar<br />
                   Borivali West, Mumbai,<br />
                   Maharashtra – 400092
@@ -203,8 +203,8 @@ const Footer = () => {
                 <div className="text-gray-400 dark:text-gray-300 leading-relaxed">
                   <p className="text-white font-semibold mb-2">Party Orders:</p>
                   <p>We accept bulk & party orders!</p>
-                  <a 
-                    href="tel:+917045617506" 
+                  <a
+                    href="tel:+917045617506"
                     className="inline-block mt-1 text-orange-500 hover:text-orange-400 transition-colors"
                   >
                     Contact us for details →
@@ -230,19 +230,19 @@ const Footer = () => {
                   <span className="text-green-500 font-semibold text-base md:text-lg">21525012000906</span>
                 </div>
               </div>
-              
+
               {/* QR Code */}
               <div className="flex flex-col items-center">
-                <img 
-                  src="/qrcode.png" 
-                  alt="FSSAI License QR Code" 
+                <img
+                  src="/qrcode.png"
+                  alt="FSSAI License QR Code"
                   className="w-16 h-16 md:w-20 md:h-20 rounded-md bg-white p-1"
                 />
                 <span className="text-xs text-white mt-1">Scan to verify</span>
               </div>
             </div>
           </div>
-          
+
           <p>&copy; {new Date().getFullYear()} GoTreats. All rights reserved.</p>
         </div>
       </div>

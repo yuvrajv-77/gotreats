@@ -18,7 +18,7 @@ export type OrderDetails = {
     items: any[];
     totalAmount: number;
     grossTotalPrice: string;
-    gst: number;
+    gst?: number;
     deliveryCharge: number;
     totalQuantity: number;
     note?: string;

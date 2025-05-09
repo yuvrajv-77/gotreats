@@ -210,13 +210,13 @@ const Orders = () => {
                                             <span>Item Total</span>
                                             <span>₹{selectedOrder?.grossTotalPrice || '0.00'}</span>
                                         </div>
-                                        <div className="flex justify-between py-1">
+                                        {/* <div className="flex justify-between py-1">
                                             <span>Taxes (18%)</span>
                                             <span>
                                                 ₹
                                                 {selectedOrder?.gst}
                                             </span>
-                                        </div>
+                                        </div> */}
                                         <div className="flex justify-between py-1">
                                             <span>Delivery Charges</span>
                                             <span>₹{selectedOrder?.deliveryCharge || '0.00'}</span>

@@ -21,7 +21,7 @@ import CartSection from '../components/CartSection'
 import { OrderDetails } from '../types/orderTypes'
 
 const DELIVERY_PRICE = 20
-const TAX_RATE = 0.18
+const TAX_RATE = 0
 
 
 const Checkout = () => {
@@ -375,7 +375,7 @@ const Checkout = () => {
                                     </div>
                                 </div>
 
-                                <div className='flex justify-between items-center text-gray-600 py-2'>
+                                {/* <div className='flex justify-between items-center text-gray-600 py-2'>
                                     <div className="flex items-center gap-2">
                                         <span className="text-gray-800">GST</span>
                                         <div className="px-1.5 py-0.5 bg-gray-100 rounded text-xs">
@@ -383,7 +383,7 @@ const Checkout = () => {
                                         </div>
                                     </div>
                                     <span className="text-gray-800 font-medium">₹{(grossTotalPrice * TAX_RATE).toFixed(2)}</span>
-                                </div>
+                                </div> */}
 
                                 <div className='flex justify-between items-center text-gray-600 py-2'>
                                     <div className="flex items-center gap-2">
