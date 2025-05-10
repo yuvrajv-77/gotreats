@@ -17,6 +17,7 @@ import Loader from './components/Loader'
 import InternetStatus from './components/InternetStatus'
 import { HeroUIProvider } from "@heroui/system"
 import { ToastProvider } from "@heroui/react"
+import { Analytics } from "@vercel/analytics/next"
 
 function App() {
   const queryClient = new QueryClient({
@@ -75,6 +76,7 @@ function App() {
           },
         }}
       />
+      <Analytics/>
     </QueryClientProvider>
   )
 }
