@@ -68,7 +68,7 @@ export const handlesignInWithGoogle = async () => {
 
         if (!userDoc) {
             // First time sign in - create user document
-            await setDoc(doc(db, "users", user.uid), {
+            const newUserDetails = {
                 displayName: user.displayName,
                 email: user.email,
                 phoneNumber: null,
@@ -76,15 +76,18 @@ export const handlesignInWithGoogle = async () => {
                 uid: user.uid,
                 address: null,
                 role: 'customer'
-            });
-            return {
-                displayName: user.displayName,
-                email: user.email,
             };
+            await setDoc(doc(db, "users", user.uid), newUserDetails);
+
+            // Update the auth store with the new user's details
+            useAuthStore.getState().setUserDetails(newUserDetails);
+        } else {
+            // Returning user - update the auth store with existing document
+            useAuthStore.getState().setUserDetails(userDoc);
         }
 
-        // Returning user - return existing document
-        return userDoc;
+        // Update the auth store with the user object
+        useAuthStore.getState().setUser(user);
 
     } catch (err) {
         throw err;
@@ -186,4 +189,4 @@ export const validateAdminPassword = async (password: string): Promise<boolean> 
 //     }
 // };
 
- 
+
