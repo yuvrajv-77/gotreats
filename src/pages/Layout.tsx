@@ -1,6 +1,6 @@
 import { useEffect } from 'react'
 import Navbar from '../components/Navbar'
-import { Outlet, useLocation } from 'react-router-dom'
+import { Navigate, Outlet, useLocation } from 'react-router-dom'
 import { useProductStore } from '../store/productStore'
 
 import { useQuery } from '@tanstack/react-query'
@@ -9,10 +9,13 @@ import { Toaster } from 'react-hot-toast'
 import Footer from './Footer'
 import ScrollToTop from '../components/ScrollToTop'
 import { motion, AnimatePresence } from 'framer-motion'
+import { useAuthStore } from '@/store/authStore'
 
 function Layout() {
   const location = useLocation();
-  
+
+  const { userDetails } = useAuthStore();
+
   const { data } = useQuery({
     queryKey: ['items'],
     queryFn: getItemsFromFirestore
@@ -24,7 +27,13 @@ function Layout() {
       useProductStore.getState().setProducts(filteredItems)
     }
   }, [data])
-  
+
+  if (userDetails?.role === "admin") {
+    return <Navigate to="/admin/view-all-orders" />
+  }
+
+
+
   return (
     <div>
       <Navbar />

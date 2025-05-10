@@ -145,48 +145,61 @@ const OrderCard = ({ order, onUpdateStatus, i }) => {
 
                         <Select
                             placeholder="Select Status"
-                            selectedKeys={selectedStatus}
+                            selectedKeys={new Set([order.orderStatus])} // Use order.orderStatus directly
                             variant="bordered"
-                            radius='full'
+                            radius="full"
                             className={`border-4 p-px rounded-full ${getBorderColor(order.orderStatus)}`}
-                            defaultSelectedKeys={[order.orderStatus]}
-                            onSelectionChange={handleStatusChange}
+                            onSelectionChange={(newStatus) => {
+                                const status = Array.from(newStatus)[0]; // Convert Set to array and get the first value
+                                onUpdateStatus(order.id, status); // Update the order status
+                            }}
                         >
                             <SelectItem
                                 key="received"
                                 startContent={<Download size={15} />}
-                                color='warning'
-                                className="bg-orange-200">Received
+                                color="warning"
+                                className="bg-orange-200"
+                            >
+                                Received
                             </SelectItem>
                             <SelectItem
                                 key="preparing"
-                                startContent={<Loader className='animate-spin' size={15} />}
-                                color='warning'
-                                className="bg-yellow-200">Preparing
+                                startContent={<Loader className="animate-spin" size={15} />}
+                                color="warning"
+                                className="bg-yellow-200"
+                            >
+                                Preparing
                             </SelectItem>
                             <SelectItem
                                 key="out for delivery"
                                 startContent={<Truck size={15} />}
-
-                                className="hover:bg-blue-500 bg-blue-200">Out for Delivery
+                                className="hover:bg-blue-500 bg-blue-200"
+                            >
+                                Out for Delivery
                             </SelectItem>
                             <SelectItem
                                 key="delivered"
                                 startContent={<Circle size={15} />}
-                                color='success'
-                                className="bg-green-300">Delivered
+                                color="success"
+                                className="bg-green-300"
+                            >
+                                Delivered
                             </SelectItem>
                             <SelectItem
                                 key="cancelled"
                                 startContent={<X size={15} />}
-                                color='danger'
-                                className="bg-red-200">Cancelled
+                                color="danger"
+                                className="bg-red-200"
+                            >
+                                Cancelled
                             </SelectItem>
                             <SelectItem
                                 key="failed"
                                 startContent={<TriangleAlert size={15} />}
-                                color='danger'
-                                className="bg-red-200">Failed
+                                color="danger"
+                                className="bg-red-200"
+                            >
+                                Failed
                             </SelectItem>
                         </Select>
 
@@ -268,6 +281,7 @@ const OrderCard = ({ order, onUpdateStatus, i }) => {
                     )
                 }
             </div>
+
             <Drawer isOpen={isOpen} onOpenChange={onOpenChange}>
                 <DrawerContent>
                     {(onClose) => (
@@ -344,48 +358,61 @@ const OrderCard = ({ order, onUpdateStatus, i }) => {
                             <DrawerFooter className='border-t-2 border-gray-200'>
                                 <Select
                                     placeholder="Select Status"
-                                    selectedKeys={selectedStatus}
+                                    selectedKeys={new Set([order.orderStatus])} // Use order.orderStatus directly
                                     variant="bordered"
-                                    radius='full'
-                                    className={`border-4 p-px  rounded-full ${getBorderColor(order.orderStatus)}`}
-                                    defaultSelectedKeys={[order.orderStatus]}
-                                    onSelectionChange={handleStatusChange}
+                                    radius="full"
+                                    className={`border-4 p-px rounded-full ${getBorderColor(order.orderStatus)}`}
+                                    onSelectionChange={(newStatus) => {
+                                        const status = Array.from(newStatus)[0]; // Convert Set to array and get the first value
+                                        onUpdateStatus(order.id, status); // Update the order status
+                                    }}
                                 >
                                     <SelectItem
                                         key="received"
                                         startContent={<Download size={15} />}
-                                        color='warning'
-                                        className="bg-orange-200">Received
+                                        color="warning"
+                                        className="bg-orange-200"
+                                    >
+                                        Received
                                     </SelectItem>
                                     <SelectItem
                                         key="preparing"
-                                        startContent={<Loader className='animate-spin' size={15} />}
-                                        color='warning'
-                                        className="bg-yellow-200">Preparing
+                                        startContent={<Loader className="animate-spin" size={15} />}
+                                        color="warning"
+                                        className="bg-yellow-200"
+                                    >
+                                        Preparing
                                     </SelectItem>
                                     <SelectItem
                                         key="out for delivery"
                                         startContent={<Truck size={15} />}
-
-                                        className="hover:bg-blue-500 bg-blue-200">Out for Delivery
+                                        className="hover:bg-blue-500 bg-blue-200"
+                                    >
+                                        Out for Delivery
                                     </SelectItem>
                                     <SelectItem
                                         key="delivered"
                                         startContent={<Circle size={15} />}
-                                        color='success'
-                                        className="bg-green-300">Delivered
+                                        color="success"
+                                        className="bg-green-300"
+                                    >
+                                        Delivered
                                     </SelectItem>
                                     <SelectItem
                                         key="cancelled"
                                         startContent={<X size={15} />}
-                                        color='danger'
-                                        className="bg-red-200">Cancelled
+                                        color="danger"
+                                        className="bg-red-200"
+                                    >
+                                        Cancelled
                                     </SelectItem>
                                     <SelectItem
                                         key="failed"
                                         startContent={<TriangleAlert size={15} />}
-                                        color='danger'
-                                        className="bg-red-200">Failed
+                                        color="danger"
+                                        className="bg-red-200"
+                                    >
+                                        Failed
                                     </SelectItem>
                                 </Select>
                                 <Button variant="secondary" size='sm' onClick={onClose}>
