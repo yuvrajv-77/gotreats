@@ -17,7 +17,7 @@ import Loader from './components/Loader'
 import InternetStatus from './components/InternetStatus'
 import { HeroUIProvider } from "@heroui/system"
 import { ToastProvider } from "@heroui/react"
-import { Analytics } from "@vercel/analytics/next"
+import { Analytics } from "@vercel/analytics/react"
 
 function App() {
   const queryClient = new QueryClient({
@@ -58,26 +58,28 @@ function App() {
   };
 
   return (
-    <QueryClientProvider client={queryClient}>
-      <HeroUIProvider>
-     
-        {/* <InternetStatus /> */}
-        {/* {isLoading && <Loader onLoadingComplete={handleLoadingComplete} />} */}
-        <RouterProvider router={router} />
-      
-      </HeroUIProvider>
-      <Toaster
-        position="top-center"
-        toastOptions={{
-          duration: 3000,
-          style: {
-            background: '#333',
-            color: '#fff',
-          },
-        }}
-      />
-      <Analytics/>
-    </QueryClientProvider>
+    <>
+      <QueryClientProvider client={queryClient}>
+        <HeroUIProvider>
+
+          {/* <InternetStatus /> */}
+          {/* {isLoading && <Loader onLoadingComplete={handleLoadingComplete} />} */}
+          <RouterProvider router={router} />
+
+        </HeroUIProvider>
+        <Toaster
+          position="top-center"
+          toastOptions={{
+            duration: 3000,
+            style: {
+              background: '#333',
+              color: '#fff',
+            },
+          }}
+        />
+      </QueryClientProvider>
+      <Analytics />
+    </>
   )
 }
 
