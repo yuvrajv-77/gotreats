@@ -163,7 +163,7 @@ const Checkout = () => {
         const amountInPaise = Math.round(totalPrice * 100);
 
         const options = {
-            key: import.meta.env.VITE_RAZORPAY_KEY || 'rzp_test_BWj7LzYoG7sF6V',
+            key: import.meta.env.VITE_RAZORPAY_KEY,
             amount: amountInPaise,
             currency: 'INR',
             name: 'GoTreats Tiffins',
