@@ -118,8 +118,8 @@ const Footer = () => {
                 { to: '/terms-and-conditions', label: 'Terms & Conditions', Icon: ScrollText },
                 { to: '/concept', label: 'Concept', Icon: Lightbulb },
                 { to: '/about', label: 'About', Icon: Info },
-                { to: '/about', label: 'Privacy Policy', Icon: Info },
-                { to: '/about', label: 'Refund Policy', Icon: Info },
+                { to: '/privacy-policy', label: 'Privacy Policy', Icon: Info },
+                { to: '/refund-policy', label: 'Refund Policy', Icon: Info },
                 { to: '/contact', label: 'Contact', Icon: PhoneCall },
               ].map(({ to, label, Icon }) => (
                 <li key={label}>

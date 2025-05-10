@@ -2,60 +2,56 @@ import React, { useEffect } from 'react'
 
 const PrivacyPolicy = () => {
 
-        useEffect(() => window.scrollTo(0, 0), [])
+    useEffect(() => window.scrollTo(0, 0), [])
     return (
         <div className='max-w-full'>
             <div className='bg-orange-500 text-center py-10'>
                 <h1 className='lancelot text-5xl text-white'>Privacy Policy</h1>
             </div>
             <div className='container mx-auto px-4 md:px-8 lg:px-16 flex flex-col justify-center gap-5 text-sm py-8'>
+                <p><strong>Last Updated: May 10, 2025</strong></p>
                 <p>
-                    These Terms and Conditions, along with privacy policy or other terms ("Terms") constitute a binding
-                    agreement by and between GOVINDA JAYPRAKASH SHAH, ( "Website Owner" or "we" or "us" or
-                    "our") and you ("you" or "your") and relate to your use of our website, goods (as applicable) or services
-                    (as applicable) (collectively, "Services")
+                    At GoTreats, we are committed to protecting your privacy. This Privacy Policy explains how we collect, use, disclose, and safeguard your personal information when you use our online food ordering and delivery services.
                 </p>
+                <h2 className='text-lg font-bold'>Information We Collect:</h2>
+                <ul className='list-disc list-inside space-y-2'>
+                    <li><strong>Personal Identification Information:</strong> This may include your name, email address, phone number, and delivery address.</li>
+                    <li><strong>Payment Information:</strong> We collect necessary payment details (e.g., credit/debit card information, UPI details) to process your orders. This information is securely processed by our payment gateway providers (RazorPay) and is not stored by us.</li>
+                    <li><strong>Order Information:</strong> Details of the food items you order, order history, and any special instructions.</li>
+                    <li><strong>Device and Usage Information:</strong> We may collect information about your device (e.g., IP address, browser type, operating system) and how you interact with our website or mobile application (e.g., pages visited, time spent).</li>
+                    <li><strong>Communications:</strong> Records of your communication with us, including inquiries and feedback.</li>
+                </ul>
+                <h2 className='text-lg font-bold'>How We Use Your Information:</h2>
+                <ul className='list-disc list-inside space-y-2'>
+                    <li>To process and fulfill your orders, including delivery of your Go Treats.</li>
+                    <li>To manage your account and provide customer support related to your Go Treats orders.</li>
+                    <li>To personalize your experience and offer relevant Go Treats recommendations.</li>
+                    <li>To communicate with you about your orders, promotions, and updates from Go Treats (with your consent where required).</li>
+                    <li>To improve our Services and develop new Go Treats offerings.</li>
+                    <li>To detect and prevent fraud and ensure the security of our Go Treats platform.</li>
+                    <li>To comply with legal obligations.</li>
+                </ul>
+                <h2 className='text-lg font-bold'>Disclosure of Your Information:</h2>
+                <ul className='list-disc list-inside space-y-2'>
+                    <li><strong>Service Providers:</strong> Third-party vendors who assist us in providing the Services, such as payment processors. These providers are contractually obligated to protect your information.</li>
+                    <li><strong>Legal Authorities:</strong> If required by law or legal process, we may disclose your information to government authorities or law enforcement agencies.</li>
+                </ul>
+                <h2 className='text-lg font-bold'>Data Security:</h2>
                 <p>
-                    By using our website and availing the Services, you agree that you have read and accepted these Terms
-                    (including the Privacy Policy). We reserve the right to modify these Terms at any time and without
-                    assigning any reason. It is your responsibility to periodically review these Terms to stay informed of
-                    updates
+                    We implement reasonable security measures to protect your personal information from unauthorized access, use, or disclosure. These measures include encryption and firewalls. However, no method of transmission over the internet or electronic storage is completely secure, and we cannot guarantee absolute security.
                 </p>
+                <h2 className='text-lg font-bold'>Your Rights:</h2>
+                <p>You may have certain rights regarding your personal information, including the right to:</p>
+                <ul className='list-disc list-inside space-y-2'>
+                    <li>Access the personal information we hold about you.</li>
+                    <li>Request correction of inaccurate or incomplete information.</li>
+                    <li>Request deletion of your personal information (subject to legal limitations).</li>
+                    <li>Object to the processing of your personal information for certain purposes.</li>
+                    <li>Withdraw your consent to marketing communications from Go Treats at any time.</li>
+                </ul>
                 <p>
-                    The use of this website or availing of our Services is subject to the following terms of use:
+                    To exercise these rights, please contact us at <a href="mailto:govindashah603@gmail.com" className='text-blue-500'>govindashah603@gmail.com</a> or call us at <a href="tel:7045617506" className='text-blue-500'>7045617506</a>.
                 </p>
-                <ol className='list-decimal list-outside space-y-4'>
-                    <li>To access and use the Services, you agree to provide true, accurate, and complete information during and after registration, and you shall be responsible for all acts done through your registered account.</li>
-
-                    <li>Neither we nor any third parties provide any warranty or guarantee as to the accuracy, timeliness, performance, completeness, or suitability of the information and materials offered on this website or through the Services, for any specific purpose.</li>
-
-                    <li>You acknowledge that such information and materials may contain inaccuracies or errors, and we expressly exclude liability for any such inaccuracies or errors to the fullest extent permitted by law.</li>
-
-                    <li>Your use of our Services and the website is solely at your own risk and discretion. You are required to independently assess and ensure that the Services meet your requirements.</li>
-
-                    <li>The contents of the Website and the Services are proprietary to us, and you will not have any authority to claim any intellectual property rights, title, or interest in its contents.</li>
-
-                    <li>You acknowledge that unauthorized use of the Website or the Services may lead to action against you as per these Terms or applicable laws.</li>
-
-                    <li>You agree to pay us the charges associated with availing the Services.</li>
-
-                    <li>You agree not to use the website and/or Services for any purpose that is unlawful, illegal, or forbidden by these Terms, or Indian or local laws that might apply to you.</li>
-
-                    <li>You agree and acknowledge that the website and the Services may contain links to third-party websites. On accessing these links, you will be governed by the terms of use, privacy policy, and other policies of such third-party websites.</li>
-
-                    <li>You understand that upon initiating a transaction for availing the Services, you are entering into a legally binding and enforceable contract with us for the Services.</li>
-
-                    <li>You shall be entitled to claim a refund of the payment made by you in case we are not able to provide the Service. The timelines for such return and refund will be according to the specific Service you have availed or within the time period provided in our policies (as applicable). In case you do not raise a refund claim within the stipulated time, then this would make you ineligible for a refund.</li>
-
-                    <li>Notwithstanding anything contained in these Terms, the parties shall not be liable for any failure to perform an obligation under these Terms if performance is prevented or delayed by a force majeure event.</li>
-
-                    <li>These Terms and any dispute or claim relating to it, or its enforceability, shall be governed by and construed in accordance with the laws of India.</li>
-
-                    <li>All disputes arising out of or in connection with these Terms shall be subject to the exclusive jurisdiction of the courts in Borivali West, Maharashtra.</li>
-
-                    <li>All concerns or communications relating to these Terms must be communicated to us using the contact information provided on this website.</li>
-                </ol>
-
             </div>
         </div>
     )
