@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { Instagram, MapPin, Mail, Phone, Clock, PartyPopper, Bike, Home, ShoppingBag, ScrollText, Lightbulb, Info, PhoneCall } from 'lucide-react';
 
 const Footer = () => {
+  
   return (
     <footer className="bg-neutral-900 dark:bg-neutral-950 text-white mt-20 pt-12 pb-8 opacity-0 translate-y-5 animate-fade-in">
       <div className="container mx-auto px-4">
@@ -113,10 +114,12 @@ const Footer = () => {
             <ul className="space-y-5 text-sm">
               {[
                 { to: '/', label: 'Home', Icon: Home },
-                { to: '/products', label: 'Products', Icon: ShoppingBag },
+                // { to: '/shop', label: 'Products', Icon: ShoppingBag },
                 { to: '/terms-and-conditions', label: 'Terms & Conditions', Icon: ScrollText },
                 { to: '/concept', label: 'Concept', Icon: Lightbulb },
                 { to: '/about', label: 'About', Icon: Info },
+                { to: '/about', label: 'Privacy Policy', Icon: Info },
+                { to: '/about', label: 'Refund Policy', Icon: Info },
                 { to: '/contact', label: 'Contact', Icon: PhoneCall },
               ].map(({ to, label, Icon }) => (
                 <li key={label}>

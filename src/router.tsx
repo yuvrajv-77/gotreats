@@ -21,6 +21,8 @@ import About from "./pages/About"
 import ManageReviews from "./pages/admin/ManageReviews"
 import ManageReview from "./pages/admin/ManageReview"
 import Customers from "./pages/Customers"
+import PrivacyPolicy from "./pages/PrivacyPolicy"
+import RefundPolicy from "./pages/RefundPolicy"
 
 
 export const router = createBrowserRouter([
@@ -43,6 +45,14 @@ export const router = createBrowserRouter([
         {
           path: "/concept",
           element: <Concept />
+        },
+        {
+          path: "/privacy-policy",
+          element: <PrivacyPolicy />
+        },
+        {
+          path: "/refund-policy",
+          element: <RefundPolicy />
         },
         {
           path: "/about",

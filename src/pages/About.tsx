@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
 import { motion, Variants } from "framer-motion";
 import {
@@ -11,7 +11,7 @@ import {
 const About = () => {
   // Heading text animation variants
   const headingVariants: Variants = {
-    initial: { 
+    initial: {
       opacity: 0,
       y: 30
     },
@@ -27,7 +27,7 @@ const About = () => {
 
   // Word animation variants for "GoTreats"
   const wordVariants: Variants = {
-    initial: { 
+    initial: {
       backgroundPosition: "0% 50%"
     },
     animate: {
@@ -71,6 +71,7 @@ const About = () => {
     },
   ];
 
+  useEffect(() => window.scrollTo(0, 0), [])
   return (
     <div className="min-h-screen bg-gradient-to-br from-white via-lime-50 to-green-100 p-6 sm:p-12">
       <div className="max-w-7xl mx-auto space-y-10 text-center">

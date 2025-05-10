@@ -1,12 +1,12 @@
 import React, { useEffect } from 'react'
 
-const TermsConditions = () => {
+const PrivacyPolicy = () => {
 
         useEffect(() => window.scrollTo(0, 0), [])
     return (
         <div className='max-w-full'>
             <div className='bg-orange-500 text-center py-10'>
-                <h1 className='lancelot text-5xl text-white'>Terms and Conditions</h1>
+                <h1 className='lancelot text-5xl text-white'>Privacy Policy</h1>
             </div>
             <div className='container mx-auto px-4 md:px-8 lg:px-16 flex flex-col justify-center gap-5 text-sm py-8'>
                 <p>
@@ -61,4 +61,4 @@ const TermsConditions = () => {
     )
 }
 
-export default TermsConditions
+export default PrivacyPolicy

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
 import Button from "../components/Button";
 import { motion, Variants } from "framer-motion";
@@ -19,7 +19,7 @@ import {
 const Concept = () => {
   // Heading text animation variants
   const headingVariants: Variants = {
-    initial: { 
+    initial: {
       opacity: 0,
       y: 30
     },
@@ -35,7 +35,7 @@ const Concept = () => {
 
   // Word animation variants for "Concept"
   const wordVariants: Variants = {
-    initial: { 
+    initial: {
       backgroundPosition: "0% 50%"
     },
     animate: {
@@ -56,6 +56,8 @@ const Concept = () => {
     { icon: <Truck size={28} />, title: "Delivery", desc: "Get it at your doorstep" },
   ];
 
+
+  useEffect(() => window.scrollTo(0, 0), [])
   return (
     <div className="min-h-screen bg-gradient-to-br from-white via-lime-50 to-green-100 p-4 sm:p-8">
       <div className="max-w-6xl mx-auto text-center space-y-8">
@@ -71,7 +73,7 @@ const Concept = () => {
               className="text-orange-500 relative inline-block"
             >
               Concept
-              <motion.div 
+              <motion.div
                 className="absolute left-0 right-0 h-1 bg-orange-500 -bottom-4"
                 initial={{ width: 0 }}
                 animate={{ width: "100%" }}
@@ -85,26 +87,26 @@ const Concept = () => {
         </p>
 
         <div className="grid md:grid-cols-2 gap-6 text-left">
-        <ConceptCard
-  title="Fresh & Hygienic"
-  desc="Prepared with high-quality ingredients in a hygienic environment."
-  icon={<UtensilsCrossed size={36} className="text-orange-500" />}
-/>
-<ConceptCard
-  title="Affordable & Convenient"
-  desc="Meals for students, families, and professionals – all on a budget."
-  icon={<PiggyBank size={36} className="text-orange-500" />}
-/>
-<ConceptCard
-  title="Balanced Nutrition"
-  desc="Perfect balance of protein, carbs, and nutrients for your lifestyle."
-  icon={<Salad size={36} className="text-orange-500" />}
-/>
-<ConceptCard
-  title="Eco-Friendly Packaging"
-  desc="Delivered in biodegradable and sustainable containers."
-  icon={<Leaf size={36} className="text-orange-500" />}
-/>
+          <ConceptCard
+            title="Fresh & Hygienic"
+            desc="Prepared with high-quality ingredients in a hygienic environment."
+            icon={<UtensilsCrossed size={36} className="text-orange-500" />}
+          />
+          <ConceptCard
+            title="Affordable & Convenient"
+            desc="Meals for students, families, and professionals – all on a budget."
+            icon={<PiggyBank size={36} className="text-orange-500" />}
+          />
+          <ConceptCard
+            title="Balanced Nutrition"
+            desc="Perfect balance of protein, carbs, and nutrients for your lifestyle."
+            icon={<Salad size={36} className="text-orange-500" />}
+          />
+          <ConceptCard
+            title="Eco-Friendly Packaging"
+            desc="Delivered in biodegradable and sustainable containers."
+            icon={<Leaf size={36} className="text-orange-500" />}
+          />
 
         </div>
 
@@ -117,7 +119,7 @@ const Concept = () => {
             <React.Fragment key={idx}>
               <StepCard step={step} />
               {idx < steps.length - 1 && (
-               <div className="text-orange-500">
+                <div className="text-orange-500">
 
                   <span className="hidden sm:inline">
                     <ArrowRight size={24} />
@@ -136,10 +138,10 @@ const Concept = () => {
         </p>
 
         <Link to="/shop" className="inline-block mt-6 group">
-        <Button variant="success" className="px-6 py-3 rounded-xl font-bold text-white bg-gradient-to-r from-green-500 to-green-600 relative overflow-hidden group transition-transform transform hover:scale-105 duration-500">
-  <span className="relative z-10">Start Ordering →</span>
-  <span className="absolute inset-0 bg-gradient-to-r from-orange-400 via-orange-500 to-orange-600 -translate-x-full group-hover:translate-x-0 transition-transform duration-700 ease-in-out z-0"></span>
-</Button>
+          <Button variant="success" className="px-6 py-3 rounded-xl font-bold text-white bg-gradient-to-r from-green-500 to-green-600 relative overflow-hidden group transition-transform transform hover:scale-105 duration-500">
+            <span className="relative z-10">Start Ordering →</span>
+            <span className="absolute inset-0 bg-gradient-to-r from-orange-400 via-orange-500 to-orange-600 -translate-x-full group-hover:translate-x-0 transition-transform duration-700 ease-in-out z-0"></span>
+          </Button>
 
 
         </Link>
