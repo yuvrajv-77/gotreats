@@ -3,11 +3,13 @@ import { useAuthStore } from '../store/authStore'
 import { useEffect, useState } from 'react'
 import Button from '../components/Button'
 import { Key } from 'lucide-react'
-import { validateAdminPassword } from '../services/authService'
+import { handleLogout, validateAdminPassword } from '../services/authService'
 import { HeroUIProvider } from '@heroui/system'
+import toast from 'react-hot-toast'
 
 const AdminRoutes = () => {
-  const { userDetails } = useAuthStore()
+  const { userDetails,  } = useAuthStore()
+  
   const [isLoading, setIsLoading] = useState(true)
   const [isAuthenticated, setIsAuthenticated] = useState(false)
   const [input, setInput] = useState('')
@@ -45,6 +47,16 @@ const AdminRoutes = () => {
       alert('Something went wrong. Please try again.')
     }
   }
+   const handleLogoutClick = async () => {
+        try {
+            
+            await handleLogout();
+            toast.success('Logged out successfully');
+            // navigate('/');
+        } catch (error) {
+            toast.error('Failed to logout. Please try again.');
+        }
+    };
 
   if (isLoading) {
     return <div>Loading...</div>
@@ -71,6 +83,7 @@ const AdminRoutes = () => {
             <Button variant='primary' className='' type='submit'>Submit</Button>
           </div>
         </div>
+        <Button variant='danger' type='button' onClick={handleLogoutClick}>Logout</Button>
       </form>
     )
   }

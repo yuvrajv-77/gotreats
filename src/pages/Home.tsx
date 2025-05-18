@@ -369,6 +369,7 @@ const Home = () => {
               delay: 3500,
               disableOnInteraction: true,
             }}
+            loop={true}
             breakpoints={{
               // when window width is >= 768px (md)
               768: {
@@ -381,7 +382,7 @@ const Home = () => {
             }}
             onSwiper={setSwiperRef}>
 
-            {products?.slice(0, 5).map((item, index) => (
+            {products?.slice(0, 9).map((item, index) => (
               <SwiperSlide key={index}>
                 <ItemCards item={item} key={index} />
               </SwiperSlide>

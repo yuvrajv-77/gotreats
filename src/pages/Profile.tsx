@@ -88,9 +88,9 @@ const Profile = () => {
                                     <p className='text-sm  text-gray-500 inline-flex items-center gap-3'><Phone size={16} />
                                         {userDetails?.phoneNumber || 'No phone number added'}
                                     </p>
-                                    <p className='text-orange-500 hover:underline hover:cursor-pointer text-sm ' onClick={() => setIsEditingPhone(true)}>
+                                    {/* <p className='text-orange-500 hover:underline hover:cursor-pointer text-sm ' onClick={() => setIsEditingPhone(true)}>
                                         {userDetails?.phoneNumber ? 'Edit Phone Number' : 'Add A Phone Number'}
-                                    </p>
+                                    </p> */}
                                 </div>
                             ) : (
                                 <div className='flex items-center w-full justify-between '>

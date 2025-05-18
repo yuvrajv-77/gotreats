@@ -168,6 +168,10 @@ export const validateAdminPassword = async (password: string): Promise<boolean> 
     }
   };
 
+  export const saveNewUserToFirestore = async (userData: any) => {
+  const ref = doc(db, "users", userData.uid);
+  await setDoc(ref, userData);
+};
 
   // httpsCallable was not working for some reason it remains unauthorized so using https api method
 // export const validateAdminPassword = async (password: string): Promise<boolean> => {
