@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { useAuthStore } from '../store/authStore';
 import Button from '../components/Button';
 import { useNavigate } from 'react-router-dom';
@@ -24,6 +24,9 @@ const Profile = () => {
         setAddress(userDetails?.address || '');
     }, [userDetails?.address]);
 
+    useEffect(() => {
+        window.scrollTo(0, 0);
+    })
     const handleLogoutClick = async () => {
         try {
             await handleLogout();
