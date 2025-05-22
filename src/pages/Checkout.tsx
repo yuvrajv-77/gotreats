@@ -11,12 +11,12 @@ import { useCartStore } from '../store/cartStore'
 import { useNavigate } from 'react-router-dom'
 import { useAuthStore } from '../store/authStore'
 import { handleCheckout } from '../services/orderService'
-import { updateUserAddress, updateUserPhoneNumber } from '../services/authService'
+import { updateUserPhoneNumber } from '../services/authService'
 import toast from 'react-hot-toast'
-import { Trash, ShoppingBag, Send, Check, Loader2, Pencil, X, NotebookTabs, PenBoxIcon } from 'lucide-react'
+import {  ShoppingBag, PenBoxIcon } from 'lucide-react'
 import { motion } from 'framer-motion'
 import AddressSection from '../components/AddressSection'
-import Modal from '../components/Modal'
+
 import CartSection from '../components/CartSection'
 import { OrderDetails } from '../types/orderTypes'
 
@@ -61,34 +61,34 @@ const Checkout = () => {
     useEffect(() => window.scrollTo(0, 0), [])
 
 
-    const handlePhoneSubmit = async () => {
-        try {
-            if (!tempPhoneNumber || tempPhoneNumber.trim() === '') {
-                toast.error('Please enter a phone number to continue');
-                return;
-            }
+    // const handlePhoneSubmit = async () => {
+    //     try {
+    //         if (!tempPhoneNumber || tempPhoneNumber.trim() === '') {
+    //             toast.error('Please enter a phone number to continue');
+    //             return;
+    //         }
 
-            if (tempPhoneNumber.length !== 10) {
-                toast.error('Please enter a valid 10-digit phone number');
-                return;
-            }
+    //         if (tempPhoneNumber.length !== 13) {
+    //             toast.error('Please enter a valid 10-digit phone number');
+    //             return;
+    //         }
 
-            setIsPhoneSaving(true);
-            if (userDetails?.uid) {
-                await updateUserPhoneNumber(userDetails.uid, tempPhoneNumber);
-                useAuthStore.getState().setUserDetails({
-                    ...userDetails,
-                    phoneNumber: tempPhoneNumber
-                });
-                setIsEditingPhone(false);
-                toast.success('Phone number updated successfully');
-            }
-        } catch (err) {
-            console.error("Failed to update phone number:", err);
-            toast.error('Failed to update phone number. Please try again.');
-        }
-        setIsPhoneSaving(false);
-    };
+    //         setIsPhoneSaving(true);
+    //         if (userDetails?.uid) {
+    //             await updateUserPhoneNumber(userDetails.uid, tempPhoneNumber);
+    //             useAuthStore.getState().setUserDetails({
+    //                 ...userDetails,
+    //                 phoneNumber: tempPhoneNumber
+    //             });
+    //             setIsEditingPhone(false);
+    //             toast.success('Phone number updated successfully');
+    //         }
+    //     } catch (err) {
+    //         console.error("Failed to update phone number:", err);
+    //         toast.error('Failed to update phone number. Please try again.');
+    //     }
+    //     setIsPhoneSaving(false);
+    // };
 
     const loadRazorpayScript = () => {
         return new Promise((resolve) => {
@@ -122,7 +122,7 @@ const Checkout = () => {
             return;
         }
 
-        if (!currentUser.phoneNumber || currentUser.phoneNumber.length !== 10) {
+        if (!currentUser.phoneNumber || currentUser.phoneNumber.length !== 13) {
             toast.error('Please enter a valid 10-digit phone number');
             return;
         }
@@ -232,9 +232,10 @@ const Checkout = () => {
             <div className='max-w-3xl mx-auto px-4 py-8'>
                 <div className='flex justify-between items-center  mb-5'>
                     <h1 className='text-3xl font-semibold lancelot text-gray-800'>Checkout</h1>
-                    <Button variant='success' size='sm' onClick={() => navigate('/shop')}>
+                    
+                    <Button variant='success' size='sm'  onClick={() => navigate('/shop')}>
                         <ShoppingBag size={20} />
-                        Add More Item
+                        <p>Add More Item</p>
                     </Button>
                 </div>
 
@@ -262,7 +263,8 @@ const Checkout = () => {
                     <div className='bg-white rounded-xl shadow-sm p-6'>
                         <h2 className='text-xl font-semibold mb-6'>Delivery Information</h2>
 
-                        <div className='mb-6'>
+                         {/* no need for phone number input below since we are using phone auth */}
+                        {/* <div className='mb-6'>
                             <div className='flex items-center justify-between mb-4'>
                                 <h3 className=' text-orange-500 font-medium'>Phone Number</h3>
                                 {userDetails?.phoneNumber && !isEditingPhone && (
@@ -307,7 +309,7 @@ const Checkout = () => {
                                                     />
                                                     <span className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-500 border-r pr-2">+91</span>
                                                 </div>
-                                                {tempPhoneNumber && tempPhoneNumber.length !== 10 && (
+                                                {tempPhoneNumber && tempPhoneNumber.length !== 13 && (
                                                     <p className="mt-1 text-sm text-red-500">Please enter a valid 10-digit phone number</p>
                                                 )}
 
@@ -339,7 +341,7 @@ const Checkout = () => {
                                     </div>
                                 )}
                             </div>
-                        </div>
+                        </div> */}
 
                         <AddressSection uid={userDetails?.uid || ""} />
 

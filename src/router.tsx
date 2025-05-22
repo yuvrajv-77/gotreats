@@ -26,111 +26,113 @@ import RefundPolicy from "./pages/RefundPolicy"
 
 
 export const router = createBrowserRouter([
-    {
-      path: "/",
-      element: <Layout />,
-      children: [
-        {
-          path: "/",
-          element: <Home />
-        },
-        {
-          path: "/login",
-          element: <Login />
-        },
-        {
-          path: "/register",
-          element: <Register />
-        },
-        {
-          path: "/concept",
-          element: <Concept />
-        },
-        {
-          path: "/privacy-policy",
-          element: <PrivacyPolicy />
-        },
-        {
-          path: "/refund-policy",
-          element: <RefundPolicy />
-        },
-        {
-          path: "/about",
-          element: <About />
-        },
-        {
-          path: "/customers",
-          element: <Customers />
-        },
-        {
-          path: "/shop",
-          element: <Shop />
-        },
-        {
-          path: "/contact",
-          element: <Contact />
-        },
-        {
-          path: "/terms-and-conditions",
-          element: <TermsConditions />
-        },
-        {
-          element: <ProtectedRoute />,
-          children: [
-            {
-              path: "/checkout",
-              element: <Checkout />
-            },
-            {
-              path: "/profile",
-              element: <Profile />
-            },
-            {
-              path: "/orders",
-              element: <Orders />,
-              children: [
-                {
-                  path: ":orderId",
-                  element: <Orders />
-                }
-              ]
-            }
-          ]
-        },
-      ]
-    },
-    {
-      path: "/admin",
-      element:<AdminRoutes/>,
-      children:[
-        {
-          
-          element: <AdminLayout/>,
-          children: [
-            
-            {
-              path: "view-all-products",
-              element:<ManageProducts/>,
-            },
-            {
-              path: "product-form",
-              element:<ProductFrom/>
-            },
-            {
-              path: "product-form/:productId",
-              element:<ProductFrom/>
-            },
-            {
-              path: "view-all-orders",
-              element:<ManageOrders/>
-            },
-            {
-              path: "manage-reviews",
-              element:<ManageReview/>
-            }
-          ]
-        }
-      ]
-      
-    }
-  ])
+  {
+    path: "/register",
+    element: <Register />
+  },
+  {
+    path: "/",
+    element: <Layout />,
+    children: [
+      {
+        path: "/",
+        element: <Home />
+      },
+      // {
+      //   path: "/login",
+      //   element: <Login />
+      // },
+
+      {
+        path: "/concept",
+        element: <Concept />
+      },
+      {
+        path: "/privacy-policy",
+        element: <PrivacyPolicy />
+      },
+      {
+        path: "/refund-policy",
+        element: <RefundPolicy />
+      },
+      {
+        path: "/about",
+        element: <About />
+      },
+      {
+        path: "/customers",
+        element: <Customers />
+      },
+      {
+        path: "/shop",
+        element: <Shop />
+      },
+      {
+        path: "/contact",
+        element: <Contact />
+      },
+      {
+        path: "/terms-and-conditions",
+        element: <TermsConditions />
+      },
+      {
+        element: <ProtectedRoute />,
+        children: [
+          {
+            path: "/checkout",
+            element: <Checkout />
+          },
+          {
+            path: "/profile",
+            element: <Profile />
+          },
+          {
+            path: "/orders",
+            element: <Orders />,
+            children: [
+              {
+                path: ":orderId",
+                element: <Orders />
+              }
+            ]
+          }
+        ]
+      },
+    ]
+  },
+  
+  {
+    path: "/admin",
+    element: <AdminRoutes />,
+    children: [
+      {
+
+        element: <AdminLayout />,
+        children: [
+
+          {
+            path: "view-all-products",
+            element: <ManageProducts />,
+          },
+          {
+            path: "product-form",
+            element: <ProductFrom />
+          },
+          {
+            path: "product-form/:productId",
+            element: <ProductFrom />
+          },
+          {
+            path: "view-all-orders",
+            element: <ManageOrders />
+          },
+          {
+            path: "manage-reviews",
+            element: <ManageReview />
+          }
+        ]
+      }
+    ]
+
+  }
+])
