@@ -70,7 +70,7 @@ const Navbar = () => {
     return (
         <>
             <nav className='flex fixed top-0 left-0 w-full lg:justify-around justify-between shadow-sm px-3 py-2 lg:py-3 lg:px-0 items-center bg-white z-[40]'>
-                <ul className='gap-6 hidden lg:flex'>
+                <ul className='gap-6  hidden lg:flex'>
                     <li className='relative group nav-item'>
                         <Link to='/shop' className={`py-2 px-1 inline-block overflow-hidden ${isLinkActive('/shop') ? 'nav-link-active' : ''}`}>
                             <span className='relative z-10 text-gray-800 group-hover:text-green-600 transition-colors duration-300'>Shop</span>
@@ -142,9 +142,11 @@ const Navbar = () => {
                     {user &&
                         <Dropdown>
                             <DropdownTrigger>
-                                <Button variant='secondary' className='bg-wh' >
-                                    <UserRound strokeWidth={1.4} />
-                                    <p className='hidden lg:block'>{userDetails?.displayName}</p>
+                                <Button variant='secondary' >
+                                    <div className='flex items-center gap-2'>
+                                        <UserRound strokeWidth={1.4} />
+                                        <p className='hidden lg:block'>{userDetails?.displayName}</p>
+                                    </div>
                                 </Button>
                             </DropdownTrigger>
                             <DropdownMenu aria-label="Static Actions" >
@@ -186,11 +188,11 @@ const Navbar = () => {
 
                     {!user &&
                         <div className='flex items-center gap-4'>
-                            <div onClick={() => navigate('/Login')} className="hidden lg:block cursor-pointer">
+                            {/* <div onClick={() => navigate('/Login')} className="hidden lg:block cursor-pointer">
                                 <button className="nav-signin">Sign In</button>
-                            </div>
-                            <div onClick={() => navigate('/Register')} className="cursor-pointer">
-                                <button className="nav-signup">Sign Up</button>
+                            </div> */}
+                            <div onClick={() => navigate('/register')} className="cursor-pointer">
+                             <Button variant='primary'  className=''>Sign Up</Button>
                             </div>
                         </div>
                     }
