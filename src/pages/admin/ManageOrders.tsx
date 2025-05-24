@@ -157,7 +157,7 @@ const ManageOrders = () => {
           ))}
         </AnimatePresence>
       </div>
-      <Button
+      {/* <Button
         onClick={() => {
           addToast({
             title: 'New Order Arrived !',
@@ -189,7 +189,7 @@ const ManageOrders = () => {
         }}
         variant='primary'>
         toast
-      </Button>
+      </Button> */}
     </div>
   );
 };
