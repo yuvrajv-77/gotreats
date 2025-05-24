@@ -221,7 +221,6 @@ const Orders = () => {
                                             <span>Delivery Charges</span>
                                             <span>₹{selectedOrder?.deliveryCharge || '0.00'}</span>
                                         </div>
-
                                     </div>
 
                                     {/* Total Paid Section */}

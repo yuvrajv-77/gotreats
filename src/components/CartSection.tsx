@@ -41,6 +41,7 @@ const CartSection: React.FC<CartSectionProps> = ({ items, updateItemQuantity }) 
 
         {/* Cart Items */}
         <div className="space-y-6">
+          
           {items.map((item) => {
             
             return (

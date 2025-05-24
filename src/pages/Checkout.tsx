@@ -20,7 +20,7 @@ import Modal from '../components/Modal'
 import CartSection from '../components/CartSection'
 import { OrderDetails } from '../types/orderTypes'
 
-const DELIVERY_PRICE = 20
+const DELIVERY_PRICE = 0
 const TAX_RATE = 0
 
 
@@ -368,12 +368,21 @@ const Checkout = () => {
                             </h2>
 
                             <div className=' mb-6'>
-                                <div className='flex justify-between items-center text-gray-600 py-2'>
+                                {/* <div className='flex justify-between items-center text-gray-600 py-2'>
                                     <span className="text-gray-800">Gross Total</span>
                                     <div className="flex items-center gap-2">
                                         <span className="text-gray-800 font-medium">₹{grossTotalPrice.toFixed(2)}</span>
                                     </div>
-                                </div>
+                                </div> */}
+                                {items.map((item, index) => (
+                                    <div key={index} className='flex justify-between items-center text-gray-600 py-2'>
+                                        <span className="text-gray-800">{item.productName}{item.quantity > 1 ? ` x ${item.quantity}` : ''}</span>
+                                        <div className="flex items-center gap-2">
+                                            <span className="text-gray-800 font-medium">₹{item.offerPrice * item.quantity}</span>
+                                        </div>
+                                    </div>
+                                ))}
+                                
 
                                 {/* <div className='flex justify-between items-center text-gray-600 py-2'>
                                     <div className="flex items-center gap-2">
@@ -385,7 +394,7 @@ const Checkout = () => {
                                     <span className="text-gray-800 font-medium">₹{(grossTotalPrice * TAX_RATE).toFixed(2)}</span>
                                 </div> */}
 
-                                <div className='flex justify-between items-center text-gray-600 py-2'>
+                                {/* <div className='flex justify-between items-center text-gray-600 py-2'>
                                     <div className="flex items-center gap-2">
                                         <span className="text-gray-800">Delivery Fee</span>
                                         <div className="px-1.5 py-0.5 bg-gray-100 rounded text-xs">
@@ -393,10 +402,10 @@ const Checkout = () => {
                                         </div>
                                     </div>
                                     <span className="text-gray-800 font-medium">₹{DELIVERY_PRICE.toFixed(2)}</span>
-                                </div>
+                                </div> */}
                             </div>
 
-                            <div className="bg-green-50 p-4 rounded-lg mb-6">
+                            {/* <div className="bg-green-50 p-4 rounded-lg mb-6">
                                 <div className="flex items-center justify-between">
                                     <div className="flex items-center gap-2">
                                         <div className="w-8 h-8 rounded-full bg-green-100 flex items-center justify-center">
@@ -411,7 +420,7 @@ const Checkout = () => {
                                     </div>
                                     <span className="text-green-700 font-bold">₹{(grossTotalPrice * 0.1).toFixed(2)}</span>
                                 </div>
-                            </div>
+                            </div> */}
 
                             <div className='pt-4 border-t border-dashed'>
                                 <div className='flex justify-between items-start'>
