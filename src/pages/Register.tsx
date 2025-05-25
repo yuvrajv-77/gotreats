@@ -11,7 +11,7 @@ import { getUserFromDb, saveNewUserToFirestore } from "@/services/authService";
 import { Phone } from "lucide-react";
 
 const Register = () => {
-const [step, setStep] = useState<1 | 2 | 3>(1);
+  const [step, setStep] = useState<1 | 2 | 3>(1);
   const [phone, setPhone] = useState("");
   const [otp, setOtp] = useState("");
   const [confirmationResult, setConfirmationResult] = useState<any>(null);
@@ -59,19 +59,19 @@ const [step, setStep] = useState<1 | 2 | 3>(1);
       const user = result.user;
 
       // 👇 Since getUserFromDb returns `data()` or undefined, just check truthiness
-    const userDetails = await getUserFromDb(user.uid);
+      const userDetails = await getUserFromDb(user.uid);
 
-    if (userDetails) {
-      // 🔐 Existing user
-      setUser(user);
-      setUserDetails(userDetails);
-      toast.success("Login successful");
-      navigate("/");
-    } else {
-      // New user
-      console.log("[verifyOtp] New user detected. Moving to name/email input.");
-      setStep(3);
-    }
+      if (userDetails) {
+        // 🔐 Existing user
+        setUser(user);
+        setUserDetails(userDetails);
+        toast.success("Login successful");
+        navigate("/");
+      } else {
+        // New user
+        console.log("[verifyOtp] New user detected. Moving to name/email input.");
+        setStep(3);
+      }
     } catch (err) {
       console.error("[verifyOtp]", err);
       setError("Invalid OTP");
@@ -113,118 +113,123 @@ const [step, setStep] = useState<1 | 2 | 3>(1);
     }
   };
 
-    return (
-        <div className="h-svh border">
-            <div className="md:grid grid-cols-2 h-full px-7 md:px-0">
-                <div className="w-full h-full flex flex-col items-center justify-center relative">
-                    {/* Step 1: Phone Number Input */}
-                    {step === 1 && (
-                        <div className="md:w-1/2">
-                            <p className="text-2xl md:text-3xl font-bold mb-2 flex item-center">Welcome</p>
-                            <p className="text-sm text-gray-600 mb-10">Enter your phone number to get started</p>
-                            <Input
-                                type="tel"
-                                value={phone}
-                                onChange={(e) => setPhone(e.target.value)}
-                                label="Phone Number"
-                                placeholder="Enter Phone Number"
-                                labelPlacement="outside"
-                                size="lg" isInvalid={error !== ""}
-                                errorMessage={error}
-                                isRequired maxLength={10}
-                                startContent={
-                                    <div className="flex items-center gap-2 text-gray-600">
-                                        <Phone size={16} />|<p>+91</p>
-                                    </div>
-                                }
-                            />
-                            <Button
-                                variant="primary"
-                                size="lg"
-                                onClick={handleSendOtp}
-                                className="mt-4 w-full"
-                                isLoading={loading}
-                            >
-                                Send OTP
-                            </Button>
-                            <p className="text-sm text-gray-600 mt-4">By Clicking "Send OTP", you agree to our <Link to="/terms-and-conditions"><strong>Terms and Conditions</strong></Link> and <Link to="/privacy-policy"><strong>Privacy Policy</strong></Link></p>
-                        </div>
-                    )}
-
-                    {/* Step 2: OTP Input */}
-                    {step === 2 && (
-                        <div className="md:w-1/2 flex flex-col items-start justify-center">
-                            
-                            <p className="text-2xl md:text-3xl font-bold mb-2 flex item-center">Enter OTP</p>
-                            <p className="text-sm text-gray-600 mb-10">We have sent an OTP to your Phone Number +91{phone}</p>
-                            <InputOtp
-                                value={otp}
-                                onValueChange={setOtp}
-                                length={6}
-                                variant="faded"
-                                size="lg" isInvalid={error !== ""}
-                                errorMessage={error}
-                                autoFocus
-                            />
-                            <Button
-                                variant="primary"
-                                onClick={handleVerifyOtp}
-                                className="mt-4"
-                                isLoading={loading}
-                            >
-                                Verify OTP
-                            </Button>
-                        </div>
-                    )}
-
-                    {/* Step 3: Name and Email Input for New Users */}
-                    {step === 3 && (
-                        <div className="md:w-1/2 space-y-6">
-                            <p className="text-2xl md:text-3xl font-bold flex item-center ">Enter Details</p>
-                            <Input
-                                label="Enter Your Name"
-                                value={formData.name}
-                                onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                                // placeholder="Enter your name"
-                                size="md"
-                                autoFocus
-                                isRequired
-                            />
-                            <Input
-                                label="Current Number"
-                                value={phone}
-                                disabled
-                                // placeholder="Enter your name"
-                                size="md"
-                                className="text-"
-                                isRequired 
-                            />
-                            <Input
-                                label="Enter Your Email"
-                                value={formData.email}
-                                onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                                // placeholder="Enter your email"
-                                size="md"
-                               
-                                type="email"
-                                isRequired
-                            />
-                            <Button
-                                variant="primary"
-                                onClick={handleSaveNewUser}
-                                className="mt-4 w-full"
-                                isLoading={loading}
-                            >
-                                Save and Create Account
-                            </Button>
-                        </div>
-                    )}
-                </div>
-                <div className="bg-[url('/register.webp')]  bg-cover bg-center bg-no-repeat rotate-270 h-full hidden lg:block"></div>
+  return (
+    <div className="h-svh border">
+      <div className="md:grid grid-cols-2 h-full px-7 md:px-0">
+        <div className="w-full h-full flex flex-col items-center justify-center relative">
+          {/* Step 1: Phone Number Input */}
+          {step === 1 && (
+            <div className="md:w-1/2">
+              <p className="text-2xl md:text-3xl font-bold mb-15 flex item-center">Welcome to
+                <div onClick={() => navigate('/')} className="cursor-pointer ml-3">
+                  <p className='comfortaa font-bold tracking-tighter text-2xl lg:text-3xl text-orange-600'>
+                    <span className='text-green-500'>go</span>treats
+                  </p>
+                </div></p>
+              {/* <p className="text-sm text-gray-600 mb-10">Enter your phone number to get started</p> */}
+              <Input
+                type="tel"
+                value={phone}
+                onChange={(e) => setPhone(e.target.value)}
+                label="Phone Number"
+                placeholder="Enter Phone Number"
+                labelPlacement="outside"
+                size="lg" isInvalid={error !== ""}
+                errorMessage={error}
+                isRequired maxLength={10}
+                startContent={
+                  <div className="flex items-center gap-2 text-gray-600">
+                    <Phone size={16} />|<p>+91</p>
+                  </div>
+                }
+              />
+              <Button
+                variant="primary"
+                size="lg"
+                onClick={handleSendOtp}
+                className="mt-4 w-full"
+                isLoading={loading}
+              >
+                Send OTP
+              </Button>
+              <p className="text-sm text-gray-600 mt-4">By Clicking "Send OTP", you agree to our <Link to="/terms-and-conditions"><strong>Terms and Conditions</strong></Link> and <Link to="/privacy-policy"><strong>Privacy Policy</strong></Link></p>
             </div>
-            <div id="recaptcha-container"></div>
+          )}
+
+          {/* Step 2: OTP Input */}
+          {step === 2 && (
+            <div className="md:w-1/2 flex flex-col items-start justify-center">
+
+              <p className="text-2xl md:text-3xl font-bold mb-2 flex item-center">Enter OTP</p>
+              <p className="text-sm text-gray-600 mb-10">We have sent an OTP to your Phone Number +91{phone}</p>
+              <InputOtp
+                value={otp}
+                onValueChange={setOtp}
+                length={6}
+                variant="faded"
+                size="lg" isInvalid={error !== ""}
+                errorMessage={error}
+                autoFocus
+              />
+              <Button
+                variant="primary"
+                onClick={handleVerifyOtp}
+                className="mt-4"
+                isLoading={loading}
+              >
+                Verify OTP
+              </Button>
+            </div>
+          )}
+
+          {/* Step 3: Name and Email Input for New Users */}
+          {step === 3 && (
+            <div className="md:w-1/2 space-y-6">
+              <p className="text-2xl md:text-3xl font-bold flex item-center ">Enter Details</p>
+              <Input
+                label="Enter Your Name"
+                value={formData.name}
+                onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                // placeholder="Enter your name"
+                size="md"
+                autoFocus
+                isRequired
+              />
+              <Input
+                label="Current Number"
+                value={phone}
+                disabled
+                // placeholder="Enter your name"
+                size="md"
+                className="text-"
+                isRequired
+              />
+              <Input
+                label="Enter Your Email"
+                value={formData.email}
+                onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                // placeholder="Enter your email"
+                size="md"
+
+                type="email"
+                isRequired
+              />
+              <Button
+                variant="primary"
+                onClick={handleSaveNewUser}
+                className="mt-4 w-full"
+                isLoading={loading}
+              >
+                Save and Create Account
+              </Button>
+            </div>
+          )}
         </div>
-    );
+        <div className="bg-[url('/register.webp')]  bg-cover bg-center bg-no-repeat rotate-270 h-full hidden lg:block"></div>
+      </div>
+      <div id="recaptcha-container"></div>
+    </div>
+  );
 };
 
 export default Register;

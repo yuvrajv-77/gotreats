@@ -4,7 +4,7 @@ import { useCartStore } from '../store/cartStore'
 import { useAuthStore } from '../store/authStore'
 import { useNavigate } from 'react-router-dom'
 import { motion } from 'framer-motion'
-import React from 'react'
+import React, { useState } from 'react'
 
 // Add keyframes for the glowing animation
 const glowingStyles = `
@@ -81,6 +81,9 @@ const ItemCards = ({ item }: { item: Item }) => {
         };
     }, []);
 
+     const [imgLoaded, setImgLoaded] = useState(false);
+     const [imgLoadedMobile, setImgLoadedMobile] = useState(false);
+
     const veg = (
         <div className='border-2 rounded-md border-green-700 flex items-center justify-center size-5 mb-1'>
             <div className='p-1 bg-green-700 rounded-full size-2'></div>
@@ -118,19 +121,30 @@ const ItemCards = ({ item }: { item: Item }) => {
         <>
             <div className='md:flex flex-col justify-between hidden group w-64 lg:w-76 bg-white p-6 rounded-3xl shadow-xs cursor-pointer hover:bg-green-50 transition-color duration-500 border-orange-50 relative'>
                 {/* Most Ordered Tag for Desktop */}
-                {(item.productName.toLowerCase().includes('combo') || 
-                  item.productName.toLowerCase().includes('poori bhaji')) && (
-                    <motion.div
-                        initial={{ scale: 0.9, opacity: 0 }}
-                        animate={{ scale: 1, opacity: 1 }}
-                        className="absolute -top-2 -right-2 z-10"
-                    >
-                        <div className="tag-container bg-gradient-to-r from-orange-600 to-orange-500 text-white text-xs font-medium px-2 py-1 rounded-lg shadow-lg transform rotate-3 whitespace-nowrap">
-                            <span className="glowing-text">Most Ordered</span> ⭐
-                        </div>
-                    </motion.div>
-                )}
-                <img src={item.imageUrl} alt="" className='mb-5 size-64 object-cover rounded-3xl group-hover:scale-102 transition-all duration-500' />
+                {(item.productName.toLowerCase().includes('combo') ||
+                    item.productName.toLowerCase().includes('poori bhaji')) && (
+                        <motion.div
+                            initial={{ scale: 0.9, opacity: 0 }}
+                            animate={{ scale: 1, opacity: 1 }}
+                            className="absolute -top-2 -right-2 z-10"
+                        >
+                            <div className="tag-container bg-gradient-to-r from-orange-600 to-orange-500 text-white text-xs font-medium px-2 py-1 rounded-lg shadow-lg transform rotate-3 whitespace-nowrap">
+                                <span className="glowing-text">Most Ordered</span> ⭐
+                            </div>
+                        </motion.div>
+                    )}
+                <div className="relative mb-5 size-64">
+                    {!imgLoaded && (
+                        <div className="absolute inset-0 bg-gray-200 animate-pulse rounded-3xl" />
+                    )}
+                    <img
+                        src={item.imageUrl}
+                        alt=""
+                        loading="lazy"
+                        onLoad={() => setImgLoaded(true)}
+                        className={`size-64 object-cover rounded-3xl group-hover:scale-102 transition-all duration-500 ${imgLoaded ? 'opacity-100' : 'opacity-0'}`}
+                    />
+                </div>
                 {item.isNonVeg ? nonVeg : veg}
                 <h4 className='lancelot text-2xl lg:text-3xl font-medium'>{item.productName}</h4>
                 <p className='comfortaa text-sm text-green-700 font-bold flex items-center gap-1 mb-2'><Star fill='green' size={13} />{item.rating}</p>
@@ -139,25 +153,25 @@ const ItemCards = ({ item }: { item: Item }) => {
                 <div className='flex justify-between items-center mt-5'>
                     {
                         user ?
-                        <div className=' h-9 flex justify-between items-center bg-green-100 rounded-lg text-lg'>
-                            <button
-                                onClick={handleDecrement}
-                                className='h-full flex items-center px-3 text-4xl text-green-600 cursor-pointer'
-                            >
-                                -
+                            <div className=' h-9 flex justify-between items-center bg-green-100 rounded-lg text-lg'>
+                                <button
+                                    onClick={handleDecrement}
+                                    className='h-full flex items-center px-3 text-4xl text-green-600 cursor-pointer'
+                                >
+                                    -
+                                </button>
+                                <p className='px-2 text-green-600 font-semibold'>{quantity}</p>
+                                <button
+                                    onClick={handleIncrement}
+                                    className='h-full flex items-center px-3 text-3xl text-green-600 cursor-pointer hover:text-green-800'
+                                >
+                                    +
+                                </button>
+                            </div>
+                            :
+                            <button onClick={() => navigate('/register')} className=' h-9 flex justify-between items-center bg-green-100 rounded-lg text-lg'>
+                                <p className='px-2 text-green-600 text-sm font-semibold'>Login to add</p>
                             </button>
-                            <p className='px-2 text-green-600 font-semibold'>{quantity}</p>
-                            <button
-                                onClick={handleIncrement}
-                                className='h-full flex items-center px-3 text-3xl text-green-600 cursor-pointer hover:text-green-800'
-                            >
-                                +
-                            </button>
-                        </div>
-                        :
-                        <button onClick={() => navigate('/register')} className=' h-9 flex justify-between items-center bg-green-100 rounded-lg text-lg'>
-                            <p className='px-2 text-green-600 text-sm font-semibold'>Login to add</p>
-                        </button>
                     }
                     <div className='inline-flex items-center gap-2'>
                         <p className='comfortaa text-lg line-through '> ₹{item.originalPrice} </p>
@@ -168,18 +182,18 @@ const ItemCards = ({ item }: { item: Item }) => {
 
             <div className='flex md:hidden justify-between mx-2 p-4 gap-1 rounded-xl shadow-xs cursor-pointer bg-white transition-color duration-500 w-full relative'>
                 {/* Most Ordered Tag for Mobile */}
-                {(item.productName.toLowerCase().includes('combo') || 
-                  item.productName.toLowerCase().includes('poori bhaji')) && (
-                    <motion.div
-                        initial={{ scale: 0.9, opacity: 0 }}
-                        animate={{ scale: 1, opacity: 1 }}
-                        className="absolute -top-2 right-2 z-10"
-                    >
-                        <div className="tag-container bg-gradient-to-r from-orange-600 to-orange-500 text-white text-[10px] font-medium px-1.5 py-0.5 rounded-md shadow-md transform rotate-2 whitespace-nowrap">
-                            <span className="glowing-text">Most Ordered</span> ⭐
-                        </div>
-                    </motion.div>
-                )}
+                {(item.productName.toLowerCase().includes('combo') ||
+                    item.productName.toLowerCase().includes('poori bhaji')) && (
+                        <motion.div
+                            initial={{ scale: 0.9, opacity: 0 }}
+                            animate={{ scale: 1, opacity: 1 }}
+                            className="absolute -top-2 right-2 z-10"
+                        >
+                            <div className="tag-container bg-gradient-to-r from-orange-600 to-orange-500 text-white text-[10px] font-medium px-1.5 py-0.5 rounded-md shadow-md transform rotate-2 whitespace-nowrap">
+                                <span className="glowing-text">Most Ordered</span> ⭐
+                            </div>
+                        </motion.div>
+                    )}
                 <div className=' w-3/5'>
                     {item.isNonVeg ? nonVeg : veg}
                     <h4 className='lancelot text-2xl font-bold mb-2'>{item.productName}</h4>
@@ -191,28 +205,39 @@ const ItemCards = ({ item }: { item: Item }) => {
                     <p className=' text-gray-500 text-sm line-clamp-2 tracking-tight'>{item.productDescription}</p>
                 </div>
                 <div className='flex flex-col justify-between items-center  w-2/5'>
-                    <img src={item.imageUrl} className=' size-30 mb-3  rounded-2xl  object-cover' alt="" />
+                    <div className="relative size-30 mb-3">
+                        {!imgLoadedMobile && (
+                            <div className="absolute inset-0 bg-gray-200 animate-pulse rounded-2xl" />
+                        )}
+                        <img
+                            src={item.imageUrl}
+                            alt=""
+                            loading="lazy"
+                            onLoad={() => setImgLoadedMobile(true)}
+                            className={`size-30 rounded-2xl object-cover transition-all duration-500 ${imgLoadedMobile ? 'opacity-100' : 'opacity-0'}`}
+                        />
+                    </div>
                     {
                         user ?
-                        <div className=' h-9 flex justify-between items-center bg-green-100 rounded-lg text-lg'>
-                            <button
-                                onClick={handleDecrement}
-                                className='h-full flex items-center px-3 text-4xl text-green-600 cursor-pointer'
-                            >
-                                -
+                            <div className=' h-9 flex justify-between items-center bg-green-100 rounded-lg text-lg'>
+                                <button
+                                    onClick={handleDecrement}
+                                    className='h-full flex items-center px-3 text-4xl text-green-600 cursor-pointer'
+                                >
+                                    -
+                                </button>
+                                <p className='px-2 text-green-600 font-semibold'>{quantity}</p>
+                                <button
+                                    onClick={handleIncrement}
+                                    className='h-full flex items-center px-3 text-3xl text-green-600 cursor-pointer hover:text-green-800'
+                                >
+                                    +
+                                </button>
+                            </div>
+                            :
+                            <button onClick={() => navigate('/register')} className=' h-9 flex justify-between items-center bg-green-100 rounded-lg text-lg'>
+                                <p className='px-2 text-green-600 text-sm font-semibold'>Login to add</p>
                             </button>
-                            <p className='px-2 text-green-600 font-semibold'>{quantity}</p>
-                            <button
-                                onClick={handleIncrement}
-                                className='h-full flex items-center px-3 text-3xl text-green-600 cursor-pointer hover:text-green-800'
-                            >
-                                +
-                            </button>
-                        </div>
-                        :
-                        <button onClick={() => navigate('/register')} className=' h-9 flex justify-between items-center bg-green-100 rounded-lg text-lg'>
-                            <p className='px-2 text-green-600 text-sm font-semibold'>Login to add</p>
-                        </button>
                     }
                 </div>
             </div>

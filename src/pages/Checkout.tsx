@@ -13,7 +13,7 @@ import { useAuthStore } from '../store/authStore'
 import { handleCheckout } from '../services/orderService'
 import { updateUserPhoneNumber } from '../services/authService'
 import toast from 'react-hot-toast'
-import {  ShoppingBag, PenBoxIcon } from 'lucide-react'
+import { ShoppingBag, PenBoxIcon } from 'lucide-react'
 import { motion } from 'framer-motion'
 import AddressSection from '../components/AddressSection'
 
@@ -452,7 +452,7 @@ const Checkout = () => {
                                     <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
                                 </svg>
                                 <p className="text-xs">
-                                    Secure payment gateway • Terms & conditions apply
+                                    Secure payment via Razorpay
                                 </p>
                             </div>
                         </div>

@@ -22,9 +22,7 @@ export const getItemsFromFirestore = async () => {
           imageUrl: doc.data().imageUrl,
           rating: doc.data().rating,
           isAvailable: doc.data().isAvailable
-         
         }
-
       ));
       return allItems;
   

@@ -1,4 +1,4 @@
-import { BadgePercent, Candy, Dessert, Drumstick, Salad, Search, Soup, Utensils } from 'lucide-react';
+import { BadgePercent, Beer, Candy, Cookie, Dessert, Drumstick, Salad, Search, Soup, Utensils } from 'lucide-react';
 import { useEffect, useState } from 'react';
 import ItemCards from '../components/ItemCards';
 import { useNavigate, useSearchParams } from 'react-router-dom';
@@ -19,6 +19,7 @@ const Shop = () => {
     const products = useProductStore((state) => state.products);
     const items = useCartStore((state) => state.items);
     const itemQuantity = useCartStore((state) => state.itemCount);
+
 
     useEffect(() => {
         if (!tag) {
@@ -71,10 +72,9 @@ const Shop = () => {
             return filteredProducts?.filter(item => item.category === 'Desserts');
         } else if (tag === 'snacks') {
             return filteredProducts?.filter(item => item.category === 'Snacks');
-        } else if (tag === 'chocolate') {
-            return filteredProducts?.filter(item => item.category === 'Chocolate');
+        } else if (tag === 'drinks') {
+            return filteredProducts?.filter(item => item.category === 'Drinks');
         }
-
         return filteredProducts;
     };
 
@@ -195,7 +195,7 @@ const Shop = () => {
                                     <span
                                         className={`whitespace-nowrap cursor-pointer px-4 py-2 rounded-xl ${tag == 'paav-bhaaji' ? 'bg-orange-600 text-white hover:text-white' : 'bg-white'}  hover:text-orange-600 inline-flex items-center shadow-xs gap-2 transition-colors duration-100 ease-in`}
                                         onClick={() => navigate('/shop/?tag=paav-bhaaji')}>
-                                        Paav Bhaaji
+                                        Pav Bhaaji
                                     </span>
                                     <span
                                         className={`whitespace-nowrap cursor-pointer px-4 py-2 rounded-xl ${tag == 'pasta' ? 'bg-orange-600 text-white hover:text-white' : 'bg-white'}  hover:text-orange-600 inline-flex items-center shadow-xs gap-2 transition-colors duration-100 ease-in`}
@@ -205,22 +205,26 @@ const Shop = () => {
                                     <span
                                         className={`whitespace-nowrap cursor-pointer px-4 py-2 rounded-xl ${tag == 'maggi' ? 'bg-orange-600 text-white hover:text-white' : 'bg-white'}  hover:text-orange-600 inline-flex items-center shadow-xs gap-2 transition-colors duration-100 ease-in`}
                                         onClick={() => navigate('/shop/?tag=maggi')}>
-                                        <Soup strokeWidth={1.5} />Maggi
+                                        <Soup strokeWidth={1.5} />
+                                        Maggi
                                     </span>
                                     <span
                                         className={`whitespace-nowrap cursor-pointer px-4 py-2 rounded-xl ${tag == 'desserts' ? 'bg-orange-600 text-white hover:text-white' : 'bg-white'}  hover:text-orange-600 inline-flex items-center shadow-xs gap-2 transition-colors duration-100 ease-in`}
                                         onClick={() => navigate('/shop/?tag=desserts')}>
-                                        <Dessert strokeWidth={1.5} /> Desserts
+                                        <Dessert strokeWidth={1.5} /> 
+                                        Desserts
                                     </span>
                                     <span
                                         className={`whitespace-nowrap cursor-pointer px-4 py-2 rounded-xl ${tag == 'snacks' ? 'bg-orange-600 text-white hover:text-white' : 'bg-white'}  hover:text-orange-600 inline-flex items-center shadow-xs gap-2 transition-colors duration-100 ease-in`}
                                         onClick={() => navigate('/shop/?tag=snacks')}>
+                                            <Cookie strokeWidth={1.5} />
                                         Snacks
                                     </span>
                                     <span
-                                        className={`whitespace-nowrap cursor-pointer px-4 py-2 rounded-xl ${tag == 'chocolate' ? 'bg-orange-600 text-white hover:text-white' : 'bg-white'}  hover:text-orange-600 inline-flex items-center shadow-xs gap-2 transition-colors duration-100 ease-in`}
-                                        onClick={() => navigate('/shop/?tag=chocolate')}>
-                                        Chocolate
+                                        className={`whitespace-nowrap cursor-pointer px-4 py-2 rounded-xl ${tag == 'drinks' ? 'bg-orange-600 text-white hover:text-white' : 'bg-white'}  hover:text-orange-600 inline-flex items-center shadow-xs gap-2 transition-colors duration-100 ease-in`}
+                                        onClick={() => navigate('/shop/?tag=drinks')}>
+                                        <Beer strokeWidth={1.5} />
+                                        Drinks & Juices
                                     </span>
                                 </>
                             )}

@@ -209,7 +209,7 @@ const Home = () => {
                     <span className="text-green-500">✓</span> Valid on all meal options
                   </li>
                   <li className="flex items-center gap-2">
-                    <span className="text-green-500">✓</span> Limited time offer - <span className="font-semibold text-red-600">Valid till April 20th</span>
+                    <span className="text-green-500">✓</span> Limited time offer - <span className="font-semibold text-red-600">Valid till August 20th</span>
                   </li>
                 </ul>
                 <button
