@@ -158,7 +158,7 @@ const Orders = () => {
                     {(onClose) => (
                         <div className='flex flex-col h-full justify-between '>
                             <div>
-                                <DrawerHeader className="flex items-center gap-1 bg-white  border-b fixed top-0 w-full z-[100] shadow-sm">
+                                <DrawerHeader className="flex items-center gap-1 bg-white   border-b fixed top-0 w-full  shadow-sm">
                                     <IconButton><ArrowLeft size={20} onClick={onClose} /></IconButton>
                                     <p> Order #{selectedOrder?.id}</p>
 

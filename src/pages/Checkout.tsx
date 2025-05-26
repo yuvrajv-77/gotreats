@@ -188,7 +188,7 @@ const Checkout = () => {
             },
             modal: {
                 ondismiss: function () {
-                    toast('Payment popup closed');
+                    toast('Payment Cancelled');
                 }
             },
             handler: async function (response: any) {

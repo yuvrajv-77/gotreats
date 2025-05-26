@@ -74,6 +74,8 @@ const Shop = () => {
             return filteredProducts?.filter(item => item.category === 'Snacks');
         } else if (tag === 'drinks') {
             return filteredProducts?.filter(item => item.category === 'Drinks');
+        }else if (tag === 'pickles') {
+            return filteredProducts?.filter(item => item.category === 'Pickles');
         }
         return filteredProducts;
     };
@@ -195,7 +197,7 @@ const Shop = () => {
                                     <span
                                         className={`whitespace-nowrap cursor-pointer px-4 py-2 rounded-xl ${tag == 'paav-bhaaji' ? 'bg-orange-600 text-white hover:text-white' : 'bg-white'}  hover:text-orange-600 inline-flex items-center shadow-xs gap-2 transition-colors duration-100 ease-in`}
                                         onClick={() => navigate('/shop/?tag=paav-bhaaji')}>
-                                        Pav Bhaaji
+                                        Pav Bhaji
                                     </span>
                                     <span
                                         className={`whitespace-nowrap cursor-pointer px-4 py-2 rounded-xl ${tag == 'pasta' ? 'bg-orange-600 text-white hover:text-white' : 'bg-white'}  hover:text-orange-600 inline-flex items-center shadow-xs gap-2 transition-colors duration-100 ease-in`}
@@ -225,6 +227,12 @@ const Shop = () => {
                                         onClick={() => navigate('/shop/?tag=drinks')}>
                                         <Beer strokeWidth={1.5} />
                                         Drinks & Juices
+                                    </span>
+                                    <span
+                                        className={`whitespace-nowrap cursor-pointer px-4 py-2 rounded-xl ${tag == 'pickles' ? 'bg-orange-600 text-white hover:text-white' : 'bg-white'}  hover:text-orange-600 inline-flex items-center shadow-xs gap-2 transition-colors duration-100 ease-in`}
+                                        onClick={() => navigate('/shop/?tag=pickles')}>
+                                        <Beer strokeWidth={1.5} />
+                                        Pickles
                                     </span>
                                 </>
                             )}
@@ -276,9 +284,9 @@ const Shop = () => {
                                 window.scrollTo(0, 0);
                                 navigate('/checkout');
                             }}
-                            className="relative bg-black text-white px-5 py-2.5 rounded-full shadow-lg hover:bg-gray-900 transition-all duration-300 backdrop-blur-sm"
+                            className="relative bg-black  text-white px-6 py-4 rounded-full min-w- shadow-lg hover:bg-gray-900 transition-all duration-300"
                         >
-                            <span className="flex items-center text-sm">
+                            <span className="flex items-center">
                                 <p className="font-medium">{itemQuantity} Items Added</p>
                                 <span className="text-orange-400 ml-3">View Cart →</span>
                             </span>

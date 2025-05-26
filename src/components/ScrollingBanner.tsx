@@ -3,14 +3,12 @@ import { ChefHat, Zap,IndianRupee, Truck, Clock, Star, UtensilsCrossed, ShieldCh
 
 const ScrollingBanner = () => {
     const bannerItems = [
-        { text: "Homemade Food", icon: <ChefHat size={20} /> },
-        { text: "Fast Services", icon: <Zap size={20} /> },
         { text: "Affordable", icon: <IndianRupee size={20} /> },
-        { text: "Free Delivery upto 500 meters", icon: <Truck size={20} /> },
-        { text: "On-Time Delivery", icon: <Clock size={20} /> },
+        { text: "Order Delivery in 1 Hour", icon: <Truck size={20} /> },
         { text: "Best Quality", icon: <Star size={20} /> },
         { text: "Fresh Food", icon: <UtensilsCrossed size={20} /> },
-        { text: "Hygienic Preparation", icon: <ShieldCheck size={20} /> }
+        { text: "Hygienic Preparation", icon: <ShieldCheck size={20} /> },
+        { text: "Free Delivery upto 500 meters", icon: <Truck size={20} /> },
     ];
 
     // Triple the items for even more seamless scrolling

@@ -11,12 +11,21 @@ import toast, { Toaster } from 'react-hot-toast';
 import DeliveryAreaChecker from './DeliveryAreaChecker';
 import Modal from './Modal';
 
+export const BrandLogo = () => {
+    const navigate = useNavigate();
+    return (
+        <div onClick={() => navigate('/')} className="cursor-pointer">
+            <p className='comfortaa font-bold tracking-tighter text-2xl lg:text-3xl text-orange-600'>
+                <span className='text-green-500'>go</span>treats
+            </p>
+        </div>
+    )
+}
 const Navbar = () => {
     const [isOpen, setIsOpen] = useState(false)
     const [showDeliveryChecker, setShowDeliveryChecker] = useState(false)
     const [showLogoutModal, setShowLogoutModal] = useState(false);
     const location = useLocation();
-
     const user = useAuthStore((state) => state.user)
     const userDetails = useAuthStore((state) => state.userDetails)
     const items = useCartStore((state) => state.items);
@@ -57,232 +66,137 @@ const Navbar = () => {
         return location.pathname === path;
     };
 
-    const menuItems = [
-        { path: '/', label: 'Home' },
-        { path: '/shop', label: 'Shop' },
-        { path: '/terms-and-conditions', label: 'Terms and Conditions' },
-        { path: '/about', label: 'About' },
-        { path: '/customers', label: 'Customers' },
-        { path: '/contact', label: 'Contact Us' },
-        { path: '/concept', label: 'Concept' },
-    ]
 
     return (
         <>
-            <nav className='flex fixed top-0 left-0 w-full lg:justify-around justify-between shadow-sm px-3 py-2 lg:py-3 lg:px-0 items-center bg-white z-[40]'>
-                <ul className='gap-6  hidden lg:flex'>
-                    <li className='relative group nav-item'>
-                        <Link to='/shop' className={`py-2 px-1 inline-block overflow-hidden ${isLinkActive('/shop') ? 'nav-link-active' : ''}`}>
-                            <span className='relative z-10 text-gray-800 group-hover:text-green-600 transition-colors duration-300'>Shop</span>
-                            <span className='absolute bottom-0 left-0 w-0 h-0.5 bg-green-500 group-hover:w-full transition-all duration-300'></span>
-                        </Link>
-                    </li>
-                    <li className='relative group nav-item'>
-                        <Link to='/concept' className={`py-2 px-1 inline-block overflow-hidden ${isLinkActive('/concept') ? 'nav-link-active' : ''}`}>
-                            <span className='relative z-10 text-gray-800 group-hover:text-green-600 transition-colors duration-300'>Concept</span>
-                            <span className='absolute bottom-0 left-0 w-0 h-0.5 bg-green-500 group-hover:w-full transition-all duration-300'></span>
-                        </Link>
-                    </li>
-                    <li className='relative group nav-item'>
-                        <Link to='/about' className={`py-2 px-1 inline-block overflow-hidden ${isLinkActive('/about') ? 'nav-link-active' : ''}`}>
-                            <span className='relative z-10 text-gray-800 group-hover:text-green-600 transition-colors duration-300'>About</span>
-                            <span className='absolute bottom-0 left-0 w-0 h-0.5 bg-green-500 group-hover:w-full transition-all duration-300'></span>
-                        </Link>
-                    </li>
-                    <li className='relative group nav-item'>
-                        <Link to='/customers' className={`py-2 px-1 inline-block overflow-hidden ${isLinkActive('/customers') ? 'nav-link-active' : ''}`}>
-                            <span className='relative z-10 text-gray-800 group-hover:text-green-600 transition-colors duration-300'>Customers</span>
-                            <span className='absolute bottom-0 left-0 w-0 h-0.5 bg-green-500 group-hover:w-full transition-all duration-300'></span>
-                        </Link>
-                    </li>
-                    <li className='relative group nav-item'>
-                        <Link to='/contact' className={`py-2 px-1 inline-block overflow-hidden ${isLinkActive('/contact') ? 'nav-link-active' : ''}`}>
-                            <span className='relative z-10 text-gray-800 group-hover:text-green-600 transition-colors duration-300'>Contact</span>
-                            <span className='absolute bottom-0 left-0 w-0 h-0.5 bg-green-500 group-hover:w-full transition-all duration-300'></span>
-                        </Link>
-                    </li>
-                </ul>
-                <div className='flex items-center gap-8'>
-                    <IconButton className='lg:hidden block cursor-thumb' onClick={() => setIsOpen((prev) => !prev)}>
-                        {isOpen ? (
-                            <X strokeWidth={1.6} className="transition-transform duration-300" />
-                        ) : (
-                            <Menu strokeWidth={1.6} className="transition-transform duration-300" />
-                        )}
-                    </IconButton>
-                    <div onClick={() => navigate('/')} className="cursor-pointer">
-                        <p className='comfortaa font-bold tracking-tighter text-2xl lg:text-3xl text-orange-600'>
-                            <span className='text-green-500'>go</span>treats
-                        </p>
-                    </div>
-                    <button
-                        onClick={() => setShowDeliveryChecker(true)}
-                        className="hidden lg:flex items-center gap-2 border border-gray-200 rounded-md px-4 py-2 hover:border-green-500 hover:bg-green-50/50 transition-all duration-300 cursor-pointer group"
-                    >
-                        <span className="text-gray-600 group-hover:text-green-600 transition-colors">Check Our Delivery Areas</span>
-                        <span className="bg-green-500 text-white px-3 py-1 rounded-md text-sm group-hover:bg-green-600 transition-colors">Check</span>
-                    </button>
-                </div>
-                <div className='flex gap-4 items-center'>
-                    {userDetails?.role === 'admin' &&
-                        <Button variant='primary' className='hidden lg:block' onClick={() => navigate('/admin/view-all-products')}>Admin</Button>
-                    }
+            <header className=" py-2  w-full  z-50 ">
+                <div className="container  mx-auto">
+                    <div className="border bg-whitebackdrop-blur-md border-white/20 ">
+                        <div className=" grid grid-cols-2 lg:grid-cols-3 px-4 md:pr-2 py-2  items-center">
+                            <div className='flex items-center gap-2'>
+                                <span onClick={() => setIsOpen(!isOpen)}>
+                                    <svg
+                                        xmlns="http://www.w3.org/2000/svg"
+                                        width="24"
+                                        height="24"
+                                        viewBox="0 0 24 24"
+                                        fill="none"
+                                        stroke="currentColor"
+                                        strokeWidth="2"
+                                        strokeLinecap="round"
+                                        strokeLinejoin="round"
+                                        className="feather feather-menu md:hidden"
+                                    >
+                                        <line x1="3" y1="6" x2="21" y2="6" className={`origin-left transition ${isOpen ? "rotate-45 -translate-y-1" : ""}`}></line>
+                                        <line x1="3" y1="12" x2="21" y2="12" className={isOpen ? "opacity-0 transition" : "transition"}></line>
+                                        <line x1="3" y1="18" x2="21" y2="18" className={`origin-left transition ${isOpen ? "-rotate-45 translate-y-1" : ""}`}></line>
+                                    </svg>
+                                </span>
+                                <BrandLogo />
+                            </div>
+                            <div className="hidden lg:block">
+                                <nav className="flex gap-10 items-center justify-center">
+                                    <Link to="/shop" className="">Menu</Link>
+                                    <Link to="/concept" className="">Concept</Link>
+                                    <Link to="/about" className="">About</Link>
+                                    <Link to="/customers" className="">Customers</Link>
+                                    <Link to="/contact" className="">Contact</Link>
+                                </nav>
+                            </div>
+                            <div className="flex justify-end gap-4">
+                                {!user && (
+                                    <Button variant='primary' className='' onClick={() => navigate('/register')}>Sign Up</Button>
+                                )}
+                                {user &&
+                                    <div onClick={() => navigate('/checkout')} className="cursor-pointer">
+                                        <IconButton>
+                                            <ShoppingCart strokeWidth={1.4} />
+                                            <p className='text-green-600 text-lg'>
+                                                {items.reduce((total, item) => total + item.quantity, 0)}
+                                            </p>
+                                        </IconButton>
+                                    </div>
+                                }
+                                {user &&
+                                    <Dropdown>
+                                        <DropdownTrigger>
+                                            <Button variant='secondary' >
+                                                <div className='flex items-center gap-2'>
+                                                    <UserRound strokeWidth={1.4} />
+                                                    <p className='hidden lg:block'>{userDetails?.displayName}</p>
+                                                </div>
+                                            </Button>
+                                        </DropdownTrigger>
+                                        <DropdownMenu aria-label="Static Actions" >
+                                            <DropdownItem
+                                                className='hover:bg-gray-100'
+                                                key="profile"
+                                                onPress={() => navigate('/profile')}
+                                            >
+                                                <div className="flex items-center gap-2">
+                                                    <UserRound size={16} />
+                                                    Profile
+                                                </div>
+                                            </DropdownItem>
+                                            <DropdownItem key="orders" onPress={() => navigate('/orders')}>
+                                                <div className="flex items-center gap-2">
+                                                    <Box size={16} />
+                                                    Orders
+                                                </div>
+                                            </DropdownItem>
+                                            <DropdownItem key="orders" onPress={() => navigate('/contact')}>
+                                                <div className="flex items-center gap-2">
+                                                    <CircleHelp size={16} />
+                                                    Help
+                                                </div>
+                                            </DropdownItem>
+                                            <DropdownItem
+                                                className='hover:bg-gray-100 text-red-500'
+                                                key="logout"
+                                                onPress={() => setShowLogoutModal(true)}
+                                            >
+                                                <div className="flex items-center gap-2">
+                                                    <LogOut size={16} />
+                                                    Log Out
+                                                </div>
+                                            </DropdownItem>
+                                        </DropdownMenu>
+                                    </Dropdown>
+                                }
 
-                    {user &&
-                        <div onClick={() => navigate('/checkout')} className="cursor-pointer">
-                            <IconButton>
-                                <ShoppingCart strokeWidth={1.4} />
-                                <p className='text-green-600 text-lg'>
-                                    {items.reduce((total, item) => total + item.quantity, 0)}
-                                </p>
-                            </IconButton>
-                        </div>
-                    }
-
-                    {user &&
-                        <Dropdown>
-                            <DropdownTrigger>
-                                <Button variant='secondary' >
-                                    <div className='flex items-center gap-2'>
-                                        <UserRound strokeWidth={1.4} />
-                                        <p className='hidden lg:block'>{userDetails?.displayName}</p>
-                                    </div>
-                                </Button>
-                            </DropdownTrigger>
-                            <DropdownMenu aria-label="Static Actions" >
-                                <DropdownItem
-                                    className='hover:bg-gray-100'
-                                    key="profile"
-                                    onPress={() => navigate('/profile')}
-                                >
-                                    <div className="flex items-center gap-2">
-                                        <UserRound size={16} />
-                                        Profile
-                                    </div>
-                                </DropdownItem>
-                                <DropdownItem key="orders" onPress={() => navigate('/orders')}>
-                                    <div className="flex items-center gap-2">
-                                        <Box size={16} />
-                                        Orders
-                                    </div>
-                                </DropdownItem>
-                                <DropdownItem key="orders" onPress={() => navigate('/contact')}>
-                                    <div className="flex items-center gap-2">
-                                        <CircleHelp size={16} />
-                                        Help
-                                    </div>
-                                </DropdownItem>
-                                <DropdownItem
-                                    className='hover:bg-gray-100 text-red-500'
-                                    key="logout"
-                                    onPress={() => setShowLogoutModal(true)}
-                                >
-                                    <div className="flex items-center gap-2">
-                                        <LogOut size={16} />
-                                        Log Out
-                                    </div>
-                                </DropdownItem>
-                            </DropdownMenu>
-                        </Dropdown>
-                    }
-
-                    {!user &&
-                        <div className='flex items-center gap-4'>
-                            {/* <div onClick={() => navigate('/Login')} className="hidden lg:block cursor-pointer">
-                                <button className="nav-signin">Sign In</button>
-                            </div> */}
-                            <div onClick={() => navigate('/register')} className="cursor-pointer">
-                             <Button variant='primary'  className=''>Sign Up</Button>
                             </div>
                         </div>
-                    }
+                        <AnimatePresence>
+                            {isOpen && (
+                                <motion.div
+                                    initial={{ height: 0 }}
+                                    animate={{ height: "100dvh" }}
+                                    exit={{ height: 0 }}
+                                    className="overflow-hidden">
+                                    <div className="flex flex-col gap-10 items-center justify-center px-10 py-10 ">
+                                        <nav className="flex flex-col gap-15 items-center justify-center">
+                                            <Link to="/" onClick={() => setIsOpen(false)} className={`text-lg `}>Home</Link>
+                                            <Link to="/shop" onClick={() => setIsOpen(false)} className={`text-lg `}>Shop</Link>
+                                            <Link to="/terms-and-conditions" onClick={() => setIsOpen(false)} className={`text-lg `}>Terms and Conditions</Link>
+                                            <Link to="/about" onClick={() => setIsOpen(false)} className={`text-lg `}>About</Link>
+                                            <Link to="/customers" onClick={() => setIsOpen(false)} className={`text-lg `}>Customers</Link>
+                                            <Link to="/contact" onClick={() => setIsOpen(false)} className={`text-lg `}>Contact Us</Link>
+                                            <Link to="/concept" onClick={() => setIsOpen(false)} className={`text-lg `}>Concept</Link>
+                                        </nav>
+                                        <div className="space-y-4 w-full">
+
+                                            {user ?
+                                                <Button variant='danger' className='w-full' onClick={() => setShowLogoutModal(true)}>Log Out</Button> :
+                                                <Button variant='primary' className='w-full' onClick={() => navigate('/register')}>Sign Up</Button>
+                                            }
+                                        </div>
+                                    </div>
+                                </motion.div>
+                            )}
+                        </AnimatePresence>
+                    </div>
                 </div>
-            </nav>
-
-            {/* Mobile Menu Overlay */}
-            <AnimatePresence>
-                {isOpen && (
-                    <>
-                        <motion.div
-                            initial={{ opacity: 0 }}
-                            animate={{ opacity: 1 }}
-                            exit={{ opacity: 0 }}
-                            className='fixed inset-0 bg-black z-[90]'
-                        />
-                        <motion.div
-                            initial={{ opacity: 0 }}
-                            animate={{ opacity: 1 }}
-                            exit={{ opacity: 0 }}
-                            className='fixed left-0 top-[72px] h-[calc(100vh-72px)] w-full lg:hidden bg-black z-[95]'
-                        >
-                            <motion.ul
-                                className='h-full w-full flex flex-col justify-start pt-16 gap-5 items-center'
-                                initial="closed"
-                                animate="open"
-                                variants={{
-                                    open: {
-                                        transition: { staggerChildren: 0.1, delayChildren: 0.2 }
-                                    },
-                                    closed: {
-                                        transition: { staggerChildren: 0.05, staggerDirection: -1 }
-                                    }
-                                }}
-                            >
-                                <motion.li
-                                    className='w-full text-center'
-                                    variants={{
-                                        open: {
-                                            y: 0,
-                                            opacity: 1,
-                                            transition: { type: "spring", stiffness: 300, damping: 24 }
-                                        },
-                                        closed: { y: 20, opacity: 0 }
-                                    }}
-                                >
-                                    <button
-                                        className="flex items-center justify-center gap-2 w-[80%] mx-auto border border-gray-700 rounded-md px-4 py-3 text-white hover:bg-white/10 transition-colors"
-                                        onClick={() => setShowDeliveryChecker(true)}
-                                    >
-                                        <MapPin size={18} className="text-green-500" />
-                                        <span>Check Our Delivery Areas</span>
-                                        <span className="bg-green-500 px-3 py-1 rounded-md text-sm">Check</span>
-                                    </button>
-                                </motion.li>
-                                {menuItems.map((item) => (
-                                    <motion.li
-                                        key={item.path}
-                                        className='w-full text-center'
-                                        variants={{
-                                            open: {
-                                                y: 0,
-                                                opacity: 1,
-                                                transition: { type: "spring", stiffness: 300, damping: 24 }
-                                            },
-                                            closed: { y: 20, opacity: 0 }
-                                        }}
-                                    >
-                                        <button
-                                            className={`text-xl px-10 py-3 w-full transition-all duration-300 rounded-lg font-medium cursor-pointer text-white
-                                            hover:bg-white/10`}
-                                            onClick={() => handleNavigation(item.path)}
-                                        >
-                                            {item.label}
-                                        </button>
-                                    </motion.li>
-                                ))}
-                            </motion.ul>
-                        </motion.div>
-                    </>
-                )}
-            </AnimatePresence>
-
-            {/* Delivery Area Checker Modal */}
-            <DeliveryAreaChecker
-                isOpen={showDeliveryChecker}
-                onClose={() => setShowDeliveryChecker(false)}
-                setMobileMenuOpen={setIsOpen}
-            />
-
+            </header>
             <Modal
                 isOpen={showLogoutModal}
                 title="Confirm Logout"
@@ -292,8 +206,6 @@ const Navbar = () => {
                 confirmLabel="Yes, Log Out"
                 cancelLabel="Cancel"
             />
-
-
 
             <Toaster />
         </>

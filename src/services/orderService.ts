@@ -4,6 +4,7 @@ import { OrderDetails, OrderData } from '../types/orderTypes';
 
 export const handleCheckout = async (orderDetails: OrderDetails): Promise<boolean> => {
     try {
+        
         const orderData: OrderData = {
             ...orderDetails,
             createdAt: new Date().toISOString(),

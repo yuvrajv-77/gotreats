@@ -128,7 +128,7 @@ const Register = () => {
                 </div></p>
               {/* <p className="text-sm text-gray-600 mb-10">Enter your phone number to get started</p> */}
               <Input
-                type="tel"
+                type="tel" autoFocus
                 value={phone}
                 onChange={(e) => setPhone(e.target.value)}
                 label="Phone Number"

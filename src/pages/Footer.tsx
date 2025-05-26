@@ -171,8 +171,6 @@ const Footer = () => {
               {[
                 'Kandivali West',
                 'Borivali West',
-                'Dahisar West',
-                'Malad West',
                 'Shimpoli',
                 'Satya Nagar',
                 'Dhanukarwadi',
