@@ -18,7 +18,8 @@ function Layout() {
 
   const { data } = useQuery({
     queryKey: ['items'],
-    queryFn: getItemsFromFirestore
+    queryFn: getItemsFromFirestore,
+    
   })
 
   useEffect(() => {

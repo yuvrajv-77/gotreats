@@ -111,7 +111,7 @@ const Footer = () => {
           {/* Quick Links */}
           <div>
             <h4 className="text-lg font-semibold mb-4">Quick Links</h4>
-            <ul className="space-y-5 text-sm">
+            <ul className="space-y-2 text-sm">
               {[
                 { to: '/', label: 'Home', Icon: Home },
                 // { to: '/shop', label: 'Products', Icon: ShoppingBag },
@@ -138,7 +138,7 @@ const Footer = () => {
           {/* Contact Info */}
           <div>
             <h4 className="text-lg font-semibold mb-4">Contact Us</h4>
-            <ul className="space-y-5 text-sm">
+            <ul className="space-y-2 text-sm">
               <li className="flex items-start gap-4 group transition-all duration-300 hover:translate-x-1">
                 <MapPin className="text-orange-500 mt-1 group-hover:scale-110 transition-transform" size={20} />
                 <span className="text-gray-400 dark:text-gray-300 group-hover:text-white transition-colors leading-relaxed">
@@ -167,7 +167,7 @@ const Footer = () => {
           {/* Delivery Service */}
           <div>
             <h4 className="text-lg font-semibold mb-4">Delivery Service</h4>
-            <ul className="space-y-5 text-sm">
+            <ul className="space-y-2 text-sm">
               {[
                 'Kandivali West',
                 'Borivali West',

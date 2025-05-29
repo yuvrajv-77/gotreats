@@ -231,7 +231,7 @@ const Shop = () => {
                                     <span
                                         className={`whitespace-nowrap cursor-pointer px-4 py-2 rounded-xl ${tag == 'pickles' ? 'bg-orange-600 text-white hover:text-white' : 'bg-white'}  hover:text-orange-600 inline-flex items-center shadow-xs gap-2 transition-colors duration-100 ease-in`}
                                         onClick={() => navigate('/shop/?tag=pickles')}>
-                                        <Beer strokeWidth={1.5} />
+                                        
                                         Pickles
                                     </span>
                                 </>
@@ -265,7 +265,7 @@ const Shop = () => {
                     {/* Items Container */}
                     <div className='flex flex-wrap lg:gap-10 gap-4 mt-10 justify-center'>
                         {getFilteredProducts()?.map((item, index) => (
-                            <ItemCards key={index} item={item} />
+                            <ItemCards key={item.id} item={item} />
                         ))}
                     </div>
 

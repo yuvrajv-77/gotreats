@@ -23,6 +23,7 @@ import ManageReview from "./pages/admin/ManageReview"
 import Customers from "./pages/Customers"
 import PrivacyPolicy from "./pages/PrivacyPolicy"
 import RefundPolicy from "./pages/RefundPolicy"
+import ManageVouchers from "./pages/admin/ManageVouchers"
 
 
 export const router = createBrowserRouter([
@@ -129,6 +130,10 @@ export const router = createBrowserRouter([
           {
             path: "manage-reviews",
             element: <ManageReview />
+          },
+          {
+            path: "manage-vouchers",
+            element: <ManageVouchers />
           }
         ]
       }

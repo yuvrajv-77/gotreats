@@ -135,7 +135,9 @@ const ItemCards = ({ item }: { item: Item }) => {
                     )}
                 <div className="relative mb-5 size-64">
                     {!imgLoaded && (
-                        <div className="absolute inset-0 bg-gray-200 animate-pulse rounded-3xl" />
+                        <div className="absolute inset-0 bg-gray-200 animate-pulse flex items-center justify-center rounded-3xl" >
+                            <p className='comfortaa text-4xl tracking-tighter font-bold text-zinc-400'>gotreats</p>
+                        </div>
                     )}
                     <img
                         src={item.imageUrl}
@@ -207,7 +209,9 @@ const ItemCards = ({ item }: { item: Item }) => {
                 <div className='flex flex-col justify-between items-center  w-2/5'>
                     <div className="relative size-30 mb-3">
                         {!imgLoadedMobile && (
-                            <div className="absolute inset-0 bg-gray-200 animate-pulse rounded-2xl" />
+                            <div className="absolute inset-0 bg-gray-200 animate-pulse flex items-center justify-center rounded-3xl" >
+                            <p className='comfortaa text-2xl tracking-tighter font-bold text-zinc-400'>gotreats</p>
+                        </div>
                         )}
                         <img
                             src={item.imageUrl}

@@ -96,11 +96,11 @@ const Navbar = () => {
                             </div>
                             <div className="hidden lg:block">
                                 <nav className="flex gap-10 items-center justify-center">
-                                    <Link to="/shop" className="">Menu</Link>
-                                    <Link to="/concept" className="">Concept</Link>
-                                    <Link to="/about" className="">About</Link>
-                                    <Link to="/customers" className="">Customers</Link>
-                                    <Link to="/contact" className="">Contact</Link>
+                                    <Link to="/shop" className="hover:text-green-600">Menu</Link>
+                                    <Link to="/concept" className="hover:text-green-600">Concept</Link>
+                                    <Link to="/about" className="hover:text-green-600">About</Link>
+                                    <Link to="/customers" className="hover:text-green-600">Customers</Link>
+                                    <Link to="/contact" className="hover:text-green-600">Contact</Link>
                                 </nav>
                             </div>
                             <div className="flex justify-end gap-4">

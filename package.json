@@ -10,7 +10,6 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "@cashfreepayments/cashfree-js": "^1.0.5",
     "@formspark/use-formspark": "^0.1.42",
     "@heroui/drawer": "^2.2.16",
     "@heroui/react": "^2.8.0-beta.4",

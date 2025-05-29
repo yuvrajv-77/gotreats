@@ -1,4 +1,4 @@
-import { Box, Calendar, Home, Inbox, MessageCircleMore, Salad, Search, Settings } from "lucide-react"
+import { Box, Calendar, Home, Inbox, MessageCircleMore, Salad, Search, Settings, TicketPercent } from "lucide-react"
 
 import {
     Sidebar,
@@ -30,6 +30,11 @@ const items = [
         title: "Reviews",
         url: "/admin/manage-reviews",
         icon: MessageCircleMore,
+    },
+    {
+        title: "Vouchers",
+        url: "/admin/manage-vouchers",
+        icon: TicketPercent,
     },
 
 ]
