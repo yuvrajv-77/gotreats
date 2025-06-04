@@ -22,6 +22,10 @@ const ManageVouchers = () => {
     console.log("vouchers", vouchers);
 
     const handleDeleteVoucher = async (id: string) =>{
+        // window.alert("Are you sure you want to delete this voucher?");
+        if (!window.confirm("Are you sure you want to delete this voucher?")) {
+            return;
+        }
         await deleteVoucher(id);
         refetch();
         toast.success("Voucher deleted successfully");
