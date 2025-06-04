@@ -2,7 +2,7 @@ import { ArrowLeft, ArrowRight, Banknote, Box, Check, Circle, Clock, Coins, Cook
 import React, { useState } from 'react';
 import { Select, SelectSection, SelectItem, Drawer, useDisclosure, DrawerContent, DrawerHeader, DrawerBody, DrawerFooter, Tooltip } from "@heroui/react";
 import toast from 'react-hot-toast';
-import { motion } from 'framer-motion';
+import { AnimatePresence, motion } from 'framer-motion';
 import Button, { IconButton } from './Button';
 import { StatusBadge } from './StatusBadge';
 
@@ -220,66 +220,80 @@ const OrderCard = ({ order, onUpdateStatus, i }) => {
                     </div>
                 </div>
                 {/* for desktop */}
-                {
-                    expanded && (
 
-                        <div className='hidden md:block mt-4 border-t border-gray-300 p-4'>
-
-                            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                                {/* Customer Details */}
-                                <div>
-                                    <h3 className="font-semibold lancelot text-purple-700 mb-2 flex gap-2 item-center"><User size={19} /> Customer Details</h3>
-                                    <p><strong>Name:</strong> {order.customer.name}</p>
-                                    {/* <p><strong>Customer ID:</strong> {order.customer.uid}</p> */}
-                                    <p><strong>Phone:</strong> {order.customer.phoneNumber}</p>
-                                    <p><strong>Email:</strong> {order.customer.email}</p>
-                                </div>
-                                {/* Address Breakdown */}
-                                <div>
-                                    <h3 className="font-semibold lancelot text-purple-700 mb-2 flex gap-2 item-center"><MapPin size={19} /> Address</h3>
-                                    <p><strong>Flat Number:</strong> {order.address.flatNumber}</p>
-                                    <p><strong>Building Name:</strong> {order.address.buildingName}</p>
-                                    <p><strong>Street Address:</strong> {order.address.streetAddress}</p>
-                                    <p><strong>Area:</strong> {order.address.area}</p>
-                                    <p><strong>Pincode:</strong> {order.address.pincode}</p>
-                                </div>
-
-                                {/* Payment Details */}
-                                <div>
-                                    <h3 className="font-semibold lancelot text-purple-700 mb-2 flex gap-2 item-center"><Banknote size={19} /> Payment Details</h3>
-                                    <p><strong>Total Items:</strong> {order.totalQuantity}</p>
-                                    <p><strong>Total Price:</strong> {order.totalAmount}</p>
-                                    <p className='text-green-600'><strong>Payment ID:</strong> {order.razorpay_payment_id}</p>
-                                    <p className='text-green-600'><strong>Payment Status:</strong> {order.paymentStatus}</p>
-                                    <p><strong>Delivery Time:</strong> {order.deliveryTime}</p>
-                                </div>
-                                {/* Items */}
-                                <div className="">
-                                    <h3 className="font-semibold lancelot text-purple-700 flex gap-2 item-center"><ShoppingBasket size={19} /> Items</h3>
-                                    <ul className="list-disc pl-5 space-y-1">
-                                        {order.items.map((item, index) => (
-                                            <li key={index}>
-                                                <strong>{item.productName}</strong> - Quantity: {item.quantity}, Price: {item.offerPrice}
-                                            </li>
-                                        ))}
-                                    </ul>
-                                </div>
-                                <div>
-                                    <h3 className="font-bold lancelot text-purple-700 mb-2 flex gap-2 item-center"><Box size={19} /> Order Details</h3>
-                                    <p><strong>Total Items:</strong> {order.totalQuantity}</p>
-                                    <p><strong>Order Status:</strong> {order.orderStatus}</p>
-                                    <p><strong>Order Created At:</strong> {formatOrderDateTime(order.createdAt)}</p>
-                                </div>
-                                <div>
-                                    <h3 className="font-bold lancelot text-purple-700 mb-2 flex gap-2 item-center">< CookingPot size={19} /> Instruction</h3>
-                                    <p className='text-gray-600'>" {order.note} "</p>
+                <AnimatePresence>
 
 
+                    {
+                        expanded && (
+
+                            <motion.div
+                                initial={{ height: 0 }}
+                                animate={{ height: 'auto' }}
+                                transition={{ duration: 0.3 }}
+                                exit={{ height: 0 }}
+                                className='hidden md:block mt-4 border-t border-gray-300 p-4 overflow-hidden'>
+
+                                <div className="grid  grid-cols-1 md:grid-cols-3 gap-4">
+                                    {/* Customer Details */}
+                                    <div className=''>
+                                        <h3 className="font-semibold lancelot text-purple-700 mb-2 flex gap-2 item-center"><User size={19} /> Customer Details</h3>
+                                        <p className='flex justify-between pr-10'><strong>Name:</strong> {order.customer.name}</p>
+                                        <p className='flex text-sm justify-between pr-10'><strong>Customer ID:</strong> {order.customer.uid}</p>
+                                        <p className='flex justify-between pr-10'><strong>Phone:</strong> {order.customer.phoneNumber}</p>
+                                        <p className='flex justify-between pr-10'><strong>Email:</strong> {order.customer.email}</p>
+                                    </div>
+                                    {/* Address Breakdown */}
+                                    <div>
+                                        <h3 className="font-semibold lancelot text-purple-700 mb-2 flex gap-2 item-center"><MapPin size={19} /> Address</h3>
+                                        <p><strong>Flat Number: </strong> {order.address.flatNumber}</p>
+                                        <p><strong>Building Name: </strong> {order.address.buildingName}</p>
+                                        <p><strong>Street Address:</strong> {order.address.streetAddress}</p>
+                                        <p><strong>Area:</strong> {order.address.area}</p>
+                                        <p><strong>Pincode:</strong> {order.address.pincode}</p>
+                                    </div>
+
+                                    {/* Payment Details */}
+                                    <div>
+                                        <h3 className="font-semibold lancelot text-purple-700 mb-2 flex gap-2 item-center"><Banknote size={19} /> Payment Details</h3>
+                                        <p className='flex justify-between pr-10'><strong>Total Items:</strong> {order.totalQuantity}</p>
+                                        <p className='flex justify-between pr-10'><strong>Total Price:</strong> ₹{order.totalAmount}</p>
+                                        <p className='text-green-600 flex justify-between pr-10'><strong>Payment ID:</strong> {order.razorpay_payment_id}</p>
+                                        <p className='text-green-600 flex justify-between pr-10'><strong>Payment Status:</strong> {order.paymentStatus}</p>
+                                        <p className='flex justify-between pr-10'><strong>Delivery Time:</strong> {order.deliveryTime}</p>
+                                    </div>
+                                    {/* Items */}
+                                    <div className="">
+                                        <h3 className="font-semibold lancelot text-purple-700 flex gap-2 item-center"><ShoppingBasket size={19} /> Items</h3>
+                                        <ul className="list-disc pl-5 space-y-1">
+                                            {order.items.map((item, index) => (
+                                                <li key={index} className='flex justify-between pr-10'>
+                                                    <strong>{item.productName}</strong>  Quantity: {item.quantity}, Price: {item.offerPrice}
+                                                </li>
+                                            ))}
+                                        </ul>
+                                    </div>
+                                    <div>
+                                        <h3 className="font-bold lancelot text-purple-700 mb-2 flex gap-2 item-center"><Box size={19} /> Order Details</h3>
+                                        <p className='flex justify-between pr-10'><strong>Total Items:</strong> {order.totalQuantity}</p>
+                                        <p className='flex justify-between pr-10'><strong>Order Status:</strong> {order.orderStatus}</p>
+                                        <p className='flex justify-between pr-10'><strong>Gross Total: </strong> ₹{order.grossTotalPrice}</p>
+                                        <p className='flex justify-between pr-10'><strong>Discount: </strong> -₹{order.voucherDiscount}</p>
+                                        <p className='flex justify-between pr-10'><strong>Voucher Code: </strong> '{order.voucherCode}'</p>
+                                        <p className='flex justify-between pr-10'><strong>Delivery: </strong> ₹{order.deliveryCharge}</p>
+                                        <p className='flex justify-between pr-10'><strong>GST: </strong> ₹{order.gst}</p>
+                                        <p className='flex justify-between pr-10'><strong>Order Created At:</strong> {formatOrderDateTime(order.createdAt)}</p>
+
+                                    </div>
+                                    <div>
+                                        <h3 className="font-bold lancelot text-purple-700 mb-2 flex gap-2 item-center">< CookingPot size={19} /> Instruction</h3>
+                                        <p className='text-gray-600'>" {order.note} "</p>
+                                    </div>
                                 </div>
-                            </div>
-                        </div>
-                    )
-                }
+                            </motion.div>
+                        )
+                    }
+                </AnimatePresence>
             </div>
 
             <Drawer isOpen={isOpen} onOpenChange={onOpenChange}>
@@ -296,33 +310,30 @@ const OrderCard = ({ order, onUpdateStatus, i }) => {
                                     {/* Customer Details */}
                                     <div>
                                         <h3 className="font-semibold lancelot text-2xl mb-2">Customer Details</h3>
-                                        <p><strong>Name:</strong> {order.customer.name}</p>
-                                        {/* <p><strong>Customer ID:</strong> {order.customer.uid}</p> */}
-                                        <p className='flex items-center gap-2 '><strong>Phone:</strong> {order.customer.phoneNumber}
-                                            {/* <Copy className='p-1 focus:bg-gray-100 ' onClick={() => copyToClipboard(order.customer.phoneNumber)}/> */}
-
-                                        </p>
-                                        <p><strong>Email:</strong> {order.customer.email}</p>
+                                        <p className='flex justify-between '><strong>Name:</strong> {order.customer.name}</p>
+                                        <p className='flex justify-between text-sm'><strong>Customer ID:</strong> {order.customer.uid}</p>
+                                        <p className='flex items-center justify-between gap-2 '><strong>Phone:</strong> {order.customer.phoneNumber}</p>
+                                        <p className='flex justify-between '><strong>Email:</strong> {order.customer.email}</p>
                                     </div>
                                     <hr className='md:hidden border border-gray-400 my-1' />
                                     {/* Address Breakdown */}
                                     <div>
                                         <h3 className="font-semibold lancelot text-2xl mb-2">Address</h3>
-                                        <p><strong>Flat Number:</strong> {order.address.flatNumber}</p>
-                                        <p><strong>Building Name:</strong> {order.address.buildingName}</p>
-                                        <p><strong>Street Address:</strong> {order.address.streetAddress}</p>
-                                        <p><strong>Area:</strong> {order.address.area}</p>
-                                        <p><strong>Pincode:</strong> {order.address.pincode}</p>
+                                        <p className='flex justify-between '><strong>Flat Number:</strong> {order.address.flatNumber}</p>
+                                        <p className='flex justify-between '><strong>Building Name:</strong> {order.address.buildingName}</p>
+                                        <p className='flex justify-between '><strong>Street Address:</strong> {order.address.streetAddress}</p>
+                                        <p className='flex justify-between '><strong>Area:</strong> {order.address.area}</p>
+                                        <p className='flex justify-between '><strong>Pincode:</strong> {order.address.pincode}</p>
                                     </div>
 
                                     <hr className='md:hidden border border-gray-400 my-1' />
                                     {/* Items */}
                                     <div className="">
                                         <h3 className="font-semibold lancelot text-2xl mb-2">Items</h3>
-                                        <ul className="list-disc pl-5 space-y-1">
+                                        <ul className="list-disc px-5 space-y-1">
                                             {order.items.map((item, index) => (
-                                                <li key={index}>
-                                                    <strong className='comfortaa font-bold text-purple-700 '>{item.productName} X {item.quantity}</strong>  ,  ₹{item.offerPrice * item.quantity}
+                                                <li key={index} className='flex justify-between '>
+                                                    <strong className='comfortaa font-bold text-purple-700 '>{item.productName} X {item.quantity}</strong>  ₹{item.offerPrice * item.quantity}
                                                 </li>
                                             ))}
                                         </ul>
@@ -332,21 +343,27 @@ const OrderCard = ({ order, onUpdateStatus, i }) => {
                                     {/* Payment Details */}
                                     <div>
                                         <h3 className="font-semibold lancelot text-2xl mb-2">Payment Details</h3>
-                                        <p><strong>Total Items:</strong> {order.totalQuantity}</p>
-                                        <p><strong>GST:</strong> ₹{order.gst.toFixed(2)}</p>
-                                        <p><strong>Delivery Charge:</strong> ₹{order.deliveryCharge}</p>
-                                        <p><strong>Total Price:</strong> ₹{order.totalAmount}</p>
-                                        <p className='text-green-600'><strong>Payment ID:</strong> {order.razorpay_payment_id}</p>
-                                        <p className='text-green-600'><strong>Payment Status:</strong> {order.paymentStatus}</p>
+                                        <p className='flex justify-between '><strong>Total Items:</strong> {order.totalQuantity}</p>
+                                        <p className='flex justify-between '><strong>GST:</strong> ₹{order.gst.toFixed(2)}</p>
+                                        <p className='flex justify-between '><strong>Delivery Charge:</strong> ₹{order.deliveryCharge}</p>
+                                        <p className='text-green-600 flex font-bold justify-between'><strong>Total Price:</strong> ₹{order.totalAmount}</p>
+                                        <p className='text-green-600 flex justify-between'><strong>Payment ID:</strong> {order.razorpay_payment_id}</p>
+                                        <p className='text-green-600 flex justify-between'><strong>Payment Status:</strong> {order.paymentStatus}</p>
                                         <p><strong>Delivery Time:</strong> {order.deliveryTime}</p>
                                     </div>
                                     <hr className='md:hidden border border-gray-400 my-1' />
 
                                     <div>
                                         <h3 className="font-bold lancelot text-2xl mb-2">Order Details</h3>
-                                        <p><strong>Total Items:</strong> {order.totalQuantity}</p>
-                                        <p><strong>Order Status:</strong> {order.orderStatus}</p>
-                                        <p><strong>Order Created At:</strong> {formatOrderDateTime(order.createdAt)}</p>
+                                        <p className='flex justify-between '><strong>Total Items:</strong> {order.totalQuantity}</p>
+                                        <p className='flex justify-between '><strong>Order Status:</strong> {order.orderStatus}</p>
+                                        <p className='flex justify-between font-bold '><strong>Gross Total: </strong> ₹{order.grossTotalPrice}</p>
+                                        <p className='flex justify-between  font-bold'><strong>Discount: </strong> -₹{order.voucherDiscount}</p>
+                                        <p className='flex justify-between '><strong>Voucher Code: </strong> '{order.voucherCode}'</p>
+                                        <p className='flex justify-between '><strong>Delivery: </strong> ₹{order.deliveryCharge}</p>
+                                        <p className='flex justify-between '><strong>GST: </strong> ₹{order.gst}</p>
+                                        <p className='flex justify-between '><strong>Order Created At:</strong> {formatOrderDateTime(order.createdAt)}</p>
+
                                     </div>
                                     <hr className='md:hidden border border-gray-400 my-1' />
                                     <div>

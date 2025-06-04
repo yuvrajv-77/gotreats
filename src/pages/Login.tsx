@@ -101,13 +101,13 @@ const Login = () => {
                     <button type='submit' className='auth-button auth-login-btn'>Log In</button>
                     <p className='text-center'>Or</p>
                 </form>
-                <button 
-                    type='button' 
+                <button
+                    type='button'
                     onClick={async () => {
                         await handlesignInWithGoogle();
                         toast.success("Login successful")
                         navigate("/");
-                    }} 
+                    }}
                     className='auth-button auth-google-btn'>
                     <img src="/google.svg" className='w-5' alt="" />
                     Sign In With Google

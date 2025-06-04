@@ -13,6 +13,8 @@ import {
 } from "@/components/ui/sidebar"
 import { Link } from "react-router-dom"
 import { useAuthStore } from "@/store/authStore"
+import Button from "./Button"
+import { handleLogout } from "@/services/authService"
 
 // Menu items.
 const items = [
@@ -69,13 +71,15 @@ const AppSidebar = () => {
             </SidebarContent>
             <SidebarFooter>
                 <SidebarGroupLabel className="my-10">
-                <div className="p-2">
-                    <h2 className="font-bold text-xl">{userDetails.displayName}</h2>
-                    <p className="text-sm text-gray-500">{userDetails.email}</p>
-                    <p className="text-sm text-gray-500">{userDetails.phoneNumber}</p>
-                </div>
+                    <div className="p-2">
+                        <h2 className="font-bold text-xl">{userDetails.displayName}</h2>
+                        <p className="text-sm text-gray-500">{userDetails.email}</p>
+                        <p className="text-sm text-gray-500">{userDetails.phoneNumber}</p>
+                        <Button variant="danger" onClick={handleLogout}>Logout</Button>
+                    </div>
+                    
                 </SidebarGroupLabel>
-              
+
             </SidebarFooter>
         </Sidebar>
     )

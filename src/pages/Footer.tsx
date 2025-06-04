@@ -1,26 +1,18 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { Instagram, MapPin, Mail, Phone, Clock, PartyPopper, Bike, Home, ShoppingBag, ScrollText, Lightbulb, Info, PhoneCall } from 'lucide-react';
+import { BrandLogo } from '@/components/Navbar';
 
 const Footer = () => {
   
   return (
-    <footer className="bg-neutral-900 dark:bg-neutral-950 text-white mt-20 pt-12 pb-8 opacity-0 translate-y-5 animate-fade-in">
+    <footer className="bg-neutral-900 text-white mt-20 pt-12 pb-8  translate-y-5 animate-fade-in">
       <div className="container mx-auto px-4">
         <div className="grid grid-cols-1 md:grid-cols-5 gap-8">
 
           {/* Company Info */}
           <div>
-            <Link to="/">
-              <p className="gotreats-button" data-text="GOTREATS">
-                <span className="hover-text">
-                  <span className="go">GO</span>
-                  <span className="treats">TREATS</span>
-                </span>
-                GOTREATS
-              </p>
-
-            </Link>
+            <BrandLogo/>
             <p className="text-gray-400 dark:text-gray-300 mt-4">
               Ghar ka khana just the way you want.
             </p>

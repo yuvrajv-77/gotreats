@@ -71,7 +71,7 @@ const AddressSection: React.FC<AddressSectionProps> = ({ uid }) => {
     return (
         <div className="">
             <div className="flex justify-between items-center mb-5">
-                <h2 className="text text-orange-500 font-semibold">Delivery Address</h2>
+                <h2 className="text-sm text-orange-500 font-semibold">Delivery Address</h2>
                 <button
                     onClick={() => setIsEditing(true)}
                     className=" text-sm text-orange-500 hover:text-orange-600 transition-colors font-medium"

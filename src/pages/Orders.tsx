@@ -188,6 +188,11 @@ const Orders = () => {
                                                 <p className='text-sm text-red-500'>Order Cancelled | Refund will be initiated soon</p>
                                             )
                                         }
+                                        {
+                                            selectedOrder?.orderStatus === 'failed' && (
+                                                <p className='text-sm text-red-500'>Order Failed | Refund will be initiated soon</p>
+                                            )
+                                        }
                                     </div>
 
                                     <div className="mt-4 border-b pb-4">
@@ -210,6 +215,19 @@ const Orders = () => {
                                             <span>Item Total</span>
                                             <span>₹{selectedOrder?.grossTotalPrice || '0.00'}</span>
                                         </div>
+
+                                        {selectedOrder?.voucherDiscount && (
+                                            <div className="flex justify-between py-1">
+                                                <span>Voucher Discount</span>
+                                                <span>-₹{selectedOrder?.voucherDiscount}</span>
+                                            </div>
+                                        )}
+
+                                        <div className="flex justify-between py-1">
+                                            <span>Delivery Charges</span>
+                                            <span>₹{selectedOrder?.deliveryCharge || '0.00'}</span>
+                                        </div>
+
                                         {/* <div className="flex justify-between py-1">
                                             <span>Taxes (18%)</span>
                                             <span>
@@ -217,10 +235,7 @@ const Orders = () => {
                                                 {selectedOrder?.gst}
                                             </span>
                                         </div> */}
-                                        <div className="flex justify-between py-1">
-                                            <span>Delivery Charges</span>
-                                            <span>₹{selectedOrder?.deliveryCharge || '0.00'}</span>
-                                        </div>
+
                                     </div>
 
                                     {/* Total Paid Section */}
@@ -228,6 +243,13 @@ const Orders = () => {
                                         <span>Total Paid</span>
                                         <span>₹{selectedOrder?.totalAmount || '0.00'}</span>
                                     </div>
+
+                                    {
+                                        selectedOrder?.note && (
+                                            <p>📝 "{selectedOrder?.note}"</p>
+                                        )
+                                    }
+
 
                                     <div>
                                         <div className="mt-4 flex items-center gap-2 text-green-600 text-sm">

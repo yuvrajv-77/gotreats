@@ -1,3 +1,5 @@
+import { Voucher } from "./voucherTypes";
+
 export type Customer = {
     uid: string;
     name: string;
@@ -28,6 +30,8 @@ export type OrderDetails = {
     razorpay_payment_id?: string;
     paymentStatus?: 'success' | 'failed' | 'pending';
     orderStatus?: 'received' | 'pending' | 'preparing' | 'out for delivery' | 'delivered' | 'failed' | 'cancelled';
+    voucherDiscount?: any;
+    voucherCode?: string;
 };
 
 export type OrderData = OrderDetails & {

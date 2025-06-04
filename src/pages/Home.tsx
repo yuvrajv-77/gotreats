@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import Button, { IconButton } from '../components/Button'
+
 import { Locate, MapPin, Phone, Pin, Star, Quote, Box } from 'lucide-react'
 import ItemCards from '../components/ItemCards';
 import { Swiper, SwiperSlide } from 'swiper/react';
@@ -66,7 +66,7 @@ const Home = () => {
     {
       id: 3,
       name: "Pasta",
-      img: "/pasta.jpg",
+      img: "/pasta2.jpg",
       link: "/shop/?tag=pasta"
     },
     {
@@ -102,15 +102,13 @@ const Home = () => {
               {userDetails?.role === 'admin' ?
                 <button className="cssbuttons-io animate-pulse" onClick={() => navigate('/admin/view-all-orders')}>
                   <span className='flex items-center gap-2'>
-                    <Box  className='animate-bounce' />
+                    <Box className='animate-bounce' />
                     Manage Orders
                   </span>
                 </button>
                 :
-                <button className="cssbuttons-io" onClick={() => navigate("/shop")}>
-                  <span>
-                    Order Now
-                  </span>
+                <button className="bg-black px-5 cursor-pointer rounded-lg hover:bg-orange-600 transition-all ease-in-out  duration-100 active:scale-95  py-3 text-white " onClick={() => navigate("/shop")}>
+                  Order Now
                 </button>
               }
             </div>
@@ -118,11 +116,11 @@ const Home = () => {
           </div>
 
           {/* Right Column */}
-          <div className="w-full md:w-2/5 md:mt-0 animate-[fadeIn_0.7s_ease-in]">
+          <div className="w-full md:w-2/5 md:mt-0 ">
             <img
               src="/indian-plate.png"
               alt="Blog Hero Image"
-              className="object-cover w-full rounded-2xl transition-all duration-500 h-auto rotate-infinite"
+              className="object-cover w-full rounded-2xl transition-all duration-300 h-auto hover:scale-105"
             />
           </div>
 
@@ -310,7 +308,7 @@ const Home = () => {
 
 
       {/* -------info----- */}
-      <section className='bg-[#fff9f2] '>
+      {/* <section className='bg-[#fff9f2] '>
         <div className="container mx-auto px-4 pt-3 mt-12 gap-10 md:gap-0  sm:px-30 md:justify-between flex flex-col md:flex-row items-center  ">
           <div className="w-full md:w-2/5     animate-[fadeIn_0.7s_ease-in]">
             <img
@@ -333,7 +331,7 @@ const Home = () => {
             </p>
           </div>
         </div>
-      </section>
+      </section> */}
 
       {/* ------varieties------ */}
       <section>

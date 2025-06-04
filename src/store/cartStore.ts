@@ -11,6 +11,8 @@ interface CartStore {
   grossTotalPrice: number
   totalPrice: number
   itemCount: number
+  voucherDiscount: number // NEW
+  setVoucherDiscount: (discount: number) => void // NEW
   addItem: (item: Item) => void
   removeItem: (itemId: string) => void
   updateQuantity: (itemId: string, quantity: number) => void
@@ -49,6 +51,9 @@ export const useCartStore = create<CartStore>()(
         grossTotalPrice: 0,
         totalPrice: 0,
         itemCount: 0,
+        voucherDiscount: 0, // NEW
+
+        setVoucherDiscount: (discount) => set({ voucherDiscount: discount }), 
 
         addItem: (item) => set((state) => {
           const existingItem = state.items.find((i) => i.id === item.id)
@@ -87,7 +92,8 @@ export const useCartStore = create<CartStore>()(
           items: [],
           grossTotalPrice: 0,
           totalPrice: 0,
-          itemCount: 0
+          itemCount: 0,
+          voucherDiscount: 0 // Reset on clear
         }),
 
         calculateGrossTotalPrice: () => set((state) => ({
@@ -96,9 +102,15 @@ export const useCartStore = create<CartStore>()(
             .toFixed(2))
         })),
 
-        calculateTotalPrice: (deliveryCharge, taxRate) => set((state) => ({
-          totalPrice: Number((state.grossTotalPrice + deliveryCharge + (state.grossTotalPrice * taxRate)).toFixed(2))
-        })),
+        calculateTotalPrice: (deliveryCharge, taxRate) => set((state) => {
+          // 1. Apply discount to gross price
+          const discountedGross = Math.max(0, state.grossTotalPrice - state.voucherDiscount);
+          // 2. Add delivery charge
+          const subtotal = discountedGross + deliveryCharge;
+          // 3. Apply tax on subtotal
+          const total = Number((subtotal + (subtotal * taxRate)).toFixed(2));
+          return { totalPrice: total };
+        }),
 
         getItemById: (itemId) => get().items.find((item) => item.id === itemId),
         
@@ -111,7 +123,8 @@ export const useCartStore = create<CartStore>()(
           items: state.items,
           grossTotalPrice: state.grossTotalPrice,
           totalPrice: state.totalPrice,
-          itemCount: state.itemCount
+          itemCount: state.itemCount,
+          voucherDiscount: state.voucherDiscount // Persist discount
         })
       }
     )

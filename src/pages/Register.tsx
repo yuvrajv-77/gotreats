@@ -126,12 +126,12 @@ const Register = () => {
                     <span className='text-green-500'>go</span>treats
                   </p>
                 </div></p>
-              {/* <p className="text-sm text-gray-600 mb-10">Enter your phone number to get started</p> */}
+              <p className="text-sm text-gray-600 mb-2">Enter your phone number to get started</p>
               <Input
                 type="tel" autoFocus
                 value={phone}
                 onChange={(e) => setPhone(e.target.value)}
-                label="Phone Number"
+                // label="Phone Number"
                 placeholder="Enter Phone Number"
                 labelPlacement="outside"
                 size="lg" isInvalid={error !== ""}
@@ -186,34 +186,48 @@ const Register = () => {
           {step === 3 && (
             <div className="md:w-1/2 space-y-6">
               <p className="text-2xl md:text-3xl font-bold flex item-center ">Enter Details</p>
-              <Input
-                label="Enter Your Name"
-                value={formData.name}
-                onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                // placeholder="Enter your name"
-                size="md"
-                autoFocus
-                isRequired
-              />
-              <Input
-                label="Current Number"
-                value={phone}
-                disabled
-                // placeholder="Enter your name"
-                size="md"
-                className="text-"
-                isRequired
-              />
-              <Input
-                label="Enter Your Email"
-                value={formData.email}
-                onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                // placeholder="Enter your email"
-                size="md"
 
-                type="email"
-                isRequired
-              />
+              <div>
+                <p className="text-sm text-gray-600 mb-2">Enter Name</p>
+                <Input
+                  // label="Enter Your Name"
+                  value={formData.name}
+                  onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                  placeholder="Enter your name"
+                  size="md"
+                  autoFocus
+                  variant="underlined"
+                  isRequired
+                />
+              </div>
+              <div>
+                <p className="text-sm text-gray-600 mb-2">Enter Phone</p>
+
+                <Input
+                  // label="Current Number"
+                  value={phone}
+                  disabled
+                  // placeholder="Enter your name"
+                  size="md"
+                  variant="underlined"
+                  className="text-"
+                  isRequired
+                />
+              </div>
+              <div>
+                <p className="text-sm text-gray-600 mb-2">Enter Email</p>
+
+                <Input
+                  // label="Enter Your Email"
+                  value={formData.email}
+                  onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                  placeholder="Enter your email"
+                  size="md"
+                  variant="underlined"
+                  type="email"
+                  isRequired
+                />
+              </div>
               <Button
                 variant="primary"
                 onClick={handleSaveNewUser}

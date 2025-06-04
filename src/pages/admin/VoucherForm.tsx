@@ -3,15 +3,19 @@ import {
     ModalContent,
     ModalHeader,
     ModalBody,
-    ModalFooter, RadioGroup, Radio, Chip, DateRangePicker, Input, NumberInput, Select, SelectItem, Switch 
+    ModalFooter, RadioGroup, Radio, Chip, DateRangePicker, Input, NumberInput, Select, SelectItem, Switch
 } from "@heroui/react";
+
 import Button from '@/components/Button'
 import { Voucher, VoucherScope, VoucherDiscountType } from '@/types/voucherTypes'
 import { Earth, IndianRupee, Percent, TicketPercent, UserRound, UserRoundPlus, UsersRound } from 'lucide-react'
 import React from 'react'
 import type { RangeValue } from "@react-types/shared";
 import type { DateValue } from "@react-types/datepicker";
-import { parseDate, getLocalTimeZone } from "@internationalized/date";
+import { parseDate, getLocalTimeZone, today } from "@internationalized/date";
+import { create } from "domain";
+import { useMutation } from '@tanstack/react-query'
+import { createVoucher } from "@/services/voucherService";
 
 const defaultForm = {
     name: '',
@@ -25,7 +29,17 @@ const defaultForm = {
     singleUsePerCustomer: true,
 };
 
-const VoucherForm = ({ isOpen, onOpenChange, onOpen }: { isOpen: boolean, onOpenChange: () => void, onOpen: () => void }) => {
+const VoucherForm = ({
+    isOpen,
+    onOpenChange,
+    onOpen,
+    refetchVouchers
+}: {
+    isOpen: boolean,
+    onOpenChange: () => void,
+    onOpen: () => void,
+    refetchVouchers: () => void
+}) => {
     const [form, setForm] = React.useState({ ...defaultForm });
     const [allowedUserInput, setAllowedUserInput] = React.useState('');
     const [dateRange, setDateRange] = React.useState<RangeValue<DateValue> | null>(null);
@@ -37,21 +51,31 @@ const VoucherForm = ({ isOpen, onOpenChange, onOpen }: { isOpen: boolean, onOpen
         }
     }, [isOpen]);
 
+    // Mutation for creating voucher
+    const { mutate: createVoucherMutation, isPending } = useMutation({
+        mutationFn: createVoucher,
+        onSuccess: () => {
+            refetchVouchers();
+            onOpenChange();
+        },
+        onError: (error) => {
+            alert('Failed to create voucher');
+        }
+    });
+
     // Handle scope change
     const handleScopeChange = (scope: VoucherScope) => {
         setForm(f => ({
             ...f,
             scope,
-            allowedUsers: scope === 'all' ? [] : scope === 'single' && f.allowedUsers.length > 0 ? [f.allowedUsers[0]] : [],
+            allowedUsers: scope === 'all' ? [] : f.allowedUsers,
         }));
     };
 
     // Handle allowed user add
     const handleAddAllowedUser = () => {
         if (!allowedUserInput.trim()) return;
-        if (form.scope === 'single') {
-            setForm(f => ({ ...f, allowedUsers: [allowedUserInput.trim()] }));
-        } else if (form.scope === 'multiple') {
+        if (form.scope === 'specific') {
             setForm(f => ({ ...f, allowedUsers: Array.from(new Set([...f.allowedUsers, allowedUserInput.trim()])) }));
         }
         setAllowedUserInput('');
@@ -72,21 +96,21 @@ const VoucherForm = ({ isOpen, onOpenChange, onOpen }: { isOpen: boolean, onOpen
         e.preventDefault();
 
         // Manual validation
-    if (
-        !form.name.trim() ||
-        !form.code.trim() ||
-        !form.discountValue ||
-        !form.minOrderValue ||
-        !form.maxUses ||
-        !dateRange?.start ||
-        !dateRange?.end ||
-        ((form.scope === 'single' || form.scope === 'multiple') && form.allowedUsers.length === 0)
-    ) {
-        alert("Please fill all Voucher fields.");
-        return;
-    }
+        if (
+            !form.name.trim() ||
+            !form.code.trim() ||
+            !form.discountValue ||
+            !form.minOrderValue ||
+            !form.maxUses ||
+            !dateRange?.start ||
+            !dateRange?.end ||
+            ((form.scope === 'specific') && form.allowedUsers.length === 0)
+        ) {
+            alert("Please fill all Voucher fields.");
+            return;
+        }
 
-        // Convert DateValue to JS Date
+        // Convert DateValue to JS Date using getLocalTimeZone
         let startDate: Date | undefined = undefined;
         let expiryDate: Date | undefined = undefined;
         if (dateRange?.start && dateRange?.end) {
@@ -95,48 +119,58 @@ const VoucherForm = ({ isOpen, onOpenChange, onOpen }: { isOpen: boolean, onOpen
         }
 
         // Prepare voucher object
-        const voucher: Partial<Voucher> = {
+        const voucher: Voucher = {
             ...form,
-            allowedUsers: form.scope === 'all' ? undefined : form.allowedUsers,
-            startDate,
-            expiryDate,
+            startDate: startDate!,
+            expiryDate: expiryDate!,
+            currentUses: 0,
+            userUsage: {},
             createdAt: new Date(),
             status: 'active'
         };
-        console.log("Voucher Form Data:", voucher);
-        onOpenChange();
-    };
 
+        if (form.scope === 'all') {
+            delete voucher.allowedUsers;
+        }
+        createVoucherMutation(voucher);
+        navigator.clipboard.writeText(voucher.code)
+    };
     return (
-        <Modal isOpen={isOpen} onOpenChange={onOpenChange} size='lg' scrollBehavior='inside' backdrop='blur'>
+        <Modal isOpen={isOpen} onOpenChange={onOpenChange}  placement="center" scrollBehavior='inside' backdrop='blur'>
             <ModalContent>
                 {(onClose) => (
                     <>
                         <ModalHeader className="flex items-center lancelot text-2xl gap-3"> <TicketPercent size={25} strokeWidth={1.6} />Create Voucher</ModalHeader>
                         <ModalBody>
                             <form className='flex flex-col gap-6' onSubmit={handleSubmit}>
-                                <Input
-                                    variant='faded'
-                                    label="Voucher Name"
-                                    placeholder="What's this Voucher For?"
-                                    labelPlacement='outside'
-                                    autoFocus
-                                    isRequired
-                                    isClearable
-                                    value={form.name}
-                                    onValueChange={val => setForm(f => ({ ...f, name: val }))}
-                                />
-                                <Input
-                                    variant='faded'
-                                    label="Voucher Code"
-                                    placeholder="TASTY30"
-                                    labelPlacement='outside'
-                                    startContent={<TicketPercent size={20} color='gray' strokeWidth={1.6} />}
-                                    isRequired
-                                    isClearable
-                                    value={form.code}
-                                    onValueChange={val => setForm(f => ({ ...f, code: val.toUpperCase() }))}
-                                />
+                                <div>
+                                    <p className='text-sm'>Voucher Name*</p>
+                                    <Input
+                                        variant='faded'
+                                        // label="Voucher Name"
+                                        placeholder="Get 30% OFF"
+                                        labelPlacement='outside'
+                                        autoFocus
+                                        isRequired
+                                        isClearable
+                                        value={form.name}
+                                        onValueChange={val => setForm(f => ({ ...f, name: val }))}
+                                    />
+                                </div>
+                                <div>
+                                    <p className='text-sm'>Voucher Code*</p>
+                                    <Input
+                                        variant='faded'
+                                        // label="Voucher Code"
+                                        placeholder="TASTY30"
+                                        labelPlacement='outside'
+                                        startContent={<TicketPercent size={20} color='gray' strokeWidth={1.6} />}
+                                        isRequired
+                                        isClearable
+                                        value={form.code}
+                                        onValueChange={val => setForm(f => ({ ...f, code: val.toUpperCase() }))}
+                                    />
+                                </div>
                                 <p className='text-sm'>Discount Type</p>
                                 <div className='flex gap-4 justify-between'>
                                     <RadioGroup
@@ -148,38 +182,48 @@ const VoucherForm = ({ isOpen, onOpenChange, onOpen }: { isOpen: boolean, onOpen
                                         <Radio value="percentage">Percentage</Radio>
                                         <Radio value="fixed">Fixed</Radio>
                                     </RadioGroup>
-                                    <NumberInput
-                                        className='w-1/2'
-                                        variant='faded'
-                                        label="Discount Value"
-                                        placeholder="Discount Value"
-                                        labelPlacement='outside'
-                                        startContent={ form.discountType === 'percentage' ? <Percent size={20} color='gray' strokeWidth={1.6} /> : <IndianRupee size={20} color='gray' strokeWidth={1.6} />}
-                                        isRequired
-                                        value={form.discountValue}
-                                        onValueChange={val => setForm(f => ({ ...f, discountValue: Number(val) }))}
-                                    />
+                                    <div className="">
+                                        <p className='text-sm'>Discount Value*</p>
+                                        <NumberInput
+                                            className=''
+                                            variant='faded'
+                                            // label="Discount Value"
+                                            placeholder="Discount Value"
+                                            labelPlacement='outside'
+                                            startContent={form.discountType === 'percentage' ? <Percent size={20} color='gray' strokeWidth={1.6} /> : <IndianRupee size={20} color='gray' strokeWidth={1.6} />}
+                                            isRequired
+                                            value={form.discountValue}
+                                            onValueChange={val => setForm(f => ({ ...f, discountValue: Number(val) }))}
+                                        />
+                                    </div>
                                 </div>
                                 <div className='flex gap-4'>
-                                    <NumberInput
-                                        variant='faded'
-                                        label="Minimum Order Value"
-                                        placeholder="Minimum Order Value"
-                                        labelPlacement='outside'
-                                        startContent={<IndianRupee size={20} color='gray' strokeWidth={1.6} />}
-                                        isRequired
-                                        value={form.minOrderValue}
-                                        onValueChange={val => setForm(f => ({ ...f, minOrderValue: Number(val) }))}
-                                    />
-                                    <NumberInput
-                                        variant='faded'
-                                        label="Maximum Uses"
-                                        placeholder="Limits the number of times voucher can be used"
-                                        labelPlacement='outside'
-                                        isRequired
-                                        value={form.maxUses}
-                                        onValueChange={val => setForm(f => ({ ...f, maxUses: Number(val) }))}
-                                    />
+                                    <div className="inline-flex flex-col w-full">
+                                        <p className='text-sm'>Minimum Order Value*</p>
+                                        <NumberInput
+                                            variant='faded'
+                                            // label="Minimum Order Value"
+                                            placeholder="Minimum Order Value"
+                                            labelPlacement='outside'
+                                            startContent={<IndianRupee size={20} color='gray' strokeWidth={1.6} />}
+                                            isRequired
+                                            value={form.minOrderValue}
+                                            onValueChange={val => setForm(f => ({ ...f, minOrderValue: Number(val) }))}
+                                        />
+                                    </div>
+                                    <div className="inline-flex flex-col w-full">
+                                        <p className='text-sm'>Maximum Uses*</p>
+
+                                        <NumberInput
+                                            variant='faded'
+                                            // label="Maximum Uses"
+                                            placeholder="Limits the number of times voucher can be used"
+                                            labelPlacement='outside'
+                                            isRequired
+                                            value={form.maxUses}
+                                            onValueChange={val => setForm(f => ({ ...f, maxUses: Number(val) }))}
+                                        />
+                                    </div>
                                 </div>
                                 <div className='flex gap-4'>
                                     <DateRangePicker
@@ -187,41 +231,48 @@ const VoucherForm = ({ isOpen, onOpenChange, onOpen }: { isOpen: boolean, onOpen
                                         label="Start and Expiry Date"
                                         variant='faded'
                                         labelPlacement='outside'
-                                        isRequired
+                                        isRequired minValue={today(getLocalTimeZone())}
                                         value={dateRange}
                                         onChange={setDateRange}
                                     />
                                 </div>
-                                <div className='flex gap-4'>
-                                    <Select
-                                        className="max-w-1/2"
-                                        variant='faded'
-                                        placeholder='Select Scope of Voucher'
-                                        radius='lg' 
-                                        labelPlacement='outside'
-                                        label="Select Scope"
-                                        selectedKeys={[form.scope]}
-                                        onSelectionChange={keys => handleScopeChange(Array.from(keys)[0] as VoucherScope)}
-                                    >
-                                        <SelectItem key="all" startContent={<Earth size={20} strokeWidth={1.6} />}>Everyone</SelectItem>
-                                        <SelectItem key="multiple" startContent={<UsersRound size={20} strokeWidth={1.6} />}>Multiple</SelectItem>
-                                        <SelectItem key="single" startContent={<UserRound size={20} strokeWidth={1.6} />}>Single</SelectItem>
-                                    </Select>
-                                    <Switch
-                                        size='sm'
-                                        isSelected={form.singleUsePerCustomer}
-                                        onValueChange={val => setForm(f => ({ ...f, singleUsePerCustomer: val }))}
-                                    >
-                                        Single Use Per Customer
-                                    </Switch>
+                                <div className='flex justify-center items-center gap-4'>
+                                    <div className="flex flex-col w-full">
+                                        <p className='text-sm'>Select Scope*</p>
+
+                                        <Select
+                                            className=""
+                                            variant='faded'
+                                            placeholder='Select Scope of Voucher'
+                                            radius='lg'
+                                            labelPlacement='outside'
+                                            // label="Select Scope"
+                                            selectedKeys={[form.scope]}
+                                            onSelectionChange={keys => handleScopeChange(Array.from(keys)[0] as VoucherScope)}
+                                        >
+                                            <SelectItem key="all" startContent={<Earth size={20} strokeWidth={1.6} />}>Everyone</SelectItem>
+                                            <SelectItem key="specific" startContent={<UsersRound size={20} strokeWidth={1.6} />}>Specific</SelectItem>
+
+                                        </Select>
+                                    </div>
+                                    <div className="w-full">
+                                        <Switch
+                                            size='sm'
+                                            isSelected={form.singleUsePerCustomer}
+                                            onValueChange={val => setForm(f => ({ ...f, singleUsePerCustomer: val }))}
+                                        >
+                                            Single Use Per Customer
+                                        </Switch>
+                                    </div>
                                 </div>
                                 {/* Allowed Users: only for single/multiple */}
-                                {(form.scope === 'single' || form.scope === 'multiple') && (
+                                {(form.scope === 'specific') && (
                                     <div className='flex flex-col gap-2'>
+                                        <p className='text-sm'>Allowed Users*</p>
                                         <div className='flex items-end gap-4'>
                                             <Input
                                                 variant='faded'
-                                                label={form.scope === 'single' ? "Allowed User" : "Allowed Users"}
+                                                // label="Allowed Users"
                                                 placeholder="Enter Registered Phone Number"
                                                 labelPlacement='outside'
                                                 isRequired
@@ -234,13 +285,13 @@ const VoucherForm = ({ isOpen, onOpenChange, onOpen }: { isOpen: boolean, onOpen
                                                         handleAddAllowedUser();
                                                     }
                                                 }}
-                                                isDisabled={form.scope === 'single' && form.allowedUsers.length >= 1}
+                                            // isDisabled={form.scope === 'single' && form.allowedUsers.length >= 1}
                                             />
                                             <button
                                                 type="button"
                                                 className='px-4 py-2 rounded-xl border-2 hover:border-orange-400 bg-primary text-white'
                                                 onClick={handleAddAllowedUser}
-                                                disabled={form.scope === 'single' && form.allowedUsers.length >= 1}
+                                            // disabled={form.scope === 'single' && form.allowedUsers.length >= 1}
                                             >
                                                 <UserRoundPlus size={20} strokeWidth={1.6} />
                                             </button>
@@ -266,7 +317,7 @@ const VoucherForm = ({ isOpen, onOpenChange, onOpen }: { isOpen: boolean, onOpen
                             <Button color="danger" variant="secondary" onClick={onClose}>
                                 Close
                             </Button>
-                            <Button variant="primary" type="submit" onClick={handleSubmit}>
+                            <Button variant="primary" type="submit" onClick={handleSubmit} isLoading={isPending}>
                                 Save
                             </Button>
                         </ModalFooter>

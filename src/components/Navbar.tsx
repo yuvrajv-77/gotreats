@@ -8,7 +8,6 @@ import { handleLogout } from '../services/authService';
 import { Dropdown, DropdownTrigger, DropdownMenu, DropdownItem } from "@heroui/react";
 import { useCartStore } from '../store/cartStore';
 import toast, { Toaster } from 'react-hot-toast';
-import DeliveryAreaChecker from './DeliveryAreaChecker';
 import Modal from './Modal';
 
 export const BrandLogo = () => {
@@ -69,9 +68,9 @@ const Navbar = () => {
 
     return (
         <>
-            <header className=" py-2  w-full  z-50 ">
+            <header className=" py-2  w-full  z-50 shadow-xl border-b ">
                 <div className="container  mx-auto">
-                    <div className="border bg-whitebackdrop-blur-md border-white/20 ">
+                    <div className=" bg-white  ">
                         <div className=" grid grid-cols-2 lg:grid-cols-3 px-4 md:pr-2 py-2  items-center">
                             <div className='flex items-center gap-2'>
                                 <span onClick={() => setIsOpen(!isOpen)}>
