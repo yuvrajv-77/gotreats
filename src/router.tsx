@@ -24,6 +24,7 @@ import Customers from "./pages/Customers"
 import PrivacyPolicy from "./pages/PrivacyPolicy"
 import RefundPolicy from "./pages/RefundPolicy"
 import ManageVouchers from "./pages/admin/ManageVouchers"
+import ViewCustomers from "./pages/admin/ViewCustomers"
 
 
 export const router = createBrowserRouter([
@@ -134,7 +135,11 @@ export const router = createBrowserRouter([
           {
             path: "manage-vouchers",
             element: <ManageVouchers />
-          }
+          },
+          {
+            path: "view-customers",
+            element: <ViewCustomers />
+          },
         ]
       }
     ]

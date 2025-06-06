@@ -1,10 +1,7 @@
 import Button, { IconButton } from '@/components/Button'
-import { Voucher } from '@/types/voucherTypes'
 import { Switch, useDisclosure, Popover, PopoverContent, PopoverTrigger } from '@heroui/react'
 import { BadgeIndianRupee, BadgePercent, ChevronDown, Copy, Earth, Plus, RefreshCcw, Trash, UserRound, UsersRound } from 'lucide-react'
-import React, { useEffect } from 'react'
 import VoucherForm from './VoucherForm'
-import { get } from 'http'
 import { deleteVoucher, getVouchers, updateVoucherStatus } from '@/services/voucherService'
 import { useQuery } from '@tanstack/react-query'
 import toast from 'react-hot-toast'
@@ -90,11 +87,11 @@ const ManageVouchers = () => {
                                     const expiryDate = parseDate(voucher.expiryDate);
 
                                     return (
-                                        <tr key={voucher.id} className={`border-b text-sm  ${voucher.status === 'active' ? 'bg-green-50' : voucher.status === 'inactive' ? 'bg-gray-50' : 'bg-pink-50 text-red-900/50'} `}>
+                                        <tr key={voucher.id} className={` border-b text-sm  ${voucher.status === 'active' ? 'bg-green-50' : voucher.status === 'inactive' ? 'bg-gray-50' : 'bg-pink-50 text-red-900/50'} `}>
                                             {/* <td className="px-6 py-3 text-center">{voucher.id}</td> */}
 
                                             {/* Voucher Code  */}
-                                            <td className="px-6 py-2 text-center " onClick={() => { navigator.clipboard.writeText(voucher.code); toast.success(`${voucher.code} copied to clipboard!`); }}>
+                                            <td className="px-6 py-2 text-center border-b border-r" onClick={() => { navigator.clipboard.writeText(voucher.code); toast.success(`${voucher.code} copied to clipboard!`); }}>
                                                 <span
                                                     className={`px-3 py-1 rounded-lg border flex items-center justify-between gap-2  font-semibold ${voucher.status === 'active'
                                                         ? 'bg-green-100 text-green-800 border-green-400'
@@ -110,14 +107,14 @@ const ManageVouchers = () => {
                                             </td>
 
                                             {/* Voucher Value */}
-                                            <td className="px-6 py-2 text-center font-bold ">
+                                            <td className="px-6 py-2 text-center font-bold border-b border-r">
                                                 {voucher.discountType === 'percentage'
                                                     ? `${voucher.discountValue}%`
                                                     : `₹${voucher.discountValue}`}
                                             </td>
 
                                             {/* Min Order Value */}
-                                            <td className="px-6 py-2 text-center">₹{voucher.minOrderValue}</td>
+                                            <td className="px-6 py-2 text-center border-b border-r">₹{voucher.minOrderValue}</td>
 
 
 
@@ -146,7 +143,7 @@ const ManageVouchers = () => {
                                             </td>
 
                                             {/* Max Uses */}
-                                            <td className="px-6 py-2 text-center">
+                                            <td className="px-6 py-2 text-center border-b border-x border-r">
                                                 <Popover placement='bottom' showArrow >
                                                     <PopoverTrigger className="cursor-pointer flex justify-center">
                                                         <p className='flex items-center gap-1'> {voucher.currentUses}/{voucher.maxUses} <ChevronDown size={15} /></p>
@@ -167,11 +164,11 @@ const ManageVouchers = () => {
                                                 </Popover>
                                             </td>
 
-                                            <td className="px-6 py-2 text-center">{createdAt ? createdAt.toLocaleDateString('en-GB') : '-'}</td>
-                                            <td className="px-6 py-2 text-center">{startDate ? startDate.toLocaleDateString('en-GB') : '-'}</td>
-                                            <td className="px-6 py-2 text-center">{expiryDate ? expiryDate.toLocaleDateString('en-GB') : '-'}</td>
+                                            <td className="px-6 py-2 text-center  border-r">{createdAt ? createdAt.toLocaleDateString('en-GB') : '-'}</td>
+                                            <td className="px-6 py-2 text-center  border-r">{startDate ? startDate.toLocaleDateString('en-GB') : '-'}</td>
+                                            <td className="px-6 py-2 text-center border-r">{expiryDate ? expiryDate.toLocaleDateString('en-GB') : '-'}</td>
 
-                                            <td className="px-6 py-2 text-center">
+                                            <td className="px-6 py-2 text-center border-r">
                                                 <Switch
                                                     color="success"
                                                     size="sm"

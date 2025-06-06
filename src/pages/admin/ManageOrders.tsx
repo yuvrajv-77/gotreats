@@ -66,13 +66,13 @@ const ManageOrders = () => {
         hideIcon: true,
         classNames: {
           closeButton: "opacity-100 absolute right-4 top-1/2 -translate-y-1/2 stroke-2",
-         
-        
+
+
         },
         closeIcon: (
           <X size={32} />
         ),
-       
+
       });
     },
   });
@@ -152,9 +152,19 @@ const ManageOrders = () => {
       </div>
       <div className="space-y-4">
         <AnimatePresence>
-          {filteredOrders.map((order,i) => (
-            <OrderCard key={i} order={order} i={i} onUpdateStatus={handleUpdateStatus} />
-          ))}
+          {
+            filteredOrders.length === 0 ? (
+              <div className="text-center my-20 text-gray-500 animate-bounce capitalize">
+                
+                Looks Like there are no {activeTab.toLowerCase()} orders yet.
+              </div>
+            ) : null
+          }
+          {
+            filteredOrders.map((order, i) => (
+              <OrderCard key={i} order={order} i={i} onUpdateStatus={handleUpdateStatus} />
+            ))
+          }
         </AnimatePresence>
       </div>
       {/* <Button

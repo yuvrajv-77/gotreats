@@ -1,4 +1,4 @@
-import { doc, getDoc, setDoc, updateDoc } from "firebase/firestore";
+import { collection, doc, getDoc, getDocs, setDoc, updateDoc } from "firebase/firestore";
 import { auth, db } from "../config/firebaseConfig";
 import { createUserWithEmailAndPassword, GoogleAuthProvider, signInWithEmailAndPassword, signInWithPopup } from "firebase/auth";
 import { useAuthStore } from "../store/authStore";
@@ -100,6 +100,15 @@ export async function getUserFromDb(uid: string) {
         const docSnap = await getDoc(doc(db, "users", uid));
         // console.log("docSnap", docSnap.data());
         return (docSnap.data());
+    } catch (e) {
+        console.log(e);
+    }
+}
+export async function getAllCustomersFromDb() {
+    try {
+        const querySnapshot = await getDocs(collection(db, "users"));
+        // Return an array of user data with their document IDs
+        return querySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
     } catch (e) {
         console.log(e);
     }

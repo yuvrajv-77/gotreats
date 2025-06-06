@@ -278,8 +278,8 @@ const OrderCard = ({ order, onUpdateStatus, i }) => {
                                         <p className='flex justify-between pr-10'><strong>Total Items:</strong> {order.totalQuantity}</p>
                                         <p className='flex justify-between pr-10'><strong>Order Status:</strong> {order.orderStatus}</p>
                                         <p className='flex justify-between pr-10'><strong>Gross Total: </strong> ₹{order.grossTotalPrice}</p>
-                                        <p className='flex justify-between pr-10'><strong>Discount: </strong> -₹{order.voucherDiscount}</p>
-                                        <p className='flex justify-between pr-10'><strong>Voucher Code: </strong> '{order.voucherCode}'</p>
+                                        <p className='flex justify-between pr-10'><strong>Discount: </strong> -₹{order.voucherDiscount ? order.voucherDiscount : 0}</p>
+                                        <p className='flex justify-between pr-10'><strong>Voucher Code: </strong> '{order.voucherCode ? order.voucherCode : 'No Voucher'}'</p>
                                         <p className='flex justify-between pr-10'><strong>Delivery: </strong> ₹{order.deliveryCharge}</p>
                                         <p className='flex justify-between pr-10'><strong>GST: </strong> ₹{order.gst}</p>
                                         <p className='flex justify-between pr-10'><strong>Order Created At:</strong> {formatOrderDateTime(order.createdAt)}</p>

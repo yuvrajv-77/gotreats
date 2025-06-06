@@ -126,12 +126,12 @@ const Register = () => {
                     <span className='text-green-500'>go</span>treats
                   </p>
                 </div></p>
-              <p className="text-sm text-gray-600 mb-2">Enter your phone number to get started</p>
+              {/* <p className="text-sm text-gray-600 mb-2">Enter your phone number to get started</p>  */}
               <Input
                 type="tel" autoFocus
                 value={phone}
                 onChange={(e) => setPhone(e.target.value)}
-                // label="Phone Number"
+                label="Phone Number"
                 placeholder="Enter Phone Number"
                 labelPlacement="outside"
                 size="lg" isInvalid={error !== ""}
@@ -188,9 +188,9 @@ const Register = () => {
               <p className="text-2xl md:text-3xl font-bold flex item-center ">Enter Details</p>
 
               <div>
-                <p className="text-sm text-gray-600 mb-2">Enter Name</p>
+                {/* <p className="text-sm text-gray-600 mb-2">Enter Name</p> */}
                 <Input
-                  // label="Enter Your Name"
+                  label="Enter Your Name"
                   value={formData.name}
                   onChange={(e) => setFormData({ ...formData, name: e.target.value })}
                   placeholder="Enter your name"
@@ -201,10 +201,10 @@ const Register = () => {
                 />
               </div>
               <div>
-                <p className="text-sm text-gray-600 mb-2">Enter Phone</p>
+                {/* <p className="text-sm text-gray-600 mb-2">Enter Phone</p> */}
 
                 <Input
-                  // label="Current Number"
+                  label="Current Number"
                   value={phone}
                   disabled
                   // placeholder="Enter your name"
@@ -215,10 +215,10 @@ const Register = () => {
                 />
               </div>
               <div>
-                <p className="text-sm text-gray-600 mb-2">Enter Email</p>
+                {/* <p className="text-sm text-gray-600 mb-2">Enter Email</p> */}
 
                 <Input
-                  // label="Enter Your Email"
+                  label="Enter Your Email"
                   value={formData.email}
                   onChange={(e) => setFormData({ ...formData, email: e.target.value })}
                   placeholder="Enter your email"

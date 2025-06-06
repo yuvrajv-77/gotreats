@@ -2,8 +2,6 @@ import { RouterProvider } from "react-router-dom"
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query"
 import { router } from "./router"
 import { Toaster } from 'react-hot-toast'
-import { useState, useEffect } from 'react'
-import { HeroUIProvider } from "@heroui/system"
 import { Analytics } from "@vercel/analytics/react"
 
 function App() {
@@ -21,13 +19,13 @@ function App() {
   return (
     <>
       <QueryClientProvider client={queryClient}>
-        <HeroUIProvider>
+      
 
           {/* <InternetStatus /> */}
           {/* {isLoading && <Loader onLoadingComplete={handleLoadingComplete} />} */}
           <RouterProvider router={router} />
 
-        </HeroUIProvider>
+        
         <Toaster
           position="top-center"
           toastOptions={{

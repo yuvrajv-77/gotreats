@@ -10,4 +10,5 @@ export type Item = {
     imageUrl: string;
     rating: number;
     isAvailable: boolean;
-}
+    orderCount?: number;
+    }

@@ -5,6 +5,7 @@ import { useAuthStore } from '../store/authStore'
 import { useNavigate } from 'react-router-dom'
 import { motion } from 'framer-motion'
 import React, { useState } from 'react'
+import { Skeleton } from '@heroui/react'
 
 // Add keyframes for the glowing animation
 const glowingStyles = `
@@ -81,8 +82,8 @@ const ItemCards = ({ item }: { item: Item }) => {
         };
     }, []);
 
-     const [imgLoaded, setImgLoaded] = useState(false);
-     const [imgLoadedMobile, setImgLoadedMobile] = useState(false);
+    const [imgLoaded, setImgLoaded] = useState(false);
+    const [imgLoadedMobile, setImgLoadedMobile] = useState(false);
 
     const veg = (
         <div className='border-2 rounded-md border-green-700 flex items-center justify-center size-5 mb-1'>
@@ -134,6 +135,11 @@ const ItemCards = ({ item }: { item: Item }) => {
                         </motion.div>
                     )}
                 <div className="relative mb-5 size-64">
+                    {/* {!imgLoaded && (
+                        <Skeleton className='absolute inset-0  flex items-center justify-center rounded-3xl'>
+                            <p className='comfortaa text-4xl tracking-tighter z-10 font-bold text-zinc-400'>gotreats</p>
+                        </Skeleton>
+                    )} */}
                     {!imgLoaded && (
                         <div className="absolute inset-0 bg-gray-200 animate-pulse flex items-center justify-center rounded-3xl" >
                             <p className='comfortaa text-4xl tracking-tighter font-bold text-zinc-400'>gotreats</p>
@@ -210,8 +216,8 @@ const ItemCards = ({ item }: { item: Item }) => {
                     <div className="relative size-30 mb-3">
                         {!imgLoadedMobile && (
                             <div className="absolute inset-0 bg-gray-200 animate-pulse flex items-center justify-center rounded-3xl" >
-                            <p className='comfortaa text-2xl tracking-tighter font-bold text-zinc-400'>gotreats</p>
-                        </div>
+                                <p className='comfortaa text-2xl tracking-tighter font-bold text-zinc-400'>gotreats</p>
+                            </div>
                         )}
                         <img
                             src={item.imageUrl}

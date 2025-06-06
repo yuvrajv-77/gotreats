@@ -3,7 +3,7 @@ import { cva } from 'class-variance-authority'
 import { Spinner } from '@heroui/react';
 
 const classes = cva(
-  'px-5 py-2 rounded-full flex items-center justify-center gap-2 transition-colors cursor-pointer ',
+  'px-5 py-2 rounded-full flex items-center justify-center gap-2 transition-colors  ',
   {
     variants: {
       variant: {
@@ -19,7 +19,7 @@ const classes = cva(
       },
       disabled: {
         true: "bg-gray-300 text-gray-500 cursor-not-allowed",
-        false: ""
+        false: "cursor-pointer"
       }
     }
   }
