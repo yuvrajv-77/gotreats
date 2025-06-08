@@ -152,7 +152,7 @@ const ViewCustomers = () => {
 											{index + 1}
 										</td>
 										<td className="px-6  text-center border-r">
-											<Tooltip content={customer.id} placement='right' className="cursor-pointer">
+											<Tooltip content={customer.id} showArrow placement='right' className="cursor-pointer">
 												{customer.id.slice(-4)}
 											</Tooltip>
 										</td>

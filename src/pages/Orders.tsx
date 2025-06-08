@@ -38,11 +38,14 @@ const Orders = () => {
     }
 
     // Sort orders: prioritize non-delivered orders, then by creation date (most recent first)
-    const sortedOrders = [...orders].sort((a, b) => {
-        if (a.orderStatus !== 'delivered' && b.orderStatus === 'delivered') return -1;
-        if (a.orderStatus === 'delivered' && b.orderStatus !== 'delivered') return 1;
-        return new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime();
-    });
+    // const sortedOrders = [...orders].sort((a, b) => {
+    //     if (a.orderStatus !== 'delivered' && b.orderStatus === 'delivered') return -1;
+    //     if (a.orderStatus === 'delivered' && b.orderStatus !== 'delivered') return 1;
+    //     return new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime();
+    // });
+    const sortedOrders = [...orders].sort(
+    (a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
+);
 
     const formattedAddress = `${selectedOrder?.address.flatNumber}, ${selectedOrder?.address.buildingName}, 
     ${selectedOrder?.address.streetAddress}, ${selectedOrder?.address.area}, ${selectedOrder?.address.pincode}`;
@@ -130,8 +133,8 @@ const Orders = () => {
                                         </div>
 
                                         <div className='flex justify-between items-center'>
-                                            <p className='text-neutral-600 text-lg'>
-                                                Total Paid: <span className='font-bold text-neutral-800'>₹ {order.totalAmount}</span>
+                                            <p className='text-neutral-600 text-lg flex gap-2'>
+                                                <p>{ order.paymentStatus === 'pending' && selectedOrder?.orderStatus !== 'delivered' ? "To Pay : " : "Total Paid : " }</p> <span className='font-bold text-neutral-800'>₹{order.totalAmount}</span>
                                             </p>
                                             <button
                                                 onClick={() => {
@@ -240,7 +243,7 @@ const Orders = () => {
 
                                     {/* Total Paid Section */}
                                     <div className="flex justify-between text-gray-800 font-semibold text-lg mt-4">
-                                        <span>Total Paid</span>
+                                        <span>{ selectedOrder.paymentStatus === 'pending' && selectedOrder?.orderStatus !== 'delivered' ? "Amount To Pay : " : "Total Paid : " }</span>
                                         <span>₹{selectedOrder?.totalAmount || '0.00'}</span>
                                     </div>
 
@@ -261,8 +264,8 @@ const Orders = () => {
                                             </p>
                                         </div>
                                         <div className='flex items-center gap-2 justify-between text-sm text-gray-700 mt-2'>
-                                            <p>Transaction ID: </p>
-                                            <p>{selectedOrder?.razorpay_payment_id || 'N/A'}</p>
+                                            <p>{selectedOrder?.razorpay_payment_id && 'Transaction ID: '}</p>
+                                            <p>{selectedOrder?.razorpay_payment_id}</p>
                                         </div>
                                     </div>
 

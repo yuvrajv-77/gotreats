@@ -6,13 +6,15 @@ import { Key } from 'lucide-react'
 import { handleLogout, validateAdminPassword } from '../services/authService'
 import { HeroUIProvider } from '@heroui/system'
 import toast from 'react-hot-toast'
+import { BrandLogo } from '@/components/Navbar'
 
 const AdminRoutes = () => {
-  const { userDetails,  } = useAuthStore()
-  
+  const { userDetails, } = useAuthStore()
+
   const [isLoading, setIsLoading] = useState(true)
   const [isAuthenticated, setIsAuthenticated] = useState(false)
   const [input, setInput] = useState('')
+  const [checkingPassword, setCheckingPassword] = useState(false)
 
   useEffect(() => {
     // Check if the user is already authenticated for the day
@@ -33,41 +35,43 @@ const AdminRoutes = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault()
+    setCheckingPassword(true)
     try {
       const isValidPassword = await validateAdminPassword(input) // Server-side validation
       if (isValidPassword) {
         const today = new Date().toISOString().split('T')[0]
         localStorage.setItem('adminAuth', JSON.stringify({ date: today, isAuthenticated: true }))
         setIsAuthenticated(true)
+        setCheckingPassword(false)
       } else {
         alert('Invalid password')
+        setCheckingPassword(false)
       }
+      setCheckingPassword(false)
     } catch (error) {
       console.error('Error validating password:', error)
       alert('Something went wrong. Please try again.')
     }
   }
-   const handleLogoutClick = async () => {
-        try {
-            
-            await handleLogout();
-            toast.success('Logged out successfully');
-            // navigate('/');
-        } catch (error) {
-            toast.error('Failed to logout. Please try again.');
-        }
-    };
+  const handleLogoutClick = async () => {
+    try {
+
+      await handleLogout();
+      toast.success('Logged out successfully');
+      // navigate('/');
+    } catch (error) {
+      toast.error('Failed to logout. Please try again.');
+    }
+  };
 
   if (isLoading) {
-    return <div>Loading...</div>
+    return <div className='confortaa animate-pulse text-center my-20'>Checking Authentication please wait ....</div>
   }
 
   if (!isAuthenticated) {
     return (
       <form onSubmit={handleSubmit} className=' text-white bg-zinc-800 flex flex-col items-center justify-center h-svh w-full gap-10 '>
-        <p className='comfortaa font-bold tracking-tighter text-2xl lg:text-3xl text-orange-600'>
-          <span className='text-green-500'>go</span>treats
-        </p>
+        <BrandLogo />
         <div className='flex flex-col gap-3 items-center'>
           <h1 className='text-4xl lancelot '>Welcome {userDetails?.displayName}</h1>
           <div className='flex flex-col items-center gap-3 relative'>

@@ -70,7 +70,7 @@ const AddressSection: React.FC<AddressSectionProps> = ({ uid }) => {
 
     return (
         <div className="">
-            <div className="flex justify-between items-center mb-5">
+            <div className="flex justify-between items-center mb-3">
                 <h2 className="text-sm text-orange-500 font-semibold">Delivery Address</h2>
                 <button
                     onClick={() => setIsEditing(true)}
@@ -202,7 +202,7 @@ const AddressSection: React.FC<AddressSectionProps> = ({ uid }) => {
             ) : (
                 <div>
                     {address.flatNumber ? (
-                        <div className="bg-gray-100 flex gap-3 px-5 py-4 rounded-xl">
+                        <div className=" flex gap-3 ">
                             <Home size={20}/>
                             <p className="text-gray-800 text-sm md:text-base whitespace-pre-wrap">
                                 {`${address.flatNumber}, ${address.buildingName}, ${address.streetAddress}, ${address.landmark ? address.landmark + ", " : ""

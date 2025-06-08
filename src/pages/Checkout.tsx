@@ -21,7 +21,7 @@ import AddressSection from '../components/AddressSection'
 import CartSection from '../components/CartSection'
 import { OrderDetails } from '../types/orderTypes'
 import VoucherModal from './VoucherModal';
-import { useDisclosure } from '@heroui/react';
+import { Radio, RadioGroup, useDisclosure } from '@heroui/react';
 import { Voucher } from '@/types/voucherTypes';
 import VoucherAppliedModal from './VoucherAppliedModal';
 
@@ -35,16 +35,16 @@ const Checkout = () => {
     const userDetails = useAuthStore((state) => state.userDetails)
     const { isOpen, onOpen, onOpenChange } = useDisclosure();
     const { isOpen: isVoucherAppliedModalOpen, onOpenChange: onOpenVoucherAppliedModalChange, onOpen: onOpenVoucherAppliedModal } = useDisclosure();
-
+    const [paymentMode, setPaymentMode] = useState('online');
     const [note, setNote] = useState('');
     const [preferredDeliveryTime, setPreferredDeliveryTime] = useState('');
     const [preferredDeliveryPeriod, setPreferredDeliveryPeriod] = useState('AM');
     const [appliedVoucher, setAppliedVoucher] = useState<Voucher | null>(null);
-  
+
 
     // console.log(appliedVoucher);
     // console.log('grossTotalPrice', grossTotalPrice);
-    console.log('voucherDiscount', voucherDiscount);
+    // console.log('voucherDiscount', voucherDiscount);
 
 
     useEffect(() => {
@@ -130,12 +130,6 @@ const Checkout = () => {
             return;
         }
 
-        const res = await loadRazorpayScript();
-        if (!res) {
-            toast.error('Razorpay SDK failed to load. Are you online?');
-            return;
-        }
-
         const orderDetails: OrderDetails = {
             items: items,
             grossTotalPrice: grossTotalPrice.toFixed(2),
@@ -155,6 +149,34 @@ const Checkout = () => {
             voucherDiscount: voucherDiscount || null,
             voucherCode: appliedVoucher ? appliedVoucher.code : null,
         };
+
+        if (paymentMode === 'cod') {
+            // COD: Place order directly
+            const paymentDetails = {
+                ...orderDetails,
+                paymentStatus: 'pending' as 'pending',
+                orderStatus: 'received' as 'received',
+            };
+            const success = await handleCheckout(paymentDetails);
+            if (success && appliedVoucher && userDetails?.phoneNumber) {
+                await updateVoucherAfterOrder(appliedVoucher, userDetails.phoneNumber);
+            }
+            if (success) {
+                clearCart();
+                toast.success('Order placed successfully (Cash on Delivery)');
+                navigate('/orders');
+            } else {
+                toast.error('Order placement failed. Please contact support.');
+            }
+            return;
+        }
+
+
+        const res = await loadRazorpayScript();
+        if (!res) {
+            toast.error('Razorpay SDK failed to load. Are you online?');
+            return;
+        }
 
         const amountInPaise = Math.round(totalPrice * 100);
 
@@ -265,18 +287,31 @@ const Checkout = () => {
 
                         <AddressSection uid={userDetails?.uid || ""} />
 
-                        <div className='pt-6'>
-                            <h3 className='text-sm text-orange-500 font-medium'>Preferred Delivery Time</h3>
-                            <div className='flex gap-2 items-center'>
-                                <input
-                                    type='time'
-                                    value={preferredDeliveryTime}
-                                    onChange={e => setPreferredDeliveryTime(e.target.value)}
-                                    className='w-full p-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-green-500 focus:border-transparent'
-                                    required
-                                    placeholder='Enter preferred delivery time'
-                                />
+                        <div className='pt-6 flex flex-col gap-6 justify-between'>
+                            <div >
+                                <h3 className='text-sm text-orange-500 font-medium mb-1'>Preferred Delivery Time</h3>
+                                <div className='flex gap-2 items-center'>
+                                    <input
+                                        type='time'
+                                        value={preferredDeliveryTime}
+                                        onChange={e => setPreferredDeliveryTime(e.target.value)}
+                                        className='w-full p-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-green-500 focus:border-transparent'
+                                        required
+                                        placeholder='Enter preferred delivery time'
+                                    />
+                                </div>
                             </div>
+                            <div>
+                                <h3 className='text-sm text-orange-500 font-medium mb-1'>Payment Mode</h3>
+                                <div className='flex gap-2 items-center'>
+                                    <RadioGroup value={paymentMode} onValueChange={setPaymentMode}>
+                                        <Radio value="cod">Cash on Delivery</Radio>
+                                        <Radio description='UPI, Card, NetBanking' value="online">Online (via Razorpay)</Radio>
+                                    </RadioGroup>
+                                </div>
+                            </div>
+
+
                         </div>
                     </div>
 
@@ -344,9 +379,6 @@ const Checkout = () => {
                                     <span className="text-gray-800 font-medium">₹{DELIVERY_PRICE.toFixed(2)}</span>
                                 </div>
 
-
-
-
                                 {/* <div className='flex justify-between items-center text-gray-600 py-2 text-sm'>
                                     <div className="flex items-center gap-2">
                                         <span className="text-gray-800">GST</span>
@@ -358,8 +390,6 @@ const Checkout = () => {
                                 </div> */}
 
                             </div>
-
-
 
                             <div className='pt-4 border-t border-gray-500'>
                                 <div className='flex justify-between items-start'>
@@ -379,7 +409,7 @@ const Checkout = () => {
                                 onClick={handlePaymentClick}
                                 className='w-full mt-6 bg-gradient-to-r text-lg from-green-400 to-green-600 text-white py-4 rounded-2xl hover:from-orange-400 hover:to-orange-400 transition-colors duration-300 flex items-center justify-center gap-2 font-medium shadow-xl shadow-green-100'
                             >
-                                <span>Proceed to Payment</span>
+                                <span>{paymentMode === 'online' ? 'Proceed to Payment' : 'Place Order'}</span>
                                 <span className="text-2xl">•</span>
                                 <span>₹{totalPrice.toFixed(2)}</span>
                             </motion.button>

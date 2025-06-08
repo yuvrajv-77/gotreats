@@ -1,7 +1,7 @@
 import { Link, Outlet } from 'react-router-dom';
 import { Toaster } from 'react-hot-toast';
 
-import { Menu, UserRound } from 'lucide-react';
+import { HandCoins, Menu, UsersRound } from 'lucide-react';
 import { Drawer, DrawerContent, DrawerHeader, DrawerBody, DrawerFooter } from "@heroui/drawer";
 import { ToastProvider, useDisclosure } from "@heroui/react";
 import { Box, Calendar, Home, Inbox, MessageCircleMore, Salad, Search, Settings, TicketPercent } from "lucide-react"
@@ -42,7 +42,12 @@ const AdminLayout = () => {
         {
             title: "Customers",
             url: "/admin/view-customers",
-            icon: UserRound,
+            icon: UsersRound,
+        },
+        {
+            title: "Payments",
+            url: "/admin/payments",
+            icon: HandCoins,
         },
 
     ]
