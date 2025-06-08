@@ -116,14 +116,14 @@ export const router = createBrowserRouter([
             path: "view-all-products",
             element: <ManageProducts />,
           },
-          {
-            path: "product-form",
-            element: <ProductFrom />
-          },
-          {
-            path: "product-form/:productId",
-            element: <ProductFrom />
-          },
+          // {
+          //   path: "product-form",
+          //   element: <ProductFrom />
+          // },
+          // {
+          //   path: "product-form/:productId",
+          //   element: <ProductFrom />
+          // },
           {
             path: "view-all-orders",
             element: <ManageOrders />
