@@ -6,6 +6,15 @@ import { useNavigate } from 'react-router-dom'
 import { motion } from 'framer-motion'
 import React, { useState } from 'react'
 import { Skeleton } from '@heroui/react'
+import {
+    Drawer,
+    DrawerContent,
+    DrawerHeader,
+    DrawerBody,
+    DrawerFooter,
+    Button,
+    useDisclosure,
+} from "@heroui/react";
 
 // Add keyframes for the glowing animation
 const glowingStyles = `
@@ -84,6 +93,7 @@ const ItemCards = ({ item }: { item: Item }) => {
 
     const [imgLoaded, setImgLoaded] = useState(false);
     const [imgLoadedMobile, setImgLoadedMobile] = useState(false);
+    const { isOpen, onOpen, onOpenChange } = useDisclosure();
 
     const veg = (
         <div className='border-2 rounded-md border-green-700 flex items-center justify-center size-5 mb-1'>
@@ -120,7 +130,7 @@ const ItemCards = ({ item }: { item: Item }) => {
 
     return (
         <>
-            <div className='md:flex flex-col justify-between hidden group w-64 lg:w-76 bg-white p-6 rounded-3xl shadow-xs cursor-pointer hover:bg-green-50 transition-color duration-500 border-orange-50 relative'>
+            <div className='md:flex flex-col justify-between hidden group w-64 lg:w-76 bg-white p-6 rounded-3xl shadow-xs cursor-pointer hover:bg-green-50 transition-color duration-500 border-orange-50 relative' >
                 {/* Most Ordered Tag for Desktop */}
                 {(item.productName.toLowerCase().includes('combo') ||
                     item.productName.toLowerCase().includes('poori bhaji')) && (
@@ -188,7 +198,7 @@ const ItemCards = ({ item }: { item: Item }) => {
                 </div>
             </div>
 
-            <div className='flex md:hidden justify-between mx-2 p-4 gap-1 rounded-xl shadow-xs cursor-pointer bg-white transition-color duration-500 w-full relative'>
+            <div className='flex md:hidden justify-between mx-2 p-4 gap-1 rounded-xl shadow-xs cursor-pointer bg-white transition-color duration-500 w-full relative' onClick={onOpen}>
                 {/* Most Ordered Tag for Mobile */}
                 {(item.productName.toLowerCase().includes('combo') ||
                     item.productName.toLowerCase().includes('poori bhaji')) && (
@@ -212,7 +222,7 @@ const ItemCards = ({ item }: { item: Item }) => {
                     <p className='comfortaa text-sm text-green-700 font-bold flex items-center gap-1 mb-3'><Star fill='green' size={13} />{item.rating}</p>
                     <p className=' text-gray-500 text-sm line-clamp-2 tracking-tight'>{item.productDescription}</p>
                 </div>
-                <div className='flex flex-col justify-between items-center  w-2/5'>
+                <div className='flex flex-col justify-between items-end  w-2/5'>
                     <div className="relative size-30 mb-3">
                         {!imgLoadedMobile && (
                             <div className="absolute inset-0 bg-gray-200 animate-pulse flex items-center justify-center rounded-3xl" >
@@ -229,7 +239,7 @@ const ItemCards = ({ item }: { item: Item }) => {
                     </div>
                     {
                         user ?
-                            <div className=' h-9 flex justify-between items-center bg-green-100 rounded-lg text-lg'>
+                            <div className=' h-9 flex justify-between mr-2 items-center bg-green-100 rounded-lg text-lg'>
                                 <button
                                     onClick={handleDecrement}
                                     className='h-full flex items-center px-3 text-4xl text-green-600 cursor-pointer'
@@ -251,6 +261,59 @@ const ItemCards = ({ item }: { item: Item }) => {
                     }
                 </div>
             </div>
+
+            <Drawer isOpen={isOpen} placement='bottom' size='lg' hideCloseButton onOpenChange={onOpenChange}>
+                <DrawerContent className=''>
+                    {(onClose) => (
+                        <>
+
+                            <DrawerBody className='pt-5'>
+                                <div className=' rounded-lg w-full h-56 overflow-hidden'>
+                                    <img className='w-full h-full  object-cover' src={item.imageUrl} alt="" />
+                                </div>
+
+                                <div className='mt-4 mb-2 space-y-2'>
+                                    {item.isNonVeg ? nonVeg : veg}
+                                    <div className='flex items-center justify-between '>
+                                        <h4 className='lancelot text-xl lg:text-3xl font-bold'>{item.productName}</h4>
+                                        <p className='comfortaa text-sm text-green-700 font-bold flex items-center gap-1 mb-2'><Star fill='green' size={13} />{item.rating}</p>
+                                    </div>
+                                    <p className='text-gray-500 text-sm lg:text:base leading-5 line-clamp-2'>{item.productDescription}</p>
+                                </div>
+
+                            </DrawerBody>
+                            <DrawerFooter className='flex justify-between items-center'>
+                                <div className='inline-flex items-center gap-2 mb-2'>
+                                    <p className='comfortaa text-lg line-through '> ₹{item.originalPrice} </p>
+                                    <span className='px-[3px] py-[1px] flex items-center text-lg shadow-3xl bg-yellow-500 '>₹{item.offerPrice}</span>
+                                </div>
+                                {
+                                    user ?
+                                        <div className='outline outline-green-500 h-10 flex justify-between gap-2 mr-2 items-center bg-green-100 rounded-lg text-lg'>
+                                            <button
+                                                onClick={handleDecrement}
+                                                className='h-full flex items-center px-3 text-4xl text-green-600 cursor-pointer'
+                                            >
+                                                -
+                                            </button>
+                                            <p className='px-2 text-green-600 font-semibold'>{quantity}</p>
+                                            <button
+                                                onClick={handleIncrement}
+                                                className='h-full flex items-center px-3 text-3xl text-green-600 cursor-pointer hover:text-green-800'
+                                            >
+                                                +
+                                            </button>
+                                        </div>
+                                        :
+                                        <button onClick={() => navigate('/register')} className=' h-9 flex justify-between items-center bg-green-100 rounded-lg text-lg'>
+                                            <p className='px-2 text-green-600 text-sm font-semibold'>Login to add</p>
+                                        </button>
+                                }
+                            </DrawerFooter>
+                        </>
+                    )}
+                </DrawerContent>
+            </Drawer>
         </>
     )
 }

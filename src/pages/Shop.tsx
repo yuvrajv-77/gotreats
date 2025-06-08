@@ -1,4 +1,4 @@
-import { BadgePercent, Beer, Candy, Cookie, Dessert, Drumstick, Salad, Search, Soup, Utensils } from 'lucide-react';
+import { BadgePercent, Beer, Candy, ChevronRight, Cookie, Dessert, Drumstick, Salad, Search, Soup, Utensils } from 'lucide-react';
 import { useEffect, useState } from 'react';
 import ItemCards from '../components/ItemCards';
 import { useNavigate, useSearchParams } from 'react-router-dom';
@@ -277,18 +277,18 @@ const Shop = () => {
                         initial={{ y: 200, opacity: 0 }}
                         animate={{ y: 0, opacity: 1 }}
                         exit={{ y: 200, opacity: 0 }}
-                        className='fixed bottom-4 left-0 right-0 flex justify-center w-full z-50'
+                        className='fixed bottom-4 left-0 right-0 flex justify-center mx-4   z-80'
                     >
                         <span
                             onClick={() => {
                                 window.scrollTo(0, 0);
                                 navigate('/checkout');
                             }}
-                            className="relative bg-black  text-white px-6 py-4 rounded-full min-w- shadow-lg hover:bg-gray-900 transition-all duration-300"
+                            className="relative bg-green-500  text-white px-4 py-3 rounded-2xl min-w-full md:min-w-auto  shadow-lg hover:bg-gray-900 transition-all duration-300"
                         >
-                            <span className="flex items-center">
+                            <span className="flex justify-between items-center">
                                 <p className="font-medium">{itemQuantity} Items Added</p>
-                                <span className="text-orange-400 ml-3">View Cart →</span>
+                                <span className=" ml-3 py-1 px-3 rounded-full flex items-center">View Cart <ChevronRight size={18}/></span>
                             </span>
                         </span>
                     </motion.div>

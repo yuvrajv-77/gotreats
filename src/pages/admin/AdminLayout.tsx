@@ -14,7 +14,9 @@ import { BrandLogo } from '@/components/Navbar';
 
 const AdminLayout = () => {
     const { isOpen, onOpen, onClose } = useDisclosure();
-    const { userDetails } = useAuthStore()
+    const { user, userDetails } = useAuthStore()
+    console.log("user ", user);
+    
     // Menu items.
     const items = [
         {

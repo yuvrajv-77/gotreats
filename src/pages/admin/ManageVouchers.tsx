@@ -31,7 +31,7 @@ const ManageVouchers = () => {
 
     return (
         <main className='mx-4 w-full'>
-            <h1 className="md:text-4xl text-3xl font-bold text-center md:text-start lancelot mb-4 md:mb-6 text-white">Manage Vouchers</h1>
+            <h1 className="md:text-4xl text-3xl font-bold text-center md:text-start lancelot  text-white">Manage Vouchers</h1>
             <div className='flex justify-end gap-5 items-center'>
                 <button type='button' className='p-2 cursor-pointer bg-green-100   rounded-full transition-colors'
                     onClick={() => { refetch(); toast.success("Vouchers Refetched") }}>
@@ -42,7 +42,7 @@ const ManageVouchers = () => {
                 </Button>
             </div>
 
-            <div className="overflow-x-auto my-10">
+            <div className="overflow-x-auto my-5">
                 {isLoading ? (
                     <p className='text-center my-10'>Loading vouchers...</p>
                 ) : (
