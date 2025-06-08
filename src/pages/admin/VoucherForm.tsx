@@ -144,10 +144,10 @@ const VoucherForm = ({
                         <ModalBody>
                             <form className='flex flex-col gap-6' onSubmit={handleSubmit}>
                                 <div>
-                                    <p className='text-sm'>Voucher Name*</p>
+                                    {/* <p className='text-sm'>Voucher Name*</p> */}
                                     <Input
                                         variant='faded'
-                                        // label="Voucher Name"
+                                        label="Voucher Name"
                                         placeholder="Get 30% OFF"
                                         labelPlacement='outside'
                                         autoFocus
@@ -158,10 +158,10 @@ const VoucherForm = ({
                                     />
                                 </div>
                                 <div>
-                                    <p className='text-sm'>Voucher Code*</p>
+                                    {/* <p className='text-sm'>Voucher Code*</p> */}
                                     <Input
                                         variant='faded'
-                                        // label="Voucher Code"
+                                        label="Voucher Code"
                                         placeholder="TASTY30"
                                         labelPlacement='outside'
                                         startContent={<TicketPercent size={20} color='gray' strokeWidth={1.6} />}
@@ -183,11 +183,11 @@ const VoucherForm = ({
                                         <Radio value="fixed">Fixed</Radio>
                                     </RadioGroup>
                                     <div className="">
-                                        <p className='text-sm'>Discount Value*</p>
+                                        {/* <p className='text-sm'>Discount Value*</p> */}
                                         <NumberInput
                                             className=''
                                             variant='faded'
-                                            // label="Discount Value"
+                                            label="Discount Value"
                                             placeholder="Discount Value"
                                             labelPlacement='outside'
                                             startContent={form.discountType === 'percentage' ? <Percent size={20} color='gray' strokeWidth={1.6} /> : <IndianRupee size={20} color='gray' strokeWidth={1.6} />}
@@ -199,10 +199,10 @@ const VoucherForm = ({
                                 </div>
                                 <div className='flex gap-4'>
                                     <div className="inline-flex flex-col w-full">
-                                        <p className='text-sm'>Minimum Order Value*</p>
+                                        {/* <p className='text-sm'>Minimum Order Value*</p> */}
                                         <NumberInput
                                             variant='faded'
-                                            // label="Minimum Order Value"
+                                            label="Minimum Order Value"
                                             placeholder="Minimum Order Value"
                                             labelPlacement='outside'
                                             startContent={<IndianRupee size={20} color='gray' strokeWidth={1.6} />}
@@ -212,11 +212,11 @@ const VoucherForm = ({
                                         />
                                     </div>
                                     <div className="inline-flex flex-col w-full">
-                                        <p className='text-sm'>Maximum Uses*</p>
+                                        {/* <p className='text-sm'>Maximum Uses*</p> */}
 
                                         <NumberInput
                                             variant='faded'
-                                            // label="Maximum Uses"
+                                            label="Maximum Uses"
                                             placeholder="Limits the number of times voucher can be used"
                                             labelPlacement='outside'
                                             isRequired
@@ -238,7 +238,7 @@ const VoucherForm = ({
                                 </div>
                                 <div className='flex justify-center items-center gap-4'>
                                     <div className="flex flex-col w-full">
-                                        <p className='text-sm'>Select Scope*</p>
+                                        {/* <p className='text-sm'>Select Scope*</p> */}
 
                                         <Select
                                             className=""
@@ -246,7 +246,7 @@ const VoucherForm = ({
                                             placeholder='Select Scope of Voucher'
                                             radius='lg'
                                             labelPlacement='outside'
-                                            // label="Select Scope"
+                                            label="Select Scope"
                                             selectedKeys={[form.scope]}
                                             onSelectionChange={keys => handleScopeChange(Array.from(keys)[0] as VoucherScope)}
                                         >
@@ -268,11 +268,11 @@ const VoucherForm = ({
                                 {/* Allowed Users: only for single/multiple */}
                                 {(form.scope === 'specific') && (
                                     <div className='flex flex-col gap-2'>
-                                        <p className='text-sm'>Allowed Users*</p>
+                                        {/* <p className='text-sm'>Allowed Users*</p> */}
                                         <div className='flex items-end gap-4'>
                                             <Input
                                                 variant='faded'
-                                                // label="Allowed Users"
+                                                label="Allowed Users"
                                                 placeholder="Enter Registered Phone Number"
                                                 labelPlacement='outside'
                                                 isRequired

@@ -73,7 +73,7 @@ export default function ManageProducts() {
                 <table className="min-w-full bg-white shadow-md rounded-lg">
                     <thead className="bg-green-500 text-white">
                         <tr>
-                            <th className="px-6 py-3">Type</th>
+                            {/* <th className="px-6 py-3">Type</th> */}
                             <th className="px-6 py-3">Image</th>
                             <th className="px-6 py-3">ID</th>
                             <th className="px-6 py-3">Name</th>
@@ -91,16 +91,17 @@ export default function ManageProducts() {
 
                         {data?.map((product) => (
                             <tr key={product.id} className={`border-b hover:bg-gray-50 ${product.isAvailable ? '' : 'text-neutral-600'}`}>
-                                <td className=" ">
+                                {/* <td className=" ">
                                     <div className='flex items-center justify-center gap-2'>
                                         <VegSymbol isNonVeg={product.isNonVeg} />
                                     </div>
-                                </td>
+                                </td> */}
                                 <td className=" text-center">
                                     <Tooltip content={
-                                        <img src={product.imageUrl} className={`size-60 object-cover rounded-md ${product.isAvailable ? '' : 'grayscale'} `} alt="" />
+                                        <img src={product.imageUrl} className={`size-80 object-cover rounded-md ${product.isAvailable ? '' : 'grayscale'} `} alt="" />
                                     } placement='right-start'>
-                                        <div className='flex justify-center items-center h-full'>
+                                        <div className='flex justify-evenly items-center gap-2 h-full'>
+                                            <VegSymbol isNonVeg={product.isNonVeg} />
                                             <img src={product.imageUrl} className={`size-12 object-cover ${product.isAvailable ? '' : 'grayscale'} `} alt="" />
                                         </div>
                                     </Tooltip>

@@ -8,6 +8,7 @@ import { Box, Calendar, Home, Inbox, MessageCircleMore, Salad, Search, Settings,
 import { handleLogout } from '@/services/authService';
 import { useAuthStore } from '@/store/authStore';
 import Button from '@/components/Button';
+import { BrandLogo } from '@/components/Navbar';
 
 
 
@@ -48,7 +49,7 @@ const AdminLayout = () => {
 
         <div className='flex' >
 
-            <div className='w-12 space-y-4 pt-5 px-1 bg-white'>
+            <div className='w-12 space-y-4 pt-5 px-1 bg-white hidden lg:block'>
                 <img src="/favicon.png" className='size-6 mx-auto mb-10 ' alt="" />
                 {items.map((item) => (
                     <Link to={item.url} key={item.title} className="flex items-center gap-2 p-2 hover:bg-gray-200 rounded-md" onClick={onClose}>
@@ -89,9 +90,7 @@ const AdminLayout = () => {
             <Drawer isOpen={isOpen} placement='left' onOpenChange={onClose} className='max-w-[200px]'  >
                 <DrawerContent>
                     <DrawerHeader>
-                        <p className='comfortaa font-bold tracking-tighter text-2xl lg:text-3xl text-orange-600'>
-                            <span className='text-green-500'>go</span>treats
-                        </p>
+                        <BrandLogo/>
                     </DrawerHeader>
                     <DrawerBody>
                         {items.map((item) => (

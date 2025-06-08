@@ -22,7 +22,6 @@ export const BrandLogo = () => {
 }
 const Navbar = () => {
     const [isOpen, setIsOpen] = useState(false)
-    const [showDeliveryChecker, setShowDeliveryChecker] = useState(false)
     const [showLogoutModal, setShowLogoutModal] = useState(false);
     const location = useLocation();
     const user = useAuthStore((state) => state.user)
@@ -60,15 +59,10 @@ const Navbar = () => {
         }
     };
 
-    // Add a function to check if a link is active
-    const isLinkActive = (path: string) => {
-        return location.pathname === path;
-    };
-
 
     return (
         <>
-            <header className=" py-2  w-full  z-50 shadow-xl border-b ">
+            <header className=" py-1  z-50 shadow-xl border-b ">
                 <div className="container  mx-auto">
                     <div className=" bg-white  ">
                         <div className=" grid grid-cols-2 lg:grid-cols-3 px-4 md:pr-2 py-2  items-center">
@@ -95,11 +89,11 @@ const Navbar = () => {
                             </div>
                             <div className="hidden lg:block">
                                 <nav className="flex gap-10 items-center justify-center">
-                                    <Link to="/shop" className="hover:text-green-600">Menu</Link>
-                                    <Link to="/concept" className="hover:text-green-600">Concept</Link>
-                                    <Link to="/about" className="hover:text-green-600">About</Link>
-                                    <Link to="/customers" className="hover:text-green-600">Customers</Link>
-                                    <Link to="/contact" className="hover:text-green-600">Contact</Link>
+                                    <Link to="/shop" className="hover:text-orange-600">Menu</Link>
+                                    <Link to="/concept" className="hover:text-orange-600">Concept</Link>
+                                    <Link to="/about" className="hover:text-orange-600">About</Link>
+                                    <Link to="/customers" className="hover:text-orange-600">Customers</Link>
+                                    <Link to="/contact" className="hover:text-orange-600">Contact</Link>
                                 </nav>
                             </div>
                             <div className="flex justify-end gap-4">
@@ -109,7 +103,7 @@ const Navbar = () => {
                                 {user &&
                                     <div onClick={() => navigate('/checkout')} className="cursor-pointer">
                                         <IconButton>
-                                            <ShoppingCart strokeWidth={1.4} />
+                                            <ShoppingCart strokeWidth={1.5} size={20} />
                                             <p className='text-green-600 text-lg'>
                                                 {items.reduce((total, item) => total + item.quantity, 0)}
                                             </p>
@@ -119,10 +113,10 @@ const Navbar = () => {
                                 {user &&
                                     <Dropdown>
                                         <DropdownTrigger>
-                                            <Button variant='secondary' >
+                                            <Button variant='secondary' className='bg-white' >
                                                 <div className='flex items-center gap-2'>
-                                                    <UserRound strokeWidth={1.4} />
-                                                    <p className='hidden lg:block'>{userDetails?.displayName}</p>
+                                                    <UserRound strokeWidth={1.5} size={20} />
+                                                    <p className='hidden text-sm lg:block'>{userDetails?.displayName}</p>
                                                 </div>
                                             </Button>
                                         </DropdownTrigger>
@@ -173,14 +167,15 @@ const Navbar = () => {
                                     exit={{ height: 0 }}
                                     className="overflow-hidden">
                                     <div className="flex flex-col gap-10 items-center justify-center px-10 py-10 ">
-                                        <nav className="flex flex-col gap-15 items-center justify-center">
+                                        <nav className="flex flex-col gap-14 items-center justify-center">
                                             <Link to="/" onClick={() => setIsOpen(false)} className={`text-lg `}>Home</Link>
                                             <Link to="/shop" onClick={() => setIsOpen(false)} className={`text-lg `}>Shop</Link>
-                                            <Link to="/terms-and-conditions" onClick={() => setIsOpen(false)} className={`text-lg `}>Terms and Conditions</Link>
+                                            <Link to="/profile" onClick={() => setIsOpen(false)} className={`text-lg `}>Profile</Link>
                                             <Link to="/about" onClick={() => setIsOpen(false)} className={`text-lg `}>About</Link>
                                             <Link to="/customers" onClick={() => setIsOpen(false)} className={`text-lg `}>Customers</Link>
                                             <Link to="/contact" onClick={() => setIsOpen(false)} className={`text-lg `}>Contact Us</Link>
                                             <Link to="/concept" onClick={() => setIsOpen(false)} className={`text-lg `}>Concept</Link>
+                                            <Link to="/terms-and-conditions" onClick={() => setIsOpen(false)} className={`text-lg `}>Terms and Conditions</Link>
                                         </nav>
                                         <div className="space-y-4 w-full">
 
