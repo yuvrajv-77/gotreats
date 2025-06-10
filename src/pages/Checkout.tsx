@@ -303,10 +303,10 @@ const Checkout = () => {
                             </div>
                             <div>
                                 <h3 className='text-sm text-orange-500 font-medium mb-1'>Payment Mode</h3>
-                                <div className='flex gap-2 items-center'>
-                                    <RadioGroup value={paymentMode} onValueChange={setPaymentMode}>
-                                        <Radio value="cod">Cash on Delivery</Radio>
-                                        <Radio description='UPI, Card, NetBanking' value="online">Online (via Razorpay)</Radio>
+                                <div className='flex gap-2 items-center '>
+                                    <RadioGroup size='sm' value={paymentMode} onValueChange={setPaymentMode}>
+                                        <Radio  value="cod">Cash on Delivery</Radio>
+                                        <Radio  description='UPI, Card, NetBanking' value="online">Online (via Razorpay)</Radio>
                                     </RadioGroup>
                                 </div>
                             </div>

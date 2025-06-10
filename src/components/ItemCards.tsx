@@ -171,7 +171,7 @@ const ItemCards = ({ item }: { item: Item }) => {
                 <div className='flex justify-between items-center mt-5'>
                     {
                         user ?
-                            <div className=' h-9 flex justify-between items-center bg-green-100 rounded-lg text-lg'>
+                            <div className='  h-9 flex justify-between items-center bg-green-100 rounded-lg text-lg' onClick={(e) => e.stopPropagation()}>
                                 <button
                                     onClick={handleDecrement}
                                     className='h-full flex items-center px-3 text-4xl text-green-600 cursor-pointer'
@@ -198,7 +198,7 @@ const ItemCards = ({ item }: { item: Item }) => {
                 </div>
             </div>
 
-            <div className='flex md:hidden justify-between mx-2 p-4 gap-1 rounded-xl shadow-xs cursor-pointer bg-white transition-color duration-500 w-full relative' onClick={onOpen}>
+            <div className='flex md:hidden justify-between mx-2 p-4 gap-1 rounded-xl shadow-xs cursor-pointer bg-white transition-color duration-500 w-full relative' >
                 {/* Most Ordered Tag for Mobile */}
                 {(item.productName.toLowerCase().includes('combo') ||
                     item.productName.toLowerCase().includes('poori bhaji')) && (
@@ -223,7 +223,7 @@ const ItemCards = ({ item }: { item: Item }) => {
                     <p className=' text-gray-500 text-sm line-clamp-2 tracking-tight'>{item.productDescription}</p>
                 </div>
                 <div className='flex flex-col justify-between items-end  w-2/5'>
-                    <div className="relative size-30 mb-3">
+                    <div className="relative size-30 mb-3" onClick={onOpen}>
                         {!imgLoadedMobile && (
                             <div className="absolute inset-0 bg-gray-200 animate-pulse flex items-center justify-center rounded-3xl" >
                                 <p className='comfortaa text-2xl tracking-tighter font-bold text-zinc-400'>gotreats</p>

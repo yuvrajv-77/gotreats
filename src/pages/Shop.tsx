@@ -50,7 +50,7 @@ const Shop = () => {
         // Then filter by search query
         if (searchQuery.trim()) {
             const query = searchQuery.toLowerCase().trim();
-            filteredProducts = filteredProducts?.filter(item => 
+            filteredProducts = filteredProducts?.filter(item =>
                 item.productName.toLowerCase().includes(query) ||
                 item.category.toLowerCase().includes(query) ||
                 item.productDescription.toLowerCase().includes(query)
@@ -74,7 +74,7 @@ const Shop = () => {
             return filteredProducts?.filter(item => item.category === 'Snacks');
         } else if (tag === 'drinks') {
             return filteredProducts?.filter(item => item.category === 'Drinks');
-        }else if (tag === 'pickles') {
+        } else if (tag === 'pickles') {
             return filteredProducts?.filter(item => item.category === 'Pickles');
         }
         return filteredProducts;
@@ -82,7 +82,7 @@ const Shop = () => {
 
     // Heading text animation variants
     const headingVariants: Variants = {
-        initial: { 
+        initial: {
             opacity: 0,
             y: 30
         },
@@ -98,7 +98,7 @@ const Shop = () => {
 
     // Word animation variants for "Homemade"
     const wordVariants: Variants = {
-        initial: { 
+        initial: {
             backgroundPosition: "0% 50%"
         },
         animate: {
@@ -213,13 +213,13 @@ const Shop = () => {
                                     <span
                                         className={`whitespace-nowrap cursor-pointer px-4 py-2 rounded-xl ${tag == 'desserts' ? 'bg-orange-600 text-white hover:text-white' : 'bg-white'}  hover:text-orange-600 inline-flex items-center shadow-xs gap-2 transition-colors duration-100 ease-in`}
                                         onClick={() => navigate('/shop/?tag=desserts')}>
-                                        <Dessert strokeWidth={1.5} /> 
+                                        <Dessert strokeWidth={1.5} />
                                         Desserts
                                     </span>
                                     <span
                                         className={`whitespace-nowrap cursor-pointer px-4 py-2 rounded-xl ${tag == 'snacks' ? 'bg-orange-600 text-white hover:text-white' : 'bg-white'}  hover:text-orange-600 inline-flex items-center shadow-xs gap-2 transition-colors duration-100 ease-in`}
                                         onClick={() => navigate('/shop/?tag=snacks')}>
-                                            <Cookie strokeWidth={1.5} />
+                                        <Cookie strokeWidth={1.5} />
                                         Snacks
                                     </span>
                                     <span
@@ -231,7 +231,7 @@ const Shop = () => {
                                     <span
                                         className={`whitespace-nowrap cursor-pointer px-4 py-2 rounded-xl ${tag == 'pickles' ? 'bg-orange-600 text-white hover:text-white' : 'bg-white'}  hover:text-orange-600 inline-flex items-center shadow-xs gap-2 transition-colors duration-100 ease-in`}
                                         onClick={() => navigate('/shop/?tag=pickles')}>
-                                        
+
                                         Pickles
                                     </span>
                                 </>
@@ -272,26 +272,24 @@ const Shop = () => {
                 </div>
             </div>
             {itemQuantity > 0 &&
-                <AnimatePresence>
-                    <motion.div
+                <AnimatePresence >
+
+                    <motion.span
                         initial={{ y: 200, opacity: 0 }}
                         animate={{ y: 0, opacity: 1 }}
                         exit={{ y: 200, opacity: 0 }}
-                        className='fixed bottom-4 left-0 right-0 flex justify-center mx-4   z-80'
+                        onClick={() => {
+                            navigate('/checkout');
+                            window.scrollTo(0, 0);
+                        }}
+                        className="fixed w-full md:w-1/6 md:bottom-4 bottom-0 left-1/2  -translate-x-1/2 bg-green-700 cursor-pointer  text-white px-4 py-3  md:rounded-2xl  shadow-2xl hover:bg-gray-900 transition-all duration-300 z-50"
                     >
-                        <span
-                            onClick={() => {
-                                window.scrollTo(0, 0);
-                                navigate('/checkout');
-                            }}
-                            className="relative bg-green-500  text-white px-4 py-3 rounded-2xl min-w-full md:min-w-auto  shadow-lg hover:bg-gray-900 transition-all duration-300"
-                        >
-                            <span className="flex justify-between items-center">
-                                <p className="font-medium">{itemQuantity} Items Added</p>
-                                <span className=" ml-3 py-1 px-3 rounded-full flex items-center">View Cart <ChevronRight size={18}/></span>
-                            </span>
-                        </span>
-                    </motion.div>
+                        <button type='button' className="flex md:py-2 py-3 justify-between items-center gap-2 w-full">
+                            <p className="font-medium">{itemQuantity} Items Added</p>
+                            <span className="   flex items-center">View Cart <ChevronRight size={18} /></span>
+                        </button>
+                    </motion.span>
+
                 </AnimatePresence>
             }
         </div>

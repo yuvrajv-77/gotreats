@@ -40,7 +40,7 @@ const ScrollToTop = () => {
             {isVisible && (
                 <button
                     onClick={scrollToTop}
-                    className="fixed bottom-8 right-8 z-50 w-12 h-12 rounded-full bg-white shadow-lg overflow-hidden transition-all duration-300 hover:scale-110 group"
+                    className="fixed hidden bottom-8 right-8 z-50 w-12 h-12 rounded-full bg-white shadow-lg overflow-hidden transition-all duration-300 hover:scale-110 group"
                     style={{ boxShadow: '0 4px 15px rgba(0, 0, 0, 0.1)' }}
                 >
                     {/* Liquid fill effect */}

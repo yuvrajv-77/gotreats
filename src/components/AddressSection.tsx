@@ -74,7 +74,7 @@ const AddressSection: React.FC<AddressSectionProps> = ({ uid }) => {
                 <h2 className="text-sm text-orange-500 font-semibold">Delivery Address</h2>
                 <button
                     onClick={() => setIsEditing(true)}
-                    className=" text-sm text-orange-500 hover:text-orange-600 transition-colors font-medium"
+                    className=" text-sm text-orange-500 hover:text-orange-600 underline transition-colors font-medium"
                 >
                     Edit Address
                 </button>
@@ -203,8 +203,8 @@ const AddressSection: React.FC<AddressSectionProps> = ({ uid }) => {
                 <div>
                     {address.flatNumber ? (
                         <div className=" flex gap-3 ">
-                            <Home size={20}/>
-                            <p className="text-gray-800 text-sm md:text-base whitespace-pre-wrap">
+                            <Home size={24}/>
+                            <p className="text-gray-800 text-sm  whitespace-pre-wrap">
                                 {`${address.flatNumber}, ${address.buildingName}, ${address.streetAddress}, ${address.landmark ? address.landmark + ", " : ""
                                     }${address.area}, ${address.pincode}`}
                             </p>
