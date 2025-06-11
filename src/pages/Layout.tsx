@@ -5,7 +5,7 @@ import { useProductStore } from '../store/productStore'
 
 import { useQuery } from '@tanstack/react-query'
 import { getItemsFromFirestore } from '../services/productService'
-import { Toaster } from 'react-hot-toast'
+import toast, { Toaster } from 'react-hot-toast'
 import Footer from './Footer'
 import ScrollToTop from '../components/ScrollToTop'
 import { motion, AnimatePresence } from 'framer-motion'
@@ -19,8 +19,10 @@ function Layout() {
   const { data } = useQuery({
     queryKey: ['items'],
     queryFn: getItemsFromFirestore,
-    
+
   })
+
+ 
 
   useEffect(() => {
     if (data) {
@@ -28,6 +30,8 @@ function Layout() {
       useProductStore.getState().setProducts(filteredItems)
     }
   }, [data])
+
+  
 
   if (userDetails?.role === "admin") {
     return <Navigate to="/admin/view-all-orders" />
@@ -37,10 +41,10 @@ function Layout() {
 
   return (
     <div>
-      <Navbar/>
-     
-          <Outlet />
-       
+      <Navbar />
+
+      <Outlet />
+
       <ScrollToTop />
       <Toaster />
       <Footer />

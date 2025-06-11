@@ -9,6 +9,10 @@ import { handleLogout } from '@/services/authService';
 import { useAuthStore } from '@/store/authStore';
 import Button from '@/components/Button';
 import { BrandLogo } from '@/components/Navbar';
+import { useEffect } from 'react';
+import { requestForToken, requestNotificationPermision } from '@/utils/fwc';
+import { doc, setDoc } from 'firebase/firestore';
+import { db } from '@/config/firebaseConfig';
 
 
 
@@ -16,7 +20,7 @@ const AdminLayout = () => {
     const { isOpen, onOpen, onClose } = useDisclosure();
     const { user, userDetails } = useAuthStore()
     console.log("user ", user);
-    
+
     // Menu items.
     const items = [
         {
@@ -52,6 +56,22 @@ const AdminLayout = () => {
 
     ]
 
+    useEffect(() => {
+        if (userDetails?.role === "admin") {
+            requestForToken().then(token => {
+                if (token) {
+                    // Save admin's FCM token to Firestore
+                    setDoc(doc(db, "adminTokens", userDetails.uid), { token }, { merge: true });
+                }
+            });
+        }
+    }, [userDetails]);
+
+    useEffect(() => {
+        if (location.pathname === '/') {
+            requestNotificationPermision();
+        }
+    }, [location.pathname])
     return (
 
         <div className='flex' >
@@ -73,7 +93,7 @@ const AdminLayout = () => {
                     }}>
                     <Menu />
                 </button>
-               
+
                 <Outlet />
 
                 {/* <Toaster /> */}
@@ -97,7 +117,7 @@ const AdminLayout = () => {
             <Drawer isOpen={isOpen} placement='left' onOpenChange={onClose} className='max-w-[200px]'  >
                 <DrawerContent>
                     <DrawerHeader>
-                        <BrandLogo/>
+                        <BrandLogo />
                     </DrawerHeader>
                     <DrawerBody>
                         {items.map((item) => (

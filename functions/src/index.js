@@ -3,6 +3,7 @@ const admin = require('firebase-admin');
 const functions = require('firebase-functions');
 const cors = require('cors');
 const { onRequest } = require('firebase-functions/v2/https');
+const { onDocumentCreated } = require('firebase-functions/firestore');
 
 admin.initializeApp();
 
@@ -32,6 +33,50 @@ exports.validateAdminPassword = onRequest((req, res) => {
   });
 });
 
+exports.notifyAdminOnNewOrder = onDocumentCreated('orders/{orderId}', async (event) => {
+  const order = event.data.data();
+console.log('Order data:', order);
+
+  // Get all admin tokens (assuming you may have multiple admins)
+  const tokensSnapshot = await admin.firestore().collection('adminTokens').get();
+  const tokens = tokensSnapshot.docs.map(doc => doc.data().token).filter(Boolean);
+  console.log('Admin tokens:', tokens);
+  if (tokens.length === 0){
+    console.log('No admin tokens found. Exiting function.');
+    return;
+    
+  } ;
+
+  const message = {
+    notification: {
+      title: "New Order Received!",
+      body: `Order from ${order.customer?.name || "a customer"}`,
+    },
+    webpush: {
+      notification: {
+        icon: "/favicon.png",
+        click_action: "https://www.gotreats.in/admin/view-all-orders"
+      }
+    },
+    tokens: tokens
+  };
+
+  try {
+    const response = await admin.messaging().sendEachForMulticast(message);
+    console.log('FCM response:', response);
+    if (response.failureCount > 0) {
+      response.responses.forEach((resp, idx) => {
+        if (!resp.success) {
+          console.log(`Failed to send to token ${tokens[idx]}:`, resp.error);
+        }
+      });
+    }
+    return response;
+  } catch (error) {
+    console.error('Error sending notification:', error);
+    throw error;
+  }
+});
 
 // When you use httpsCallable to call a Firebase Cloud Function, 
 // the Firebase client SDK automatically includes the user's authentication 
