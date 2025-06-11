@@ -123,6 +123,21 @@ const ViewCustomers = () => {
 				>
 					Customers Excel
 				</Button>
+				<button
+					className="p-2 rounded-md bg-blue-500 text-white mb-4"
+					onClick={() => {
+						if (Notification.permission === "granted") {
+							new Notification("Dummy Notification", {
+								body: "This is a test notification.",
+								icon: "/favicon.png"
+							});
+						} else {
+							alert("Please allow notifications in your browser settings.");
+						}
+					}}
+				>
+					Show Dummy Notification
+				</button>
 			</div>
 			<div className="overflow-x-auto mt-2 mb-10">
 				{isLoading ? (

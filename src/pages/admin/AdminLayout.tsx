@@ -12,7 +12,8 @@ import { BrandLogo } from '@/components/Navbar';
 import { useEffect } from 'react';
 import { requestForToken, requestNotificationPermision } from '@/utils/fwc';
 import { doc, setDoc } from 'firebase/firestore';
-import { db } from '@/config/firebaseConfig';
+import { db, messaging } from '@/config/firebaseConfig';
+import { onMessage } from 'firebase/messaging';
 
 
 
@@ -72,6 +73,19 @@ const AdminLayout = () => {
             requestNotificationPermision();
         }
     }, [location.pathname])
+
+    useEffect(() => {
+        const unsubscribe = onMessage(messaging, (payload) => {
+            // Show a notification using the Notification API
+            if (Notification.permission === "granted") {
+                new Notification(payload.notification.title, {
+                    body: payload.notification.body,
+                    icon: "/favicon.png"
+                });
+            }
+        });
+        return unsubscribe;
+    }, []);
     return (
 
         <div className='flex' >

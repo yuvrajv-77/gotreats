@@ -19,7 +19,6 @@ export async function requestNotificationPermision() {
     if (permission === 'granted') {
         console.log('Notification permission granted');
 
-
     } else {
         console.log('Notification permission denied');
 

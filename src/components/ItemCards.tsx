@@ -266,9 +266,8 @@ const ItemCards = ({ item }: { item: Item }) => {
                 <DrawerContent className=''>
                     {(onClose) => (
                         <>
-
                             <DrawerBody className='pt-5'>
-                                <div className=' rounded-lg w-full h-56 overflow-hidden'>
+                                <div className=' rounded-lg w-full h-[1200px] overflow-hidden'>
                                     <img className='w-full h-full  object-cover' src={item.imageUrl} alt="" />
                                 </div>
 

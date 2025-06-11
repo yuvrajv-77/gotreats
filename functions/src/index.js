@@ -35,17 +35,17 @@ exports.validateAdminPassword = onRequest((req, res) => {
 
 exports.notifyAdminOnNewOrder = onDocumentCreated('orders/{orderId}', async (event) => {
   const order = event.data.data();
-console.log('Order data:', order);
+  // console.log('Order data:', order);
 
   // Get all admin tokens (assuming you may have multiple admins)
   const tokensSnapshot = await admin.firestore().collection('adminTokens').get();
   const tokens = tokensSnapshot.docs.map(doc => doc.data().token).filter(Boolean);
   console.log('Admin tokens:', tokens);
-  if (tokens.length === 0){
+  if (tokens.length === 0) {
     console.log('No admin tokens found. Exiting function.');
     return;
-    
-  } ;
+
+  };
 
   const message = {
     notification: {
