@@ -1,7 +1,7 @@
 import { Link, Outlet } from 'react-router-dom';
 import { Toaster } from 'react-hot-toast';
 
-import { HandCoins, Menu, UsersRound } from 'lucide-react';
+import { BadgeIndianRupee, Banknote, HandCoins, Menu, UsersRound } from 'lucide-react';
 import { Drawer, DrawerContent, DrawerHeader, DrawerBody, DrawerFooter } from "@heroui/drawer";
 import { ToastProvider, useDisclosure } from "@heroui/react";
 import { Box, Calendar, Home, Inbox, MessageCircleMore, Salad, Search, Settings, TicketPercent } from "lucide-react"
@@ -45,15 +45,21 @@ const AdminLayout = () => {
             icon: TicketPercent,
         },
         {
+            title: "Collections",
+            url: "/admin/collections",
+            icon: Banknote,
+        },
+        {
             title: "Customers",
-            url: "/admin/view-customers",
+            url: "/admin/customers",
             icon: UsersRound,
         },
         {
             title: "Payments",
             url: "/admin/payments",
-            icon: HandCoins,
+            icon: BadgeIndianRupee,
         },
+
 
     ]
 
@@ -90,17 +96,24 @@ const AdminLayout = () => {
 
         <div className='flex' >
 
-            <div className='w-12 space-y-4 pt-5 px-1 bg-white hidden lg:block'>
-                <img src="/favicon.png" className='size-6 mx-auto mb-10 ' alt="" />
+            <div className='w-12 space-y-4 pt-5 px-1 bg-white  hidden md:block md:fixed'>
+                <button
+                    className='p-2 rounded-md  bg-green-500  text-white hover:bg-orange-500'
+                    onClick={(event) => {
+                        event.stopPropagation()
+                        onOpen()
+                    }}>
+                    <Menu />
+                </button>
                 {items.map((item) => (
                     <Link to={item.url} key={item.title} className="flex items-center gap-2 p-2 hover:bg-gray-200 rounded-md" onClick={onClose}>
                         <item.icon size={25} strokeWidth={1.5} />
                     </Link>
                 ))}
             </div>
-            <main className="flex-1 mx-auto p-5 min-h-screen bg-black/90  md:flex items-start overflow-x-hidden ">
+            <main className="flex-1 md:ml-12 p-5 min-h-screen bg-black/90  md:flex items-start overflow-x-hidden ">
                 <button
-                    className='p-2 rounded-md text-white hover:bg-orange-500'
+                    className='p-2 rounded-md md:hidden fixed bg-green-500  text-white hover:bg-orange-500'
                     onClick={(event) => {
                         event.stopPropagation()
                         onOpen()
@@ -142,6 +155,21 @@ const AdminLayout = () => {
                         ))}
                     </DrawerBody>
                     <DrawerFooter className="flex flex-col items-start">
+                        <button
+                            className="p-2 rounded-md bg-blue-500 text-white mb-4"
+                            onClick={() => {
+                                if (Notification.permission === "granted") {
+                                    new Notification("Cool! You Got The Notification", {
+                                        body: "This is a test notification.",
+                                        icon: "/favicon.png"
+                                    });
+                                } else {
+                                    alert("Please allow notifications in your settings.");
+                                }
+                            }}
+                        >
+                            Test Notification
+                        </button>
                         <div className="p-2">
                             <h2 className="font-bold text-xl">{userDetails.displayName}</h2>
                             <p className="text-sm text-gray-500">{userDetails.email}</p>

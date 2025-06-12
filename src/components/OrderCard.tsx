@@ -20,7 +20,7 @@ const OrderCard = ({ order, onUpdateStatus, i }) => {
     const address = `${order.address.flatNumber}, ${order.address.buildingName}, ${order.address.streetAddress}, ${order.address.area}, ${order.address.pincode}`;
 
     // Format the createdAt date and time
-    const formatOrderDateTime = (dateString) => {
+     const formatOrderDateTime = (dateString) => {
         const date = new Date(dateString);
         return new Intl.DateTimeFormat('en-US', {
             dateStyle: 'medium',

@@ -1,18 +1,17 @@
-
 import Button, { IconButton } from '../../components/Button'
 import { Eye, EyeOff, Pen, Plus, RefreshCcw, Trash } from 'lucide-react'
 import { deleteProduct, getItemsFromFirestore, updateProduct } from '../../services/productService';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
-import { useNavigate } from 'react-router-dom';
 import VegSymbol from '../../assets/VegSymbol';
 import toast from 'react-hot-toast';
 import { Tooltip, useDisclosure } from '@heroui/react';
-import ProductFrom from './ProductFrom';
 import { useState } from 'react';
+import React, { Suspense } from 'react';
+const ProductFrom = React.lazy(() => import('./ProductFrom'));
 
 export default function ManageProducts() {
     const queryClient = useQueryClient()
-    const navigate = useNavigate();
+   
     const { isOpen, onOpen, onOpenChange } = useDisclosure();
     const [productToEdit, setProductToEdit] = useState(null);
 
@@ -33,7 +32,6 @@ export default function ManageProducts() {
     })
 
     const handleProductDelete = (id: string) => {
-
         if (window.confirm("Really delete this product with id: " + id + "?")) {
             toast.loading('Deleting product...', { id: 'deleteProduct' })
             deleteProductMutation.mutate(id, {
@@ -49,8 +47,7 @@ export default function ManageProducts() {
         mutationFn: ({ productId, updatedData }: { productId: string, updatedData: any }) =>
             updateProduct(productId, updatedData),
         onSuccess: () => {
-            queryClient.invalidateQueries({ queryKey: ['products'] })
-
+            queryClient.invalidateQueries({ queryKey: ['products'] });
         }
     });
 
@@ -113,11 +110,11 @@ export default function ManageProducts() {
                                 </td> */}
                                 <td className="px-2 text-center border-r">
                                     <Tooltip content={
-                                        <img src={product.imageUrl} className={`size-80 object-cover rounded-md ${product.isAvailable ? '' : 'grayscale'} `} alt="" />
+                                        <img src={product.imageUrl} loading='lazy' className={`size-80 object-cover rounded-md ${product.isAvailable ? '' : 'grayscale'} `} alt="" />
                                     } placement='right-start'>
                                         <div className='flex justify-evenly items-center gap-2 h-full'>
                                             <VegSymbol isNonVeg={product.isNonVeg} />
-                                            <img src={product.imageUrl} className={`size-12 object-cover ${product.isAvailable ? '' : 'grayscale'} `} alt="" />
+                                            <img loading='lazy' src={product.imageUrl} className={`size-12 object-cover ${product.isAvailable ? '' : 'grayscale'} `} alt="" />
                                         </div>
                                     </Tooltip>
                                 </td>
@@ -152,15 +149,17 @@ export default function ManageProducts() {
                 }
             </div>
 
-            <ProductFrom
-                isOpen={isOpen}
-                onOpenChange={() => {
-                    onOpenChange();
-                    setProductToEdit(null); // reset on close
-                }}
-                onOpen={onOpen}
-                productToEdit={productToEdit}
-            />
+            <Suspense fallback={<div>Loading...</div>}>
+                <ProductFrom
+                    isOpen={isOpen}
+                    onOpenChange={() => {
+                        onOpenChange();
+                        setProductToEdit(null); // reset on close
+                    }}
+                    
+                    productToEdit={productToEdit}
+                />
+            </Suspense>
 
         </main>
     )
