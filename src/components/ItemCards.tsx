@@ -5,7 +5,7 @@ import { useAuthStore } from '../store/authStore'
 import { useNavigate } from 'react-router-dom'
 import { motion } from 'framer-motion'
 import React, { useState } from 'react'
-import { Skeleton } from '@heroui/react'
+import { Skeleton, Image } from '@heroui/react'
 import {
     Drawer,
     DrawerContent,
@@ -155,13 +155,14 @@ const ItemCards = ({ item }: { item: Item }) => {
                             <p className='comfortaa text-4xl tracking-tighter font-bold text-zinc-400'>gotreats</p>
                         </div>
                     )}
-                    <img
+                    {/* <img
                         src={item.imageUrl}
                         alt=""
                         loading="lazy"
                         onLoad={() => setImgLoaded(true)}
                         className={`size-64 object-cover rounded-3xl group-hover:scale-102 transition-all duration-500 ${imgLoaded ? 'opacity-100' : 'opacity-0'}`}
-                    />
+                    /> */}
+                    <Image src={item.imageUrl} alt=""  loading='lazy' disableSkeleton onLoad={() => setImgLoaded(true)} className={`size-64 object-cover rounded-3xl group-hover:scale-102 group-hover:shadow-lg transition-all duration-500 ${imgLoaded ? 'opacity-100' : 'opacity-0'}`} />
                 </div>
                 {item.isNonVeg ? nonVeg : veg}
                 <h4 className='lancelot text-2xl lg:text-3xl font-medium'>{item.productName}</h4>

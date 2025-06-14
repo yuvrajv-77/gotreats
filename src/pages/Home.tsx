@@ -81,6 +81,10 @@ const Home = () => {
     <main className="min-h-[calc(100vh-64px)] w-full">
       <ScrollingBanner />
 
+      <section className=''>
+
+      </section>
+
       <section className='bg-[#fff9f2] '>
         <div className="container mx-auto px-4 py-30 md:justify-between  gap-10 md:gap-0  sm:px-30 flex flex-col md:flex-row items-center  ">
 

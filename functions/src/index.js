@@ -44,7 +44,6 @@ exports.notifyAdminOnNewOrder = onDocumentCreated('orders/{orderId}', async (eve
   if (tokens.length === 0) {
     console.log('No admin tokens found. Exiting function.');
     return;
-
   };
 
   const message = {

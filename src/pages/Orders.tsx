@@ -5,7 +5,7 @@ import OrderSummary from '../components/OrderSummary';
 import { fetchUserOrders } from '../services/orderService';
 import { useAuthStore } from '../store/authStore';
 import { StatusBadge } from '../components/StatusBadge';
-import { ArrowLeft, ArrowRight, CheckCircle, CircleHelp, Home, RefreshCcw, Store, XIcon } from 'lucide-react';
+import { ArrowLeft, ArrowRight, CheckCircle, CircleHelp, HandCoins, Home, RefreshCcw, Store, XIcon } from 'lucide-react';
 import { Drawer, DrawerContent, DrawerHeader, DrawerBody, DrawerFooter } from "@heroui/drawer";
 import { useDisclosure } from '@/hooks/useDisclosure';
 import { useCartStore } from '../store/cartStore'; // Import the cart store
@@ -44,8 +44,8 @@ const Orders = () => {
     //     return new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime();
     // });
     const sortedOrders = [...orders].sort(
-    (a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
-);
+        (a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
+    );
 
     const formattedAddress = `${selectedOrder?.address.flatNumber}, ${selectedOrder?.address.buildingName}, 
     ${selectedOrder?.address.streetAddress}, ${selectedOrder?.address.area}, ${selectedOrder?.address.pincode}`;
@@ -134,7 +134,7 @@ const Orders = () => {
 
                                         <div className='flex justify-between items-center'>
                                             <p className='text-neutral-600 text-lg flex gap-2'>
-                                                <p>{ order.paymentStatus === 'pending' && selectedOrder?.orderStatus !== 'delivered' ? "To Pay : " : "Total Paid : " }</p> <span className='font-bold text-neutral-800'>₹{order.totalAmount}</span>
+                                                <p>{order.paymentStatus === 'pending' && order?.orderStatus !== 'delivered' ? "To Pay : " : "Total Paid : "}</p> <span className='font-bold text-neutral-800'>₹{order.totalAmount}</span>
                                             </p>
                                             <button
                                                 onClick={() => {
@@ -243,7 +243,7 @@ const Orders = () => {
 
                                     {/* Total Paid Section */}
                                     <div className="flex justify-between text-gray-800 font-semibold text-lg mt-4">
-                                        <span>{ selectedOrder.paymentStatus === 'pending' && selectedOrder?.orderStatus !== 'delivered' ? "Amount To Pay : " : "Total Paid : " }</span>
+                                        <span>{selectedOrder.paymentStatus === 'pending' && selectedOrder?.orderStatus !== 'delivered' ? "Amount To Pay : " : "Total Paid : "}</span>
                                         <span>₹{selectedOrder?.totalAmount || '0.00'}</span>
                                     </div>
 
@@ -255,14 +255,39 @@ const Orders = () => {
 
 
                                     <div>
-                                        <div className="mt-4 flex items-center gap-2 text-green-600 text-sm">
+                                        {
+                                            selectedOrder.paymentStatus === 'success' ? (
+                                                <div className="mt-4 flex items-center gap-2 text-green-600 text-sm">
+                                                    <CheckCircle size={16} />
+                                                    <p>
+                                                      {`Paid on ${new Date(selectedOrder.createdAt).toLocaleString()}`}
+                                                    </p>
+                                                </div>
+                                            ) : selectedOrder.paymentStatus === 'pending' ? (
+                                                <div className="mt-4 flex items-center gap-2 text-green-600 text-sm">
+                                                    <HandCoins size={16} />
+                                                    <p>
+                                                        Cash On Delivery
+                                                    </p>
+                                                </div>
+                                            ) :
+                                                (
+                                                    <div className="mt-4 flex items-center gap-2 text-green-600 text-sm">
+                                                        <CheckCircle size={16} />
+                                                        <p>
+                                                            No payment information available
+                                                        </p>
+                                                    </div>
+                                                )
+                                        }
+                                        {/* <div className="mt-4 flex items-center gap-2 text-green-600 text-sm">
                                             <CheckCircle size={16} />
                                             <p>
                                                 {selectedOrder.paymentStatus === 'success'
                                                     ? `Paid on ${new Date(selectedOrder.createdAt).toLocaleString()}`
                                                     : 'No payment information available'}
                                             </p>
-                                        </div>
+                                        </div> */}
                                         <div className='flex items-center gap-2 justify-between text-sm text-gray-700 mt-2'>
                                             <p>{selectedOrder?.razorpay_payment_id && 'Transaction ID: '}</p>
                                             <p>{selectedOrder?.razorpay_payment_id}</p>

@@ -4,10 +4,10 @@ import { deleteProduct, getItemsFromFirestore, updateProduct } from '../../servi
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import VegSymbol from '../../assets/VegSymbol';
 import toast from 'react-hot-toast';
-import { Tooltip, useDisclosure } from '@heroui/react';
-import { useState } from 'react';
-import React, { Suspense } from 'react';
-const ProductFrom = React.lazy(() => import('./ProductFrom'));
+import { Image, Tooltip, useDisclosure } from '@heroui/react';
+import { useState, lazy, Suspense } from 'react';
+
+const ProductFrom = lazy(() => import('./ProductFrom'));
 
 export default function ManageProducts() {
     const queryClient = useQueryClient()
@@ -114,7 +114,8 @@ export default function ManageProducts() {
                                     } placement='right-start'>
                                         <div className='flex justify-evenly items-center gap-2 h-full'>
                                             <VegSymbol isNonVeg={product.isNonVeg} />
-                                            <img loading='lazy' src={product.imageUrl} className={`size-12 object-cover ${product.isAvailable ? '' : 'grayscale'} `} alt="" />
+                                            <Image src={product.imageUrl} loading='lazy' className={`size-12 object-cover rounded-none ${product.isAvailable ? '' : 'grayscale'} `} alt="" />
+                                            {/* <img loading='lazy' src={product.imageUrl} className={`size-12 object-cover ${product.isAvailable ? '' : 'grayscale'} `} alt="" /> */}
                                         </div>
                                     </Tooltip>
                                 </td>

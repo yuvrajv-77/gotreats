@@ -17,13 +17,14 @@ import toast from 'react-hot-toast'
 import { ShoppingBag, PenBoxIcon, BadgePercent } from 'lucide-react'
 import { motion } from 'framer-motion'
 import AddressSection from '../components/AddressSection'
-
 import CartSection from '../components/CartSection'
 import { OrderDetails } from '../types/orderTypes'
 import VoucherModal from './VoucherModal';
 import { Radio, RadioGroup, useDisclosure } from '@heroui/react';
 import { Voucher } from '@/types/voucherTypes';
 import VoucherAppliedModal from './VoucherAppliedModal';
+import OrderPlacedModal from './OrderPlacedModal';
+import { useOrderPlacedModalStore } from '@/store/orderPlacedModalStore';
 
 const DELIVERY_PRICE = 0
 const TAX_RATE = 0
@@ -35,6 +36,7 @@ const Checkout = () => {
     const userDetails = useAuthStore((state) => state.userDetails)
     const { isOpen, onOpen, onOpenChange } = useDisclosure();
     const { isOpen: isVoucherAppliedModalOpen, onOpenChange: onOpenVoucherAppliedModalChange, onOpen: onOpenVoucherAppliedModal } = useDisclosure();
+    const { isOpen: isOrderPlacedModalOpen, onOpenChange: onOpenOrderPlacedModalChange } = useDisclosure();
     const [paymentMode, setPaymentMode] = useState('online');
     const [note, setNote] = useState('');
     const [preferredDeliveryTime, setPreferredDeliveryTime] = useState('');
@@ -164,6 +166,7 @@ const Checkout = () => {
             if (success) {
                 clearCart();
                 toast.success('Order placed successfully (Cash on Delivery)');
+                useOrderPlacedModalStore.getState().open(); // Open modal globally
                 navigate('/orders');
             } else {
                 toast.error('Order placement failed. Please contact support.');
@@ -226,6 +229,7 @@ const Checkout = () => {
                 if (success) {
                     clearCart();
                     toast.success('Payment & Order placed successfully');
+                    useOrderPlacedModalStore.getState().open(); // Open modal globally
                     navigate('/orders');
                 } else {
                     toast.error('Order placement failed after payment. Please contact support.');
@@ -305,8 +309,8 @@ const Checkout = () => {
                                 <h3 className='text-sm text-orange-500 font-medium mb-1'>Payment Mode</h3>
                                 <div className='flex gap-2 items-center '>
                                     <RadioGroup size='sm' value={paymentMode} onValueChange={setPaymentMode}>
-                                        <Radio  value="cod">Cash on Delivery</Radio>
-                                        <Radio  description='UPI, Card, NetBanking' value="online">Online (via Razorpay)</Radio>
+                                        <Radio value="cod">Cash on Delivery</Radio>
+                                        <Radio description='UPI, Card, NetBanking' value="online">Online (via Razorpay)</Radio>
                                     </RadioGroup>
                                 </div>
                             </div>
@@ -457,6 +461,7 @@ const Checkout = () => {
                     voucherCode={appliedVoucher?.code || ''}
                     discount={voucherDiscount}
                 />
+                
             </div>
         </div>
     )

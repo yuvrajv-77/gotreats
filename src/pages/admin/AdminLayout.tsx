@@ -132,13 +132,13 @@ const AdminLayout = () => {
                             variant: "flat",
                         }} />
                 </div> */}
-                <div className='block md:hidden'>
+                {/* <div className='block md:hidden'>
                     <ToastProvider
                         placement="top-right"
                         toastProps={{
                             variant: "flat",
                         }} />
-                </div>
+                </div> */}
             </main>
 
             <Drawer isOpen={isOpen} placement='left' onOpenChange={onClose} className='max-w-[200px]'  >

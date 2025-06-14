@@ -1,7 +1,9 @@
+import { lazy, Suspense } from 'react';
 import Button, { IconButton } from '@/components/Button'
 import { Switch, useDisclosure, Popover, PopoverContent, PopoverTrigger } from '@heroui/react'
 import { BadgeIndianRupee, BadgePercent, ChevronDown, Copy, Earth, Plus, RefreshCcw, Trash, UserRound, UsersRound } from 'lucide-react'
-import VoucherForm from './VoucherForm'
+// import VoucherForm from './VoucherForm'
+const VoucherForm = lazy(() => import('./VoucherForm'));
 import { deleteVoucher, getVouchers, updateVoucherStatus } from '@/services/voucherService'
 import { useQuery } from '@tanstack/react-query'
 import toast from 'react-hot-toast'
@@ -18,7 +20,7 @@ const ManageVouchers = () => {
 
     console.log("vouchers", vouchers);
 
-    const handleDeleteVoucher = async (id: string) =>{
+    const handleDeleteVoucher = async (id: string) => {
         // window.alert("Are you sure you want to delete this voucher?");
         if (!window.confirm("Are you sure you want to delete this voucher?")) {
             return;
@@ -203,10 +205,10 @@ const ManageVouchers = () => {
                     <p className='comfortaa text-2xl text-gray-600 animate-bounce font-bold my-20 text-center'>No vouchers found</p>
                 }
             </div>
-
-            <VoucherForm isOpen={isOpen} onOpenChange={onOpenChange} onOpen={onOpen} refetchVouchers={refetch} />
-
-        </main>
+            <Suspense fallback={null}>
+                <VoucherForm isOpen={isOpen} onOpenChange={onOpenChange} onOpen={onOpen} refetchVouchers={refetch} />
+            </Suspense>
+        </main >
     )
 }
 

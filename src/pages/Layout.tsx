@@ -10,6 +10,7 @@ import Footer from './Footer'
 import ScrollToTop from '../components/ScrollToTop'
 import { motion, AnimatePresence } from 'framer-motion'
 import { useAuthStore } from '@/store/authStore'
+import OrderPlacedModal from './OrderPlacedModal'
 
 function Layout() {
   const location = useLocation();
@@ -48,6 +49,7 @@ function Layout() {
       <ScrollToTop />
       <Toaster />
       <Footer />
+      <OrderPlacedModal />
     </div>
   )
 }

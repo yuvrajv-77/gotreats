@@ -1,32 +1,35 @@
-import { createBrowserRouter, RouterProvider } from "react-router-dom"
-import Layout from "./pages/Layout"
-import Home from "./pages/Home"
-import Shop from "./pages/Shop"
-import Contact from "./pages/Contact"
-import Checkout from "./pages/Checkout"
-import Register from "./pages/Register"
-import Login from "./pages/Login"
-import Profile from "./pages/Profile"
-import Orders from "./pages/Orders"
-import ProtectedRoute from "./components/ProtectedRoute"
-import AdminRoute from "./admin/AdminRoutes"
-import AdminRoutes from "./admin/AdminRoutes"
-import AdminLayout from "./pages/admin/AdminLayout"
-import ManageProducts from "./pages/admin/ManageProducts"
-import ProductFrom from "./pages/admin/ProductFrom"
-import ManageOrders from "./pages/admin/ManageOrders"
-import TermsConditions from "./pages/TermsConditions"
-import Concept from "./pages/ConceptPage"
-import About from "./pages/About"
-import ManageReviews from "./pages/admin/ManageReviews"
-import ManageReview from "./pages/admin/ManageReview"
-import Customers from "./pages/Customers"
-import PrivacyPolicy from "./pages/PrivacyPolicy"
-import RefundPolicy from "./pages/RefundPolicy"
-import ManageVouchers from "./pages/admin/ManageVouchers"
-import ViewCustomers from "./pages/admin/ViewCustomers"
-import Payments from "./pages/admin/Payments"
-import Collections from "./pages/admin/Collections"
+import { createBrowserRouter } from "react-router-dom";
+import { Suspense, lazy } from "react";
+
+// Static imports for layout and protected route
+import Layout from "./pages/Layout";
+import ProtectedRoute from "./components/ProtectedRoute";
+import AdminRoutes from "./admin/AdminRoutes";
+
+// Dynamic imports for pages
+const Home = lazy(() => import("./pages/Home"));
+const Shop = lazy(() => import("./pages/Shop"));
+const Contact = lazy(() => import("./pages/Contact"));
+const Checkout = lazy(() => import("./pages/Checkout"));
+const Register = lazy(() => import("./pages/Register"));
+const Login = lazy(() => import("./pages/Login"));
+const Profile = lazy(() => import("./pages/Profile"));
+const Orders = lazy(() => import("./pages/Orders"));
+const AdminLayout = lazy(() => import("./pages/admin/AdminLayout"));
+const ManageProducts = lazy(() => import("./pages/admin/ManageProducts"));
+const ProductFrom = lazy(() => import("./pages/admin/ProductFrom"));
+const ManageOrders = lazy(() => import("./pages/admin/ManageOrders"));
+const TermsConditions = lazy(() => import("./pages/TermsConditions"));
+const Concept = lazy(() => import("./pages/ConceptPage"));
+const About = lazy(() => import("./pages/About"));
+const ManageReview = lazy(() => import("./pages/admin/ManageReview"));
+const Customers = lazy(() => import("./pages/Customers"));
+const PrivacyPolicy = lazy(() => import("./pages/PrivacyPolicy"));
+const RefundPolicy = lazy(() => import("./pages/RefundPolicy"));
+const ManageVouchers = lazy(() => import("./pages/admin/ManageVouchers"));
+const ViewCustomers = lazy(() => import("./pages/admin/ViewCustomers"));
+const Payments = lazy(() => import("./pages/admin/Payments"));
+const Collections = lazy(() => import("./pages/admin/Collections"));
 
 
 export const router = createBrowserRouter([

@@ -231,7 +231,7 @@ const VoucherForm = ({
                                         label="Start and Expiry Date"
                                         variant='faded'
                                         labelPlacement='outside'
-                                        isRequired minValue={today(getLocalTimeZone())}
+                                         minValue={today(getLocalTimeZone())}
                                         value={dateRange}
                                         onChange={setDateRange}
                                     />

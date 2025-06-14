@@ -95,7 +95,7 @@ const OrderCard = ({ order, onUpdateStatus, i }) => {
             {/* Dynamic background color for the header */}
             <div className={`p-3 flex justify-between md:items-center transition-colors duration-300 ${getBackgroundColor(order.orderStatus)}`}>
                 <h2 className="font-semibold text-white text-lg"># {order.id.slice(-6)}</h2>
-                <h2 className=" font-semibold text-white text-lg animate-pulse">{order.paymentStatus === 'pending' ? <p className='flex gap-1'><HandCoins /> COD</p> : <p className='flex gap-1'><BanknoteIcon/> Paid</p>}</h2>
+                <h2 className=" font-semibold text-white text-lg animate-pulse">{order.razorpay_payment_id  ? <p className='flex gap-1'><BanknoteIcon/> Paid</p> : <p className='flex gap-1'><HandCoins /> COD</p>}</h2>
                 <h2 className=" hidden md:block font-semibold text-white text-lg capitalize">{order.orderStatus}</h2>
                 <h2 className="text-white text-lg">{formatOrderDateTime(order.createdAt)}</h2>
             </div>
@@ -259,7 +259,7 @@ const OrderCard = ({ order, onUpdateStatus, i }) => {
                                         <h3 className="font-semibold lancelot text-purple-700 mb-2 flex gap-2 item-center"><Banknote size={19} /> Payment Details</h3>
                                         <p className='flex justify-between pr-10'><strong>Total Items:</strong> {order.totalQuantity}</p>
                                         <p className='flex justify-between pr-10'><strong>Total Price:</strong> ₹{order.totalAmount}</p>
-                                        <p className='text-green-600 flex justify-between pr-10'><strong>Payment ID:</strong> {order.razorpay_payment_id || 'CASH'}</p>
+                                        <p className='text-green-600 flex justify-between pr-10'><strong>Payment ID:</strong> {order.razorpay_payment_id || 'CASH ON DELIVERY'}</p>
                                         <p className='text-green-600 flex justify-between pr-10'><strong>Payment Status:</strong> {order.paymentStatus}</p>
                                         <p className='flex justify-between pr-10'><strong>Delivery Time:</strong> {order.deliveryTime}</p>
                                     </div>
@@ -348,7 +348,7 @@ const OrderCard = ({ order, onUpdateStatus, i }) => {
                                         <p className='flex justify-between '><strong>GST:</strong> ₹{order.gst.toFixed(2)}</p>
                                         <p className='flex justify-between '><strong>Delivery Charge:</strong> ₹{order.deliveryCharge}</p>
                                         <p className='text-green-600 flex font-bold justify-between'><strong>Total Price:</strong> ₹{order.totalAmount}</p>
-                                        <p className='text-green-600 flex justify-between'><strong>Payment ID:</strong> {order.razorpay_payment_id || 'CASH CASH CASH'}</p>
+                                        <p className='text-green-600 flex justify-between'><strong>Payment ID:</strong> {order.razorpay_payment_id || 'CASH ON DELIVERY'}</p>
                                         <p className='text-green-600 flex justify-between'><strong>Payment Status:</strong> {order.paymentStatus}</p>
                                         <p><strong>Delivery Time:</strong> {order.deliveryTime}</p>
                                     </div>

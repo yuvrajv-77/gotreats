@@ -21,32 +21,32 @@ const ManageOrders = () => {
 
   useEffect(() => {
     if (orders.length > previousOrderCount) {
-      addToast({
-        title: 'New Order Arrived !',
-        color: 'primary',
-        shouldShowTimeoutProgress: true,
-        timeout: 3000,
-        classNames: {
-          closeButton: "opacity-100 absolute right-4 top-1/2 -translate-y-1/2 stroke-2 text-orange-500",
-          base: cn([
-            "bg-orange-100 shadow-lg",
-            "flex flex-col items-start",
-            "p-4 rounded-lg",
-          ]),
-          title: cn([
-            "text-lg font-semibold text-orange-600",
-          ]),
-          icon: (
-            "fill-none animate-pulse stroke-2 text-orange-600"
-          )
-        },
-        closeIcon: (
-          <X size={32} />
-        ),
-        icon: (
-          <Box size={32} />
-        )
-      });
+      // addToast({
+      //   title: 'New Order Arrived !',
+      //   color: 'primary',
+      //   shouldShowTimeoutProgress: true,
+      //   timeout: 3000,
+      //   classNames: {
+      //     closeButton: "opacity-100 absolute right-4 top-1/2 -translate-y-1/2 stroke-2 text-orange-500",
+      //     base: cn([
+      //       "bg-orange-100 shadow-lg",
+      //       "flex flex-col items-start",
+      //       "p-4 rounded-lg",
+      //     ]),
+      //     title: cn([
+      //       "text-lg font-semibold text-orange-600",
+      //     ]),
+      //     icon: (
+      //       "fill-none animate-pulse stroke-2 text-orange-600"
+      //     )
+      //   },
+      //   closeIcon: (
+      //     <X size={32} />
+      //   ),
+      //   icon: (
+      //     <Box size={32} />
+      //   )
+      // });
     }
     setPreviousOrderCount(orders.length); // Update the previous order count
   }, [orders, previousOrderCount]);
@@ -141,7 +141,7 @@ const ManageOrders = () => {
           onClick={() => setActiveTab('Cancelled')}
         >
           Cancelled
-        </button>
+        </button> 
         {/* <button
           className={`px-4 py-2 rounded-r-full ${activeTab === 'All' ? 'bg-blue-500 text-white' : 'bg-gray-200 text-gray-700'
             }`}
@@ -155,7 +155,6 @@ const ManageOrders = () => {
           {
             filteredOrders.length === 0 ? (
               <div className="text-center my-20 text-gray-500 animate-bounce capitalize">
-                
                 Looks Like there are no {activeTab.toLowerCase()} orders yet.
               </div>
             ) : null
@@ -167,39 +166,7 @@ const ManageOrders = () => {
           }
         </AnimatePresence>
       </div>
-      {/* <Button
-        onClick={() => {
-          addToast({
-            title: 'New Order Arrived !',
-            color: 'primary',
-            shouldShowTimeoutProgress: true,
-            timeout: 3000,
-            classNames: {
-              closeButton: "opacity-100 absolute right-4 top-1/2 -translate-y-1/2 stroke-2 text-orange-500",
-              base: cn([
-                "bg-orange-100 shadow-lg",
-                "flex flex-col items-start",
-                "p-4 rounded-lg",
-              ]),
-              title: cn([
-                "text-lg font-semibold text-orange-500",
-
-              ]),
-              icon: (
-                "fill-none animate-pulse stroke-2 text-orange-500"
-              )
-            },
-            closeIcon: (
-              <X size={32} />
-            ),
-            icon: (
-              <Box size={32} />
-            )
-          });
-        }}
-        variant='primary'>
-        toast
-      </Button> */}
+     
     </div>
   );
 };
