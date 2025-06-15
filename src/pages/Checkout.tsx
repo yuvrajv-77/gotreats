@@ -26,8 +26,8 @@ import VoucherAppliedModal from './VoucherAppliedModal';
 import OrderPlacedModal from './OrderPlacedModal';
 import { useOrderPlacedModalStore } from '@/store/orderPlacedModalStore';
 
-const DELIVERY_PRICE = 0
-const TAX_RATE = 0
+const DELIVERY_PRICE = 20;
+const TAX_RATE = 0;
 
 
 const Checkout = () => {

@@ -97,6 +97,14 @@ const Footer = () => {
                   YouTube
                 </span>
               </div>
+
+              {/* Twitter */}
+              <Link to={'https://zomato.onelink.me/xqzv/ut3cavr1'} target='_blank' className="group relative cursor-pointer">
+                <img className='w-8 h-8' src="https://cdn.brandfetch.io/idEql8nEWn/theme/dark/symbol.svg?c=1dxbfHSJFAPEGdCLU4o5B" alt="" />
+                <span className="absolute -top-12 left-1/2 -translate-x-1/2 z-20 origin-left scale-0 px-3 rounded-lg border border-gray-300 bg-white py-1.5 text-sm font-semibold text-black shadow-md transition-all duration-300 ease-in-out group-hover:scale-100">
+                  Zomato
+                </span>
+              </Link>
             </div>
           </div>
 

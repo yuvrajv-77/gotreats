@@ -14,6 +14,8 @@ import { db } from '../config/firebaseConfig';
 import { useQuery } from '@tanstack/react-query';
 import TypewriterText from '../components/TypewriterText';
 import ScrollingBanner from '../components/ScrollingBanner';
+import { Image } from '@heroui/react';
+import { deleteOrdersByCustomerUid } from '@/services/orderService';
 
 // Define the Review interface
 interface Review {
@@ -76,14 +78,21 @@ const Home = () => {
       link: "/shop/?tag=meals"
     }
   ]
-
+// useEffect(() => {
+//   const deleteOrders = async () => {
+//     await deleteOrdersByCustomerUid('3IIckUCL9tXmr96y4QxHegYtoas2');
+//   };
+//   deleteOrders();
+// }, []);
   return (
     <main className="min-h-[calc(100vh-64px)] w-full">
       <ScrollingBanner />
 
-      <section className=''>
-
-      </section>
+      <Link to={'https://zomato.onelink.me/xqzv/ut3cavr1'} target='_blank' className='flex justify-center items-center bg-[#D94148] h-14'>
+        <p className='text-white '>We Are Now Available on</p>
+        <Image className='w-40 h-10 ' isBlurred
+          src='https://cdn.brandfetch.io/idEql8nEWn/theme/light/logo.svg?c=1dxbfHSJFAPEGdCLU4o5B' />
+      </Link>
 
       <section className='bg-[#fff9f2] '>
         <div className="container mx-auto px-4 py-30 md:justify-between  gap-10 md:gap-0  sm:px-30 flex flex-col md:flex-row items-center  ">
@@ -102,7 +111,6 @@ const Home = () => {
               />
             </p>
             <div className=''>
-
               {userDetails?.role === 'admin' ?
                 <button className="cssbuttons-io animate-pulse" onClick={() => navigate('/admin/view-all-orders')}>
                   <span className='flex items-center gap-2'>

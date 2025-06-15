@@ -1,5 +1,5 @@
 import { db } from '../config/firebaseConfig';
-import { collection, addDoc, query, where, getDocs, orderBy, doc, updateDoc, getDoc } from 'firebase/firestore';
+import { collection, addDoc, query, where, getDocs, orderBy, doc, updateDoc, getDoc, deleteDoc } from 'firebase/firestore';
 import { OrderDetails, OrderData } from '../types/orderTypes';
 
 export const handleCheckout = async (orderDetails: OrderDetails): Promise<boolean> => {
@@ -77,3 +77,15 @@ export const updateOrderStatus = async (orderId: string, newStatus: string): Pro
 };
 
 
+export async function deleteOrdersByCustomerUid(uid: string) {
+  const ordersRef = collection(db, "orders");
+  const q = query(ordersRef, where("customer.uid", "==", uid));
+  const snapshot = await getDocs(q);
+
+  const deletePromises = snapshot.docs.map((orderDoc) =>
+    deleteDoc(doc(db, "orders", orderDoc.id))
+  );
+
+  await Promise.all(deletePromises);
+  return deletePromises.length; // returns number of deleted docs
+}

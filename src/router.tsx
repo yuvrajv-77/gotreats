@@ -5,6 +5,7 @@ import { Suspense, lazy } from "react";
 import Layout from "./pages/Layout";
 import ProtectedRoute from "./components/ProtectedRoute";
 import AdminRoutes from "./admin/AdminRoutes";
+// import Home from "./pages/Home";
 
 // Dynamic imports for pages
 const Home = lazy(() => import("./pages/Home"));
@@ -12,12 +13,10 @@ const Shop = lazy(() => import("./pages/Shop"));
 const Contact = lazy(() => import("./pages/Contact"));
 const Checkout = lazy(() => import("./pages/Checkout"));
 const Register = lazy(() => import("./pages/Register"));
-const Login = lazy(() => import("./pages/Login"));
 const Profile = lazy(() => import("./pages/Profile"));
 const Orders = lazy(() => import("./pages/Orders"));
 const AdminLayout = lazy(() => import("./pages/admin/AdminLayout"));
 const ManageProducts = lazy(() => import("./pages/admin/ManageProducts"));
-const ProductFrom = lazy(() => import("./pages/admin/ProductFrom"));
 const ManageOrders = lazy(() => import("./pages/admin/ManageOrders"));
 const TermsConditions = lazy(() => import("./pages/TermsConditions"));
 const Concept = lazy(() => import("./pages/ConceptPage"));
@@ -45,11 +44,6 @@ export const router = createBrowserRouter([
         path: "/",
         element: <Home />
       },
-      // {
-      //   path: "/login",
-      //   element: <Login />
-      // },
-
       {
         path: "/concept",
         element: <Concept />
