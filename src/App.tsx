@@ -3,6 +3,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query"
 import { router } from "./router"
 import { Toaster } from 'react-hot-toast'
 import { Analytics } from "@vercel/analytics/react"
+import { Suspense } from "react"
 
 function App() {
   const queryClient = new QueryClient({
@@ -23,7 +24,10 @@ function App() {
 
           {/* <InternetStatus /> */}
           {/* {isLoading && <Loader onLoadingComplete={handleLoadingComplete} />} */}
+
+          <Suspense fallback={<div>Loading...</div>}>
           <RouterProvider router={router} />
+          </Suspense>
 
         
         <Toaster

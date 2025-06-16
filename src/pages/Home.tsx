@@ -78,20 +78,22 @@ const Home = () => {
       link: "/shop/?tag=meals"
     }
   ]
-// useEffect(() => {
-//   const deleteOrders = async () => {
-//     await deleteOrdersByCustomerUid('3IIckUCL9tXmr96y4QxHegYtoas2');
-//   };
-//   deleteOrders();
-// }, []);
+  // useEffect(() => {
+  //   const deleteOrders = async () => {
+  //     await deleteOrdersByCustomerUid('3IIckUCL9tXmr96y4QxHegYtoas2');
+  //   };
+  //   deleteOrders();
+  // }, []);
   return (
     <main className="min-h-[calc(100vh-64px)] w-full">
       <ScrollingBanner />
 
       <Link to={'https://zomato.onelink.me/xqzv/ut3cavr1'} target='_blank' className='flex justify-center items-center bg-[#D94148] h-14'>
-        <p className='text-white '>We Are Now Available on</p>
+        <span className='size-2 mr-4 block bg-white animate-pulse rounded-full'></span>
+        <p className='text-white inline-flex items-center gap-2 '> We Are Now Available on</p>
         <Image className='w-40 h-10 ' isBlurred
           src='https://cdn.brandfetch.io/idEql8nEWn/theme/light/logo.svg?c=1dxbfHSJFAPEGdCLU4o5B' />
+        <span className='size-2 block bg-white animate-pulse rounded-full'></span>
       </Link>
 
       <section className='bg-[#fff9f2] '>
