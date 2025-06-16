@@ -2,13 +2,11 @@ import { useEffect } from 'react'
 import Navbar from '../components/Navbar'
 import { Navigate, Outlet, useLocation } from 'react-router-dom'
 import { useProductStore } from '../store/productStore'
-
 import { useQuery } from '@tanstack/react-query'
 import { getItemsFromFirestore } from '../services/productService'
 import toast, { Toaster } from 'react-hot-toast'
 import Footer from './Footer'
 import ScrollToTop from '../components/ScrollToTop'
-import { motion, AnimatePresence } from 'framer-motion'
 import { useAuthStore } from '@/store/authStore'
 import OrderPlacedModal from './OrderPlacedModal'
 
@@ -24,7 +22,6 @@ function Layout() {
   })
 
  
-
   useEffect(() => {
     if (data) {
       const filteredItems = data.filter((item) => item.isAvailable);

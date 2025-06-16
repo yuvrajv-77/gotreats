@@ -4,6 +4,8 @@ import { router } from "./router"
 import { Toaster } from 'react-hot-toast'
 import { Analytics } from "@vercel/analytics/react"
 import { Suspense } from "react"
+import { Spinner } from "@heroui/react"
+import { BrandLogo } from "./components/Navbar"
 
 function App() {
   const queryClient = new QueryClient({
@@ -20,16 +22,25 @@ function App() {
   return (
     <>
       <QueryClientProvider client={queryClient}>
-      
 
-          {/* <InternetStatus /> */}
-          {/* {isLoading && <Loader onLoadingComplete={handleLoadingComplete} />} */}
 
-          <Suspense fallback={<div>Loading...</div>}>
+    
+        <Suspense fallback={
+          <div className="flex flex-col gap-3 items-center justify-center h-screen">
+            
+            <div className="cursor-pointer">
+              <p className='comfortaa font-bold tracking-tighter text-2xl lg:text-3xl text-orange-600'>
+                <span className='text-green-500'>go</span>treats
+              </p>
+            </div>
+            <Spinner color="success" />
+            <p className="text-green-700">Please wait while we prepare your delicious experience!</p>
+          </div>
+        }>
           <RouterProvider router={router} />
-          </Suspense>
+        </Suspense>
 
-        
+
         <Toaster
           position="top-center"
           toastOptions={{

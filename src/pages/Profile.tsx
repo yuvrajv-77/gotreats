@@ -3,18 +3,17 @@ import { useAuthStore } from '../store/authStore';
 import Button from '../components/Button';
 import { useNavigate } from 'react-router-dom';
 import { handleLogout, updateUserAddress, updateUserPhone } from '../services/authService';
-import { Mail, Phone, LogOut, ShoppingBag, AlertTriangle } from 'lucide-react';
+import { Mail, Phone } from 'lucide-react';
 import toast from 'react-hot-toast';
 import AddressSection from '../components/AddressSection';
 import Modal from '../components/Modal';
-import Orders from './Orders';
+
 
 const Profile = () => {
     const navigate = useNavigate()
     const userDetails = useAuthStore((state) => state.userDetails)
     const [address, setAddress] = React.useState(userDetails?.address || '');
     const [phoneNumber, setPhoneNumber] = React.useState(userDetails?.phoneNumber || '');
-    const [isEditingAddress, setIsEditingAddress] = React.useState(false);
     const [isEditingPhone, setIsEditingPhone] = React.useState(false);
     const [loading, setLoading] = React.useState(false);
     const [showLogoutModal, setShowLogoutModal] = React.useState(false);
