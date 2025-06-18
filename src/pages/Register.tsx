@@ -4,7 +4,6 @@ import { Link, useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
 import { RecaptchaVerifier, signInWithPhoneNumber } from "firebase/auth";
 import { auth, db } from "../config/firebaseConfig";
-import { doc, getDoc, setDoc } from "firebase/firestore";
 import { useAuthStore } from "../store/authStore";
 import Button from "@/components/Button";
 import { getUserFromDb, saveNewUserToFirestore } from "@/services/authService";

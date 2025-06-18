@@ -14,7 +14,7 @@ export const BrandLogo = () => {
     const navigate = useNavigate();
     return (
         <div onClick={() => navigate('/')} className="cursor-pointer">
-            <p className='comfortaa font-bold tracking-tighter text-2xl lg:text-3xl text-orange-600'>
+            <p className='comfortaa font-extrabold tracking-tighter text-2xl lg:text-3xl text-orange-600'>
                 <span className='text-green-500'>go</span>treats
             </p>
         </div>

@@ -42,7 +42,6 @@ const Home = () => {
   const products = useProductStore((state) => state.products)
   const [swiperRef, setSwiperRef] = useState(null);
 
-  const [loading, setLoading] = useState(true);
 
   const { data: reviews = [], isLoading, error } = useQuery({
     queryKey: ['reviews'],

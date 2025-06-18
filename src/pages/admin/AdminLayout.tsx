@@ -1,5 +1,5 @@
-import { Link, Outlet } from 'react-router-dom';
-import { Toaster } from 'react-hot-toast';
+import { Link, Navigate, Outlet } from 'react-router-dom';
+import toast, { Toaster } from 'react-hot-toast';
 
 import { BadgeIndianRupee, Banknote, HandCoins, Menu, UsersRound } from 'lucide-react';
 import { Drawer, DrawerContent, DrawerHeader, DrawerBody, DrawerFooter } from "@heroui/drawer";
@@ -20,48 +20,57 @@ import { onMessage } from 'firebase/messaging';
 const AdminLayout = () => {
     const { isOpen, onOpen, onClose } = useDisclosure();
     const { user, userDetails } = useAuthStore()
-    console.log("user ", user);
 
-    // Menu items.
+
     const items = [
         {
             title: "Orders",
-            url: "/admin/view-all-orders",
+            url: "/view-all-orders",
             icon: Box,
         },
         {
             title: "Items",
-            url: "/admin/view-all-products",
+            url: "/view-all-products",
             icon: Salad,
         },
         {
             title: "Reviews",
-            url: "/admin/manage-reviews",
+            url: "/manage-reviews",
             icon: MessageCircleMore,
         },
         {
             title: "Vouchers",
-            url: "/admin/manage-vouchers",
+            url: "/manage-vouchers",
             icon: TicketPercent,
         },
         {
             title: "Collections",
-            url: "/admin/collections",
+            url: "/collections",
             icon: Banknote,
         },
         {
             title: "Customers",
-            url: "/admin/customers",
+            url: "/customers",
             icon: UsersRound,
         },
         {
             title: "Payments",
-            url: "/admin/payments",
+            url: "/payments",
             icon: BadgeIndianRupee,
         },
 
 
     ]
+
+    const handleLogoutClick = async () => {
+        try {
+            await handleLogout();
+            toast.success('Logged out successfully');
+           <Navigate to="/" />
+        } catch (error) {
+            toast.error('Failed to logout. Please try again.');
+        }
+    };
 
     useEffect(() => {
         if (userDetails?.role === "admin") {
@@ -171,10 +180,10 @@ const AdminLayout = () => {
                             Test Notification
                         </button>
                         <div className="p-2">
-                            <h2 className="font-bold text-xl">{userDetails.displayName}</h2>
-                            <p className="text-sm text-gray-500">{userDetails.email}</p>
-                            <p className="text-sm text-gray-500">{userDetails.phoneNumber}</p>
-                            <Button variant="danger" onClick={handleLogout}>Logout</Button>
+                            <h2 className="font-bold text-xl">{userDetails?.displayName}</h2>
+                            <p className="text-sm text-gray-500">{userDetails?.email}</p>
+                            <p className="text-sm text-gray-500">{userDetails?.phoneNumber}</p>
+                            <Button variant="danger" onClick={handleLogoutClick}>Logout</Button>
                         </div>
                     </DrawerFooter>
                 </DrawerContent>
