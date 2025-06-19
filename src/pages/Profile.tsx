@@ -7,6 +7,7 @@ import { Mail, Phone } from 'lucide-react';
 import toast from 'react-hot-toast';
 import AddressSection from '../components/AddressSection';
 import Modal from '../components/Modal';
+import { Chip } from '@heroui/react';
 
 
 const Profile = () => {
@@ -80,7 +81,7 @@ const Profile = () => {
             
                 <section className='md:p-9 p-7 m-2 bg-white rounded-2xl'>
                     <div className='flex flex-col gap-1'>
-                        <h1 className='text-xl text-center md:text-start md:text-2xl font-bold'>{userDetails?.displayName}</h1>
+                        <h1 className='text-xl text-center md:text-start md:text-2xl flex items-center gap-2 font-bold'>{userDetails?.displayName} </h1>
                         <p className='text-sm  text-gray-500 inline-flex items-center gap-3 mt-2'>
                             <Mail size={16} /> {userDetails?.email}
                         </p>

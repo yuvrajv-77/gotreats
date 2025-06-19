@@ -1,4 +1,4 @@
-import { Star, Triangle } from 'lucide-react'
+import { Star, Triangle, X } from 'lucide-react'
 import { Item } from '../types/ItemsTypes'
 import { useCartStore } from '../store/cartStore'
 import { useAuthStore } from '../store/authStore'
@@ -129,7 +129,7 @@ const ItemCards = ({ item }: { item: Item }) => {
     }
 
     return (
-        <>
+        <div className='relative'>
             <div className='md:flex flex-col justify-between hidden group w-64 lg:w-76 bg-white p-6 rounded-3xl shadow-xs cursor-pointer hover:bg-green-50 transition-color duration-500 border-orange-50 relative' >
                 {/* Most Ordered Tag for Desktop */}
                 {(item.productName.toLowerCase().includes('combo') ||
@@ -263,10 +263,11 @@ const ItemCards = ({ item }: { item: Item }) => {
                 </div>
             </div>
 
-            <Drawer isOpen={isOpen} placement='bottom' size='lg' hideCloseButton onOpenChange={onOpenChange}>
-                <DrawerContent className=''>
+            <Drawer isOpen={isOpen} placement='bottom'  size='lg' hideCloseButton onOpenChange={onOpenChange}>
+                <DrawerContent>
                     {(onClose) => (
                         <>
+                        {/* <DrawerHeader><span className='absolute -top-1 right-3 bg-gray-800 text-white rounded-full p-3'><X onClick={onClose} /></span></DrawerHeader> */}
                             <DrawerBody className='pt-5'>
                                 <div className=' rounded-lg w-full h-[1200px] overflow-hidden'>
                                     <img className='w-full h-full  object-cover' src={item.imageUrl} alt="" />
@@ -314,7 +315,7 @@ const ItemCards = ({ item }: { item: Item }) => {
                     )}
                 </DrawerContent>
             </Drawer>
-        </>
+        </div>
     )
 }
 

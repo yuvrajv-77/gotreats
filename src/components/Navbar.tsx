@@ -1,4 +1,4 @@
-import { Menu, X, ShoppingCart, UserRound, MapPin, LogOut, AlertTriangle, Box, CircleHelp } from 'lucide-react'
+import { Menu, X, ShoppingCart, UserRound, MapPin, LogOut, AlertTriangle, Box, CircleHelp, ExternalLink, UserRoundCog } from 'lucide-react'
 import Button, { IconButton } from './Button'
 import { useState, useEffect } from 'react'
 import { Link, useNavigate, useLocation } from 'react-router-dom'
@@ -20,6 +20,7 @@ export const BrandLogo = () => {
         </div>
     )
 }
+
 const Navbar = () => {
     const [isOpen, setIsOpen] = useState(false)
     const [showLogoutModal, setShowLogoutModal] = useState(false);
@@ -94,6 +95,10 @@ const Navbar = () => {
                                     <Link to="/about" className="hover:text-orange-600">About</Link>
                                     <Link to="/customers" className="hover:text-orange-600">Customers</Link>
                                     <Link to="/contact" className="hover:text-orange-600">Contact</Link>
+                                    {
+                                        userDetails?.role === 'admin' &&
+                                        <Link to="https://admin.gotreats.in" target='_blank' rel="noopener noreferrer" className="hover:text-orange-600 gap-2 flex items-center">Admin <ExternalLink strokeWidth={1.5} size={15} /></Link>
+                                    }
                                 </nav>
                             </div>
                             <div className="flex justify-end gap-4">
@@ -129,6 +134,16 @@ const Navbar = () => {
                                                 <div className="flex items-center gap-2">
                                                     <UserRound size={16} />
                                                     Profile
+                                                </div>
+                                            </DropdownItem>
+                                            <DropdownItem
+                                                className='hover:bg-gray-100'
+                                                key="profile" target='_blank'
+                                                onPress={() => window.open('https://admin.gotreats.in')}
+                                            >
+                                                <div  className="flex items-center gap-2">
+                                                    <UserRoundCog size={16} />
+                                                    Go To Admin
                                                 </div>
                                             </DropdownItem>
                                             <DropdownItem key="orders" onPress={() => navigate('/orders')}>

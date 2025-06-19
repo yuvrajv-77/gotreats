@@ -11,9 +11,7 @@ import { useAuthStore } from '@/store/authStore'
 import OrderPlacedModal from './OrderPlacedModal'
 
 function Layout() {
-  const location = useLocation();
 
-  const { userDetails } = useAuthStore();
 
   const { data } = useQuery({
     queryKey: ['items'],
@@ -28,12 +26,6 @@ function Layout() {
       useProductStore.getState().setProducts(filteredItems)
     }
   }, [data])
-
-  
-  // if (userDetails?.role === "admin") {
-  //   return <Navigate to="/admin/view-all-orders" />
-  // }
-
 
 
   return (

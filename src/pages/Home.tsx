@@ -111,14 +111,16 @@ const Home = () => {
                 speed={40}
               />
             </p>
-            <div className=''>
+            <div className=' flex gap-9'>
               {userDetails?.role === 'admin' ?
-                <button className="cssbuttons-io animate-pulse" onClick={() => navigate('/admin/view-all-orders')}>
-                  <span className='flex items-center gap-2'>
-                    <Box className='animate-bounce' />
-                    Manage Orders
-                  </span>
-                </button>
+                <>
+                  <a href={'https://admin.gotreats.in'} target='_blank' className="bg-orange-600 px-5 cursor-pointer rounded-lg hover:bg-orange-600 transition-all ease-in-out  duration-100 active:scale-95  py-3 text-white " >
+                    Open Admin
+                  </a>
+                  <button className="bg-black px-5 cursor-pointer rounded-lg hover:bg-orange-600 transition-all ease-in-out  duration-100 active:scale-95  py-3 text-white " onClick={() => navigate("/shop")}>
+                    Order Now
+                  </button>
+                </>
                 :
                 <button className="bg-black px-5 cursor-pointer rounded-lg hover:bg-orange-600 transition-all ease-in-out  duration-100 active:scale-95  py-3 text-white " onClick={() => navigate("/shop")}>
                   Order Now

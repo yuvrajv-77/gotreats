@@ -84,7 +84,7 @@ const AdminLayout = () => {
     }, [userDetails]);
 
     useEffect(() => {
-        if (location.pathname === '/') {
+        if (location.pathname === '/dashboard') {
             requestNotificationPermision();
         }
     }, [location.pathname])
