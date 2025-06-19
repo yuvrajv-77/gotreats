@@ -8,10 +8,10 @@ export function getSubdomain(): string | null {
   }
 
   // Production domains: admin.gotreats.in
-  // const domainParts = host.split(".");
-  // if (domainParts.length > 2) {
-  //   return domainParts[0]; // "admin" from "admin.gotreats.in"
-  // }
+  const domainParts = host.split(".");
+  if (domainParts.length > 2) {
+    return domainParts[0]; // "admin" from "admin.gotreats.in"
+  }
 
   return null;
 }
