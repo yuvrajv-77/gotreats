@@ -6,6 +6,9 @@ import { Analytics } from "@vercel/analytics/react"
 import { Suspense } from "react"
 import { Spinner } from "@heroui/react"
 import { BrandLogo } from "./components/Navbar"
+import { getSubdomain } from "./utils/getSubdomain"
+import { admin_router } from "./router/adminRouter"
+import { client_router } from "./router/clientRouter"
 
 function App() {
   const queryClient = new QueryClient({
@@ -19,12 +22,15 @@ function App() {
     },
   })
 
+   const subdomain = getSubdomain();
+  const isAdminDomain = subdomain === "admin";
+  console.log("isAdminDomain", isAdminDomain);
+  
+
   return (
     <>
       <QueryClientProvider client={queryClient}>
 
-
-    
         <Suspense fallback={
           <div className="flex flex-col gap-3 items-center justify-center h-screen">
             
@@ -37,7 +43,9 @@ function App() {
             <p className="text-green-700">Please wait while we prepare your delicious experience!</p>
           </div>
         }>
-          <RouterProvider router={router} />
+
+          <RouterProvider router={isAdminDomain ? admin_router : client_router} />
+
         </Suspense>
 
 
@@ -52,6 +60,7 @@ function App() {
           }}
         />
       </QueryClientProvider>
+
       <Analytics />
     </>
   )

@@ -1,107 +1,115 @@
-import { Navigate, Outlet } from 'react-router-dom'
+import { Navigate, Outlet, useNavigate, useLocation } from 'react-router-dom'
 import { useAuthStore } from '../store/authStore'
 import { useEffect, useState } from 'react'
 import Button from '../components/Button'
-import { Key } from 'lucide-react'
+import { Key, LogOut } from 'lucide-react'
 import { handleLogout, validateAdminPassword } from '../services/authService'
-import { HeroUIProvider } from '@heroui/system'
 import toast from 'react-hot-toast'
 import { BrandLogo } from '@/components/Navbar'
+import AdminLogin from "@/pages/admin/AdminLogin";
+import { Input } from '@heroui/react'
 
 const AdminRoutes = () => {
-  const { userDetails, } = useAuthStore()
-
-  const [isLoading, setIsLoading] = useState(true)
-  const [isAuthenticated, setIsAuthenticated] = useState(false)
+  const { userDetails, user } = useAuthStore()
   const [input, setInput] = useState('')
   const [checkingPassword, setCheckingPassword] = useState(false)
+  const [isAuthenticated, setIsAuthenticated] = useState(false)
+  const [isLoading, setIsLoading] = useState(true)
+  const navigate = useNavigate()
+  const location = useLocation()
 
+  // Check adminAuth in localStorage
   useEffect(() => {
-    // Check if the user is already authenticated for the day
+    if (!userDetails?.role) {
+      setIsLoading(false)
+      return
+    }
     const authData = localStorage.getItem('adminAuth')
     if (authData) {
       const { date, isAuthenticated } = JSON.parse(authData)
       const today = new Date().toISOString().split('T')[0]
-      if (date === today && isAuthenticated) {
+      if (date === today && isAuthenticated && userDetails?.role === 'admin') {
         setIsAuthenticated(true)
-        setIsLoading(false)
       } else {
-        localStorage.removeItem('adminAuth') // Clear outdated auth data
+        localStorage.removeItem('adminAuth')
       }
-    } else {
-      setIsLoading(false)
     }
-  }, [])
+    setIsLoading(false)
+  }, [userDetails])
 
-  const handleSubmit = async (e) => {
-    e.preventDefault()
-    setCheckingPassword(true)
-    try {
-      const isValidPassword = await validateAdminPassword(input) // Server-side validation
-      if (isValidPassword) {
-        const today = new Date().toISOString().split('T')[0]
-        localStorage.setItem('adminAuth', JSON.stringify({ date: today, isAuthenticated: true }))
-        setIsAuthenticated(true)
-        setCheckingPassword(false)
-      } else {
-        alert('Invalid password')
-        setCheckingPassword(false)
-      }
-      setCheckingPassword(false)
-    } catch (error) {
-      console.error('Error validating password:', error)
-      alert('Something went wrong. Please try again.')
-    }
-  }
-  const handleLogoutClick = async () => {
-    try {
-
-      await handleLogout();
-      toast.success('Logged out successfully');
-      // navigate('/');
-    } catch (error) {
-      toast.error('Failed to logout. Please try again.');
-    }
-  };
-
-  if (isLoading) {
-    return <div className='confortaa animate-pulse text-center my-20'>Checking Authentication please wait ....</div>
+  // If not logged in or not admin, show login
+  if (!user || userDetails?.role !== 'admin') {
+    return <AdminLogin />
   }
 
+  // If logged in as admin but not admin-authenticated, show password prompt
   if (!isAuthenticated) {
     return (
-      <form onSubmit={handleSubmit} className=' text-white bg-zinc-800 flex flex-col items-center justify-center h-svh w-full gap-10 '>
-        <BrandLogo />
-        <div className='flex flex-col gap-3 items-center'>
+      <form onSubmit={async (e) => {
+        e.preventDefault()
+        setCheckingPassword(true)
+        try {
+          const isValidPassword = await validateAdminPassword(input)
+          if (isValidPassword) {
+            const today = new Date().toISOString().split('T')[0]
+            localStorage.setItem('adminAuth', JSON.stringify({ date: today, isAuthenticated: true }))
+            setIsAuthenticated(true)
+            setInput('')
+            // Navigate to dashboard after successful auth
+            navigate('/dashboard', { replace: true })
+          } else {
+            toast.error('Invalid password')
+          }
+        } catch (error) {
+          toast.error('Something went wrong. Please try again.')
+        } finally {
+          setCheckingPassword(false)
+        }
+      }} className='dark text-white bg-neutral-700 flex flex-col items-center justify-center h-svh w-full relative'>
+        
+        <div className="cursor-pointer text-center mb-15">
+          <p className='comfortaa flex items-end font-bold tracking-tighter text-2xl lg:text-3xl text-orange-600'>
+            <p className='text-white text-sm'>admin .</p><span className='text-green-500'>go</span>treats <p className='text-white  text-sm'> . in</p>
+          </p>
+        </div>
+
+        <div className='flex flex-col gap-3 items-center mb-5'>
           <h1 className='text-4xl lancelot '>Welcome {userDetails?.displayName}</h1>
-          <div className='flex flex-col items-center gap-3 relative'>
-            <input
+          <div className='flex flex-col items-center w-full gap-3 relative'>
+            <Input
               autoFocus
               type="password"
-              className='bg-gray-700 py-4 pl-16 rounded-full outline-0 focus:ring-2 focus:ring-offset-2 focus:ring-orange-400 w-74'
+              variant="faded"
+              labelPlacement="outside"
+              size="lg"
+
               placeholder='Enter Admin Password'
               value={input}
               onChange={(e) => setInput(e.target.value)}
+              disabled={checkingPassword}
+              startContent={<Key size={20} />}
             />
-            <Key className='absolute left-7 top-7 -translate-y-1/2 text-green-400 animate-pulse' size={20} />
-            <Button variant='primary' className='' type='submit'>Submit</Button>
+            <Button variant='primary' className='w-full' type='submit' disabled={checkingPassword}>
+              {checkingPassword ? 'Checking...' : 'Submit'}
+            </Button>
           </div>
         </div>
-        <Button variant='danger' type='button' onClick={handleLogoutClick}>Logout</Button>
+        <Button variant='danger' type='button' className='absolute bottom-4 right-4' onClick={async () => {
+          await handleLogout()
+          localStorage.removeItem('adminAuth')
+          navigate('/', { replace: true })
+        }}><LogOut size={20} /></Button>
       </form>
     )
   }
 
-  // Check if the user has admin rights
-  if (userDetails?.role !== 'admin') {
-    return <Navigate to="/" replace />
+  // If authenticated as admin, redirect root to /dashboard
+  if (location.pathname === '/') {
+    return <Navigate to="/dashboard" replace />
   }
 
-  return (
-
-    <Outlet />
-
-  )
+  // Otherwise, render admin routes
+  return <Outlet />
 }
 
 export default AdminRoutes

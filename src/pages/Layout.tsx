@@ -30,10 +30,9 @@ function Layout() {
   }, [data])
 
   
-
-  if (userDetails?.role === "admin") {
-    return <Navigate to="/admin/view-all-orders" />
-  }
+  // if (userDetails?.role === "admin") {
+  //   return <Navigate to="/admin/view-all-orders" />
+  // }
 
 
 
