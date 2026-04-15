@@ -8,6 +8,7 @@ import { useAuthStore } from "../store/authStore";
 import Button from "@/components/Button";
 import { getUserFromDb, saveNewUserToFirestore } from "@/services/authService";
 import { Phone } from "lucide-react";
+import { BrandLogo } from "@/components/Navbar";
 
 const Register = () => {
   const [step, setStep] = useState<1 | 2 | 3>(1);
@@ -113,18 +114,17 @@ const Register = () => {
   };
 
   return (
-    <div className="h-svh border">
-      <div className="md:grid grid-cols-2 h-full px-7 md:px-0">
-        <div className="w-full h-full flex flex-col items-center justify-center relative">
+    <div className="h-svh bg-white ">
+      <div className="flex items-center justify-center h-full bg-[url('/register_bg.png')] bg-cover bg-center bg-no-repeat  ">
+        <div className="md:w-1/2 w-full px-3 md:px-0 flex flex-col items-center justify-center relative">
           {/* Step 1: Phone Number Input */}
           {step === 1 && (
-            <div className="md:w-1/2">
-              <p className="text-2xl md:text-3xl font-bold mb-15 flex item-center">Welcome to
+            <div className="md:w-2/3">
+              <p className="text-2xl font-bowlby md:text-3xl font-bold mb-15 flex item-center">Welcome to
                 <div onClick={() => navigate('/')} className="cursor-pointer ml-3">
-                  <p className='comfortaa font-bold tracking-tighter text-2xl lg:text-3xl text-orange-600'>
-                    <span className='text-green-500'>go</span>treats
-                  </p>
-                </div></p>
+                  <BrandLogo />
+                </div>
+              </p>
               {/* <p className="text-sm text-gray-600 mb-2">Enter your phone number to get started</p>  */}
               <Input
                 type="tel" autoFocus
@@ -136,6 +136,9 @@ const Register = () => {
                 size="lg" isInvalid={error !== ""}
                 errorMessage={error}
                 isRequired maxLength={10}
+                onKeyDown={(e) => {
+                  if (e.key === "Enter") handleSendOtp();
+                }}
                 startContent={
                   <div className="flex items-center gap-2 text-gray-600">
                     <Phone size={16} />|<p>+91</p>
@@ -157,10 +160,10 @@ const Register = () => {
 
           {/* Step 2: OTP Input */}
           {step === 2 && (
-            <div className="md:w-1/2 flex flex-col items-start justify-center">
+            <div className="md:w-1/2 flex flex-col items-start  justify-center">
 
-              <p className="text-2xl md:text-3xl font-bold mb-2 flex item-center">Enter OTP</p>
-              <p className="text-sm text-gray-600 mb-10">We have sent an OTP to your Phone Number +91{phone}</p>
+              <p className="text-2xl font-bowlby md:text-3xl uppercase mb-2 flex item-center">Enter OTP</p>
+              <p className="text-sm text-gray-600 mb-8">We have sent an OTP to your Phone Number +91{phone}</p>
               <InputOtp
                 value={otp}
                 onValueChange={setOtp}
@@ -168,6 +171,9 @@ const Register = () => {
                 variant="faded"
                 size="lg" isInvalid={error !== ""}
                 errorMessage={error}
+                onKeyDown={(e: React.KeyboardEvent) => {
+                  if (e.key === "Enter") handleSendOtp();
+                }}
                 autoFocus
               />
               <Button
@@ -238,7 +244,7 @@ const Register = () => {
             </div>
           )}
         </div>
-        <div className="bg-[url('/register.webp')]  bg-cover bg-center bg-no-repeat rotate-270 h-full hidden lg:block"></div>
+
       </div>
       <div id="recaptcha-container"></div>
     </div>

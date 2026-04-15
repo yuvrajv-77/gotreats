@@ -125,7 +125,7 @@ const ProductFrom = ({
             queryClient.invalidateQueries({ queryKey: ['products'] });
             // refetchProducts?.();
             onOpenChange();
-            navigate('/view-all-products');
+            // navigate('/view-all-products');
         }
     })
 
