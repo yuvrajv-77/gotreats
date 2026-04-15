@@ -12,11 +12,7 @@ const Register = lazy(() => import("../pages/Register"));
 const Profile = lazy(() => import("../pages/Profile"));
 const Orders = lazy(() => import("../pages/Orders"));
 const TermsConditions = lazy(() => import("../pages/TermsConditions"));
-const Concept = lazy(() => import("../pages/ConceptPage"));
-const About = lazy(() => import("../pages/About"));
 const Customers = lazy(() => import("../pages/Customers"));
-const PrivacyPolicy = lazy(() => import("../pages/PrivacyPolicy"));
-const RefundPolicy = lazy(() => import("../pages/RefundPolicy"));
 
 
 
@@ -33,22 +29,7 @@ export const client_router = createBrowserRouter([
         index: true,
         element: <Home />
       },
-      {
-        path: "/concept",
-        element: <Concept />
-      },
-      {
-        path: "/privacy-policy",
-        element: <PrivacyPolicy />
-      },
-      {
-        path: "/refund-policy",
-        element: <RefundPolicy />
-      },
-      {
-        path: "/about",
-        element: <About />
-      },
+      
       {
         path: "/customers",
         element: <Customers />

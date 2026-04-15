@@ -14,8 +14,8 @@ export const BrandLogo = () => {
     const navigate = useNavigate();
     return (
         <div onClick={() => navigate('/')} className="cursor-pointer">
-            <p className='comfortaa font-extrabold tracking-tighter text-2xl lg:text-3xl text-orange-600'>
-                <span className='text-green-500'>go</span>treats
+            <p className='font-bowlby uppercase font-extrabold tracking-wider text-2xl lg:text-3xl text-orange-600'>
+                Bitebox
             </p>
         </div>
     )
@@ -63,10 +63,10 @@ const Navbar = () => {
 
     return (
         <>
-            <header className=" py-1  z-50 shadow-xl border-b ">
-                <div className="container  mx-auto">
-                    <div className=" bg-white  ">
-                        <div className=" grid grid-cols-2 lg:grid-cols-3 px-4 md:pr-2 py-2  items-center">
+            <header className=" py-3 z-50  ">
+                <div className="container md:px-20 px-2 mx-auto">
+                    <div className=" bg-yellow-300  rounded-lg  ">
+                        {/* <div className=" grid grid-cols-2 lg:grid-cols-3 px-5 md:pr-2 py-4 items-center">
                             <div className='flex items-center gap-2'>
                                 <span onClick={() => setIsOpen(!isOpen)}>
                                     <svg
@@ -173,6 +173,122 @@ const Navbar = () => {
                                 }
 
                             </div>
+                        </div> */}
+                        <div className='flex items-center justify-between px-5 md:px-10 py-4 '>
+                            <nav className="hidden md:flex gap-10 text-sm  items-center justify-center uppercase font-bowlby text-orange-900">
+                                <Link to="/shop" className="hover:text-orange-600">Menu</Link>
+                                <Link to="/concept" className="hover:text-orange-600">Concept</Link>
+                                <Link to="/about" className="hover:text-orange-600">About</Link>
+                                {
+                                    userDetails?.role === 'admin' &&
+                                    <Link to="https://admin.gotreats.in" target='_blank' rel="noopener noreferrer" className="hover:text-orange-600 gap-2 flex items-center">Admin <ExternalLink strokeWidth={1.5} size={15} /></Link>
+                                }
+                            </nav>
+                            <div className='flex items-center gap-2'>
+                                <span onClick={() => setIsOpen(!isOpen)}>
+                                    <svg
+                                        xmlns="http://www.w3.org/2000/svg"
+                                        width="24"
+                                        height="24"
+                                        viewBox="0 0 24 24"
+                                        fill="none"
+                                        stroke="currentColor"
+                                        strokeWidth="2"
+                                        strokeLinecap="round"
+                                        strokeLinejoin="round"
+                                        className="feather feather-menu md:hidden"
+                                    >
+                                        <line x1="3" y1="6" x2="21" y2="6" className={`origin-left transition ${isOpen ? "rotate-45 -translate-y-1" : ""}`}></line>
+                                        <line x1="3" y1="12" x2="21" y2="12" className={isOpen ? "opacity-0 transition" : "transition"}></line>
+                                        <line x1="3" y1="18" x2="21" y2="18" className={`origin-left transition ${isOpen ? "-rotate-45 translate-y-1" : ""}`}></line>
+                                    </svg>
+                                </span>
+                                <BrandLogo />
+                            </div>
+                            <div className="flex gap-5">
+                                <nav className="hidden md:flex gap-10 text-sm  items-center justify-center uppercase font-bowlby text-orange-900">
+                                    <Link to="/shop" className="hover:text-orange-600">Menu</Link>
+                                    <Link to="/concept" className="hover:text-orange-600">Concept</Link>
+                                    <Link to="/about" className="hover:text-orange-600">About</Link>
+                                    {
+                                        userDetails?.role === 'admin' &&
+                                        <Link to="https://admin.gotreats.in" target='_blank' rel="noopener noreferrer" className="hover:text-orange-600 gap-2 flex items-center">Admin <ExternalLink strokeWidth={1.5} size={15} /></Link>
+                                    }
+                                </nav>
+                                <div className="flex justify-end gap-4">
+                                    {!user && (
+                                        <Button variant='primary' className='' onClick={() => navigate('/register')}>Sign Up</Button>
+                                    )}
+                                    {user &&
+                                        <div onClick={() => navigate('/checkout')} className="cursor-pointer">
+                                            <IconButton>
+                                                <ShoppingCart strokeWidth={1.5} size={20} />
+                                                <p className='text-green-600 text-lg'>
+                                                    {items.reduce((total, item) => total + item.quantity, 0)}
+                                                </p>
+                                            </IconButton>
+                                        </div>
+                                    }
+                                    {user &&
+                                        <Dropdown>
+                                            <DropdownTrigger>
+                                                <Button variant='secondary' className='bg-white' >
+                                                    <div className='flex items-center gap-2'>
+                                                        <UserRound strokeWidth={1.5} size={20} />
+                                                        <p className='hidden text-sm lg:block'>{userDetails?.displayName}</p>
+                                                    </div>
+                                                </Button>
+                                            </DropdownTrigger>
+                                            <DropdownMenu aria-label="Static Actions" >
+                                                <DropdownItem
+                                                    className='hover:bg-gray-100'
+                                                    key="profile"
+                                                    onPress={() => navigate('/profile')}
+                                                >
+                                                    <div className="flex items-center gap-2">
+                                                        <UserRound size={16} />
+                                                        Profile
+                                                    </div>
+                                                </DropdownItem>
+                                                <DropdownItem
+                                                    className='hover:bg-gray-100'
+                                                    key="profile" target='_blank'
+                                                    onPress={() => window.open('https://admin.gotreats.in')}
+                                                >
+                                                    <div className="flex items-center gap-2">
+                                                        <UserRoundCog size={16} />
+                                                        Go To Admin
+                                                    </div>
+                                                </DropdownItem>
+                                                <DropdownItem key="orders" onPress={() => navigate('/orders')}>
+                                                    <div className="flex items-center gap-2">
+                                                        <Box size={16} />
+                                                        Orders
+                                                    </div>
+                                                </DropdownItem>
+                                                <DropdownItem key="orders" onPress={() => navigate('/contact')}>
+                                                    <div className="flex items-center gap-2">
+                                                        <CircleHelp size={16} />
+                                                        Help
+                                                    </div>
+                                                </DropdownItem>
+                                                <DropdownItem
+                                                    className='hover:bg-gray-100 text-red-500'
+                                                    key="logout"
+                                                    onPress={() => setShowLogoutModal(true)}
+                                                >
+                                                    <div className="flex items-center gap-2">
+                                                        <LogOut size={16} />
+                                                        Log Out
+                                                    </div>
+                                                </DropdownItem>
+                                            </DropdownMenu>
+                                        </Dropdown>
+                                    }
+
+                                </div>
+                            </div>
+
                         </div>
                         <AnimatePresence>
                             {isOpen && (

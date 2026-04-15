@@ -1,12 +1,9 @@
-import { BadgePercent, Beer, Candy, ChevronRight, Cookie, Dessert, Drumstick, Salad, Search, Soup, Utensils } from 'lucide-react';
+import { BadgePercent, ChevronRight,  Drumstick, Salad, Search } from 'lucide-react';
 import { useEffect, useState } from 'react';
 import ItemCards from '../components/ItemCards';
 import { useNavigate, useSearchParams } from 'react-router-dom';
-
 import { useProductStore } from '../store/productStore';
-import Button from '../components/Button';
 import { useCartStore } from '../store/cartStore';
-
 import { motion, AnimatePresence, Variants } from "framer-motion";
 
 const Shop = () => {
@@ -96,47 +93,22 @@ const Shop = () => {
         }
     };
 
-    // Word animation variants for "Homemade"
-    const wordVariants: Variants = {
-        initial: {
-            backgroundPosition: "0% 50%"
-        },
-        animate: {
-            backgroundPosition: ["0% 50%", "100% 50%", "0% 50%"],
-            transition: {
-                duration: 3,
-                repeat: Infinity,
-                ease: "linear"
-            }
-        }
-    };
 
     return (
-        <div className='bg-[#fff9f2] flex'>
-            <div className='container mx-auto'>
-                <div className='py-10'>
+        <div className='bg-gradient-to-b from-amber-50/50 to-amber-100 flex'>
+            <div className='container mx-auto md:px-20 px-2'>
+                <div className='md:py-10'>
                     <motion.div
-                        className="text-center mb-8"
+                        className="text-center my-16"
                         initial="initial"
                         animate="animate"
                         variants={headingVariants}
                     >
-                        <h1 className='text-4xl md:text-5xl lg:text-6xl lancelot'>
-                            Shop our{" "}
-                            <motion.span
-                                variants={wordVariants}
-                                className="inline-block bg-gradient-to-r from-orange-500 via-orange-400 to-orange-500 text-transparent bg-clip-text bg-[length:200%_100%]"
-                            >
-                                Homemade
-                            </motion.span>
-                            {" "}Products
+                        <h1 className='text-4xl md:text-5xl lg:text-6xl font-bowlby uppercase '>
+                            Enjoy the{" "}
+                            <span className="inline-block text-orange-500"> Delicious</span> Bites
                         </h1>
-                        <motion.div
-                            initial={{ width: 0 }}
-                            animate={{ width: "100%" }}
-                            transition={{ duration: 1, delay: 0.5 }}
-                            className="h-1 bg-gradient-to-r from-orange-500 via-orange-400 to-orange-500 mx-auto mt-4 max-w-[200px] rounded-full"
-                        />
+                        
                     </motion.div>
 
                     {/* Search Bar */}
@@ -161,7 +133,7 @@ const Shop = () => {
                         </div>
                     </div>
 
-                    <div className='text justify-center flex items-center flex-wrap gap-2 lg:gap-10 mt-5 select-none'>
+                    <div className=' justify-center flex items-center flex-wrap gap-2 lg:gap-10 mt-5 select-none'>
                         <div className='flex gap-2'>
                             <span
                                 className={`whitespace-nowrap cursor-pointer px-4 py-2 rounded-full ${foodType === 'veg' ? 'bg-green-600 text-white hover:text-white' : 'bg-white'}  hover:text-green-600 text-green-700 inline-flex items-center shadow-xs gap-2 transition-colors duration-100 ease-in`}
@@ -175,10 +147,10 @@ const Shop = () => {
                             </span>
                         </div>
                     </div>
-                    <div className={`relativ flex justify-center mx-4 mt-5 ${searchQuery ? 'opacity-50 pointer-events-none' : ''}`}>
+                    <div className={` flex justify-center mx-4 mt-5 ${searchQuery ? 'opacity-50 pointer-events-none' : ''}`}>
 
 
-                        <div className=' flex items-center overflow-x-auto scrollbar-hide py-2  mx-auto  gap-2 lg:gap-5 select-none'>
+                        <div className=' flex items-center overflow-x-auto scrollbar-hide py-2 mx-auto font-mouse tracking-wider text-lg font-bold gap-2 lg:gap-5 select-none'>
                             {/* -------Categories------- */}
                             <span
                                 className={`whitespace-nowrap cursor-pointer px-4 py-2 rounded-lg ${tag == 'top-picks' ? 'bg-orange-600 text-white hover:text-white' : 'bg-white'}  hover:text-orange-600 inline-flex items-center shadow-xs transition-colors duration-100 ease-in gap-2`}
@@ -190,48 +162,48 @@ const Shop = () => {
                             {(foodType === 'all' || foodType === 'veg') && (
                                 <>
                                     <span
-                                        className={`whitespace-nowrap cursor-pointer px-4 py-2 rounded-xl ${tag == 'meals' ? 'bg-orange-600 text-white hover:text-white' : 'bg-white'}  hover:text-orange-600 inline-flex items-center shadow-xs gap-2 transition-colors duration-100 ease-in`}
+                                        className={`whitespace-nowrap cursor-pointer px-4 py-2 rounded-lg ${tag == 'meals' ? 'bg-orange-600 text-white hover:text-white' : 'bg-white'}  hover:text-orange-600 inline-flex items-center shadow-xs gap-2 transition-colors duration-100 ease-in`}
                                         onClick={() => navigate('/shop/?tag=meals')}>
-                                        <Utensils strokeWidth={1.5} /> Meals
+                                        {/* <Utensils strokeWidth={1.5} />  */}
+                                        Meals
                                     </span>
                                     <span
-                                        className={`whitespace-nowrap cursor-pointer px-4 py-2 rounded-xl ${tag == 'paav-bhaaji' ? 'bg-orange-600 text-white hover:text-white' : 'bg-white'}  hover:text-orange-600 inline-flex items-center shadow-xs gap-2 transition-colors duration-100 ease-in`}
+                                        className={`whitespace-nowrap cursor-pointer px-4 py-2 rounded-lg ${tag == 'paav-bhaaji' ? 'bg-orange-600 text-white hover:text-white' : 'bg-white'}  hover:text-orange-600 inline-flex items-center shadow-xs gap-2 transition-colors duration-100 ease-in`}
                                         onClick={() => navigate('/shop/?tag=paav-bhaaji')}>
                                         Pav Bhaji
                                     </span>
                                     <span
-                                        className={`whitespace-nowrap cursor-pointer px-4 py-2 rounded-xl ${tag == 'pasta' ? 'bg-orange-600 text-white hover:text-white' : 'bg-white'}  hover:text-orange-600 inline-flex items-center shadow-xs gap-2 transition-colors duration-100 ease-in`}
+                                        className={`whitespace-nowrap cursor-pointer px-4 py-2 rounded-lg ${tag == 'pasta' ? 'bg-orange-600 text-white hover:text-white' : 'bg-white'}  hover:text-orange-600 inline-flex items-center shadow-xs gap-2 transition-colors duration-100 ease-in`}
                                         onClick={() => navigate('/shop/?tag=pasta')}>
                                         Pasta
                                     </span>
                                     <span
-                                        className={`whitespace-nowrap cursor-pointer px-4 py-2 rounded-xl ${tag == 'maggi' ? 'bg-orange-600 text-white hover:text-white' : 'bg-white'}  hover:text-orange-600 inline-flex items-center shadow-xs gap-2 transition-colors duration-100 ease-in`}
+                                        className={`whitespace-nowrap cursor-pointer px-4 py-2 rounded-lg ${tag == 'maggi' ? 'bg-orange-600 text-white hover:text-white' : 'bg-white'}  hover:text-orange-600 inline-flex items-center shadow-xs gap-2 transition-colors duration-100 ease-in`}
                                         onClick={() => navigate('/shop/?tag=maggi')}>
-                                        <Soup strokeWidth={1.5} />
+                                        {/* <Soup strokeWidth={1.5} /> */}
                                         Maggi
                                     </span>
                                     <span
-                                        className={`whitespace-nowrap cursor-pointer px-4 py-2 rounded-xl ${tag == 'desserts' ? 'bg-orange-600 text-white hover:text-white' : 'bg-white'}  hover:text-orange-600 inline-flex items-center shadow-xs gap-2 transition-colors duration-100 ease-in`}
+                                        className={`whitespace-nowrap cursor-pointer px-4 py-2 rounded-lg ${tag == 'desserts' ? 'bg-orange-600 text-white hover:text-white' : 'bg-white'}  hover:text-orange-600 inline-flex items-center shadow-xs gap-2 transition-colors duration-100 ease-in`}
                                         onClick={() => navigate('/shop/?tag=desserts')}>
-                                        <Dessert strokeWidth={1.5} />
+                                        {/* <Dessert strokeWidth={1.5} /> */}
                                         Desserts
                                     </span>
                                     <span
-                                        className={`whitespace-nowrap cursor-pointer px-4 py-2 rounded-xl ${tag == 'snacks' ? 'bg-orange-600 text-white hover:text-white' : 'bg-white'}  hover:text-orange-600 inline-flex items-center shadow-xs gap-2 transition-colors duration-100 ease-in`}
+                                        className={`whitespace-nowrap cursor-pointer px-4 py-2 rounded-lg ${tag == 'snacks' ? 'bg-orange-600 text-white hover:text-white' : 'bg-white'}  hover:text-orange-600 inline-flex items-center shadow-xs gap-2 transition-colors duration-100 ease-in`}
                                         onClick={() => navigate('/shop/?tag=snacks')}>
-                                        <Cookie strokeWidth={1.5} />
+                                        {/* <Cookie strokeWidth={1.5} /> */}
                                         Snacks
                                     </span>
                                     <span
-                                        className={`whitespace-nowrap cursor-pointer px-4 py-2 rounded-xl ${tag == 'drinks' ? 'bg-orange-600 text-white hover:text-white' : 'bg-white'}  hover:text-orange-600 inline-flex items-center shadow-xs gap-2 transition-colors duration-100 ease-in`}
+                                        className={`whitespace-nowrap cursor-pointer px-4 py-2 rounded-lg ${tag == 'drinks' ? 'bg-orange-600 text-white hover:text-white' : 'bg-white'}  hover:text-orange-600 inline-flex items-center shadow-xs gap-2 transition-colors duration-100 ease-in`}
                                         onClick={() => navigate('/shop/?tag=drinks')}>
-                                        <Beer strokeWidth={1.5} />
+                                        {/* <Beer strokeWidth={1.5} /> */}
                                         Drinks & Juices
                                     </span>
                                     <span
-                                        className={`whitespace-nowrap cursor-pointer px-4 py-2 rounded-xl ${tag == 'pickles' ? 'bg-orange-600 text-white hover:text-white' : 'bg-white'}  hover:text-orange-600 inline-flex items-center shadow-xs gap-2 transition-colors duration-100 ease-in`}
+                                        className={`whitespace-nowrap cursor-pointer px-4 py-2 rounded-lg ${tag == 'pickles' ? 'bg-orange-600 text-white hover:text-white' : 'bg-white'}  hover:text-orange-600 inline-flex items-center shadow-xs gap-2 transition-colors duration-100 ease-in`}
                                         onClick={() => navigate('/shop/?tag=pickles')}>
-
                                         Pickles
                                     </span>
                                 </>
@@ -242,7 +214,8 @@ const Shop = () => {
                                     <span
                                         className={`whitespace-nowrap cursor-pointer px-4 py-2 rounded-lg ${tag == 'meals' ? 'bg-orange-600 text-white hover:text-white' : 'bg-white'}  hover:text-orange-600 inline-flex items-center shadow-xs gap-2 transition-colors duration-100 ease-in`}
                                         onClick={() => navigate('/shop/?tag=meals')}>
-                                        <Utensils strokeWidth={1.5} /> Meals
+                                        {/* <Utensils strokeWidth={1.5} />  */}
+                                        Meals
                                     </span>
                                 </>
                             )}
@@ -263,7 +236,7 @@ const Shop = () => {
                     )}
 
                     {/* Items Container */}
-                    <div className='flex flex-wrap lg:gap-10 gap-4 mt-10 justify-center'>
+                    <div className='flex flex-col md:flex-row flex-wrap lg:gap-10 gap-4 mt-10 justify-center'>
                         {getFilteredProducts()?.map((item, index) => (
                             <ItemCards key={item.id} item={item} />
                         ))}

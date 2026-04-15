@@ -3,28 +3,28 @@ import { ChefHat, Zap,IndianRupee, Truck, Clock, Star, UtensilsCrossed, ShieldCh
 
 const ScrollingBanner = () => {
     const bannerItems = [
-        { text: "Affordable", icon: <IndianRupee size={20} /> },
-        { text: "Order Delivery in 1 Hour", icon: <Truck size={20} /> },
-        { text: "Best Quality", icon: <Star size={20} /> },
-        { text: "Fresh Food", icon: <UtensilsCrossed size={20} /> },
-        { text: "Hygienic Preparation", icon: <ShieldCheck size={20} /> },
-        { text: "Free Delivery upto 500 meters", icon: <Truck size={20} /> },
+        { text: "Affordable", icon: <IndianRupee size={20} strokeWidth={3} /> },
+        { text: "Order Delivery in 1 Hour", icon: <Truck size={20}  strokeWidth={3}/> },
+        { text: "Best Quality", icon: <Star size={20}  strokeWidth={3}/> },
+        { text: "Fresh Food", icon: <UtensilsCrossed size={20}  strokeWidth={3}/> },
+        { text: "Hygienic Preparation", icon: <ShieldCheck size={20}  strokeWidth={3}/> },
+        { text: "Free Delivery upto 500 meters", icon: <Truck size={20}  strokeWidth={3}/> },
     ];
 
     // Triple the items for even more seamless scrolling
     const tripledItems = [...bannerItems, ...bannerItems, ...bannerItems];
 
     return (
-        <div className="bg-black text-white py-2 overflow-hidden whitespace-nowrap">
-            <div className="animate-scroll inline-block">
+        <div className="bg-yellow-300 text-orange-800 py- overflow-hidden whitespace-nowrap">
+            <div className="animate-scroll flex py-4">
                 {tripledItems.map((item, index) => (
                     <span 
                         key={index} 
-                        className="inline-flex items-center mx-6"
+                        className="inline-flex items-center gap-3 font-mouse uppercase tracking-widest font-bold text-2xl mx-6"
                     >
-                        <span className="mr-2">{item.icon}</span>
+                        <span className="">{item.icon}</span>
                         {item.text}
-                        <span className="mx-6">•</span>
+                        
                     </span>
                 ))}
             </div>

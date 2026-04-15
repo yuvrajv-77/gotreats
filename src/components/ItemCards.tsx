@@ -16,81 +16,7 @@ import {
     useDisclosure,
 } from "@heroui/react";
 
-// Add keyframes for the glowing animation
-const glowingStyles = `
-    @keyframes glowingText {
-        0% {
-            background-position: -200% center;
-            text-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
-        }
-        50% {
-            text-shadow: 0 0 20px rgba(255, 255, 255, 0.6);
-        }
-        100% {
-            background-position: 200% center;
-            text-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
-        }
-    }
-
-    .glowing-text {
-        background: linear-gradient(
-            90deg,
-            #ffffff 0%,
-            #ffd700 25%,
-            #ffffff 50%,
-            #ffd700 75%,
-            #ffffff 100%
-        );
-        background-size: 200% auto;
-        color: transparent;
-        -webkit-background-clip: text;
-        background-clip: text;
-        animation: glowingText 2s linear infinite;
-        font-weight: 600;
-        letter-spacing: 0.5px;
-        filter: drop-shadow(0 0 8px rgba(255, 215, 0, 0.3));
-    }
-
-    .tag-container {
-        position: relative;
-    }
-
-    .tag-container::before {
-        content: '';
-        position: absolute;
-        inset: -1px;
-        background: linear-gradient(90deg, #ff8c00, #ffd700);
-        border-radius: inherit;
-        padding: 1px;
-        -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-        mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-        -webkit-mask-composite: xor;
-        mask-composite: exclude;
-        opacity: 0.7;
-        animation: borderGlow 2s linear infinite;
-    }
-
-    @keyframes borderGlow {
-        0%, 100% {
-            opacity: 0.5;
-        }
-        50% {
-            opacity: 1;
-        }
-    }
-`;
-
 const ItemCards = ({ item }: { item: Item }) => {
-    // Add styles to the document head
-    React.useEffect(() => {
-        const styleSheet = document.createElement("style");
-        styleSheet.innerText = glowingStyles;
-        document.head.appendChild(styleSheet);
-        return () => {
-            document.head.removeChild(styleSheet);
-        };
-    }, []);
-
     const [imgLoaded, setImgLoaded] = useState(false);
     const [imgLoadedMobile, setImgLoadedMobile] = useState(false);
     const { isOpen, onOpen, onOpenChange } = useDisclosure();
@@ -129,30 +55,14 @@ const ItemCards = ({ item }: { item: Item }) => {
     }
 
     return (
-        <div className='relative'>
-            <div className='md:flex flex-col justify-between hidden group w-64 lg:w-76 bg-white p-6 rounded-3xl shadow-xs cursor-pointer hover:bg-green-50 transition-color duration-500 border-orange-50 relative' >
-                {/* Most Ordered Tag for Desktop */}
-                {(item.productName.toLowerCase().includes('combo') ||
-                    item.productName.toLowerCase().includes('poori bhaji')) && (
-                        <motion.div
-                            initial={{ scale: 0.9, opacity: 0 }}
-                            animate={{ scale: 1, opacity: 1 }}
-                            className="absolute -top-2 -right-2 z-10"
-                        >
-                            <div className="tag-container bg-gradient-to-r from-orange-600 to-orange-500 text-white text-xs font-medium px-2 py-1 rounded-lg shadow-lg transform rotate-3 whitespace-nowrap">
-                                <span className="glowing-text">Most Ordered</span> ⭐
-                            </div>
-                        </motion.div>
-                    )}
-                <div className="relative mb-5 size-64">
-                    {/* {!imgLoaded && (
-                        <Skeleton className='absolute inset-0  flex items-center justify-center rounded-3xl'>
-                            <p className='comfortaa text-4xl tracking-tighter z-10 font-bold text-zinc-400'>gotreats</p>
-                        </Skeleton>
-                    )} */}
+        <div className='relative '>
+            <div className='md:flex flex-col justify-between hidden group lg:w-77 bg-white p-5 rounded-3xl shadow-xs cursor-pointer hover:bg-green-50 transition-color duration-500 border-orange-50 relative' >
+                
+                <div className="relative mb-5 ">
+                   
                     {!imgLoaded && (
                         <div className="absolute inset-0 bg-gray-200 animate-pulse flex items-center justify-center rounded-3xl" >
-                            <p className='comfortaa text-4xl tracking-tighter font-bold text-zinc-400'>gotreats</p>
+                            <p className='font-bowlby text-4xl tracking-wide font-bold text-zinc-400'>bitebox</p>
                         </div>
                     )}
                     {/* <img
@@ -162,13 +72,13 @@ const ItemCards = ({ item }: { item: Item }) => {
                         onLoad={() => setImgLoaded(true)}
                         className={`size-64 object-cover rounded-3xl group-hover:scale-102 transition-all duration-500 ${imgLoaded ? 'opacity-100' : 'opacity-0'}`}
                     /> */}
-                    <Image src={item.imageUrl} alt=""  loading='lazy' disableSkeleton onLoad={() => setImgLoaded(true)} className={`size-64 object-cover rounded-3xl group-hover:scale-102 group-hover:shadow-lg transition-all duration-500 ${imgLoaded ? 'opacity-100' : 'opacity-0'}`} />
+                    <Image src={item.imageUrl} alt=""  loading='lazy' disableSkeleton onLoad={() => setImgLoaded(true)} className={`w-full h-70 object-cover rounded-3xl group-hover:scale-102 group-hover:shadow-lg transition-all duration-500 ${imgLoaded ? 'opacity-100' : 'opacity-0'}`} />
                 </div>
                 {item.isNonVeg ? nonVeg : veg}
-                <h4 className='lancelot text-2xl lg:text-3xl font-medium'>{item.productName}</h4>
+                <h4 className='font-bowlby uppercase text-xl font-medium'>{item.productName}</h4>
                 <p className='comfortaa text-sm text-green-700 font-bold flex items-center gap-1 mb-2'><Star fill='green' size={13} />{item.rating}</p>
 
-                <p className='text-gray-500 text-sm lg:text:base leading-5 line-clamp-2'>{item.productDescription}</p>
+                <p className='text-gray-500 text-lg lg:text:base leading-5 line-clamp-2 font-mouse'>{item.productDescription}</p>
                 <div className='flex justify-between items-center mt-5'>
                     {
                         user ?
@@ -192,8 +102,8 @@ const ItemCards = ({ item }: { item: Item }) => {
                                 <p className='px-2 text-green-600 text-sm font-semibold'>Login to add</p>
                             </button>
                     }
-                    <div className='inline-flex items-center gap-2'>
-                        <p className='comfortaa text-lg line-through '> ₹{item.originalPrice} </p>
+                    <div className='inline-flex items-center gap-2 font-bowlby'>
+                        <p className=' text-lg line-through '> ₹{item.originalPrice} </p>
                         <span className='px-[3px] py-[1px] flex items-center text-lg shadow-3xl bg-yellow-500 '>₹{item.offerPrice}</span>
                     </div>
                 </div>
@@ -215,7 +125,7 @@ const ItemCards = ({ item }: { item: Item }) => {
                     )}
                 <div className=' w-3/5'>
                     {item.isNonVeg ? nonVeg : veg}
-                    <h4 className='lancelot text-2xl font-bold mb-2'>{item.productName}</h4>
+                    <h4 className='font-bowlby  text- mb-2'>{item.productName}</h4>
                     <div className='inline-flex items-center gap-2 mb-2'>
                         <p className='comfortaa text-lg line-through '> ₹{item.originalPrice} </p>
                         <span className='px-[3px] py-[1px] flex items-center text-lg shadow-3xl bg-yellow-500 '>₹{item.offerPrice}</span>
@@ -227,7 +137,7 @@ const ItemCards = ({ item }: { item: Item }) => {
                     <div className="relative size-30 mb-3" onClick={onOpen}>
                         {!imgLoadedMobile && (
                             <div className="absolute inset-0 bg-gray-200 animate-pulse flex items-center justify-center rounded-3xl" >
-                                <p className='comfortaa text-2xl tracking-tighter font-bold text-zinc-400'>gotreats</p>
+                                <p className='comfortaa text-2xl tracking-wider font-bold text-zinc-400'>Bitebox</p>
                             </div>
                         )}
                         <img

@@ -3,12 +3,12 @@ import { cva } from 'class-variance-authority'
 import { Spinner } from '@heroui/react';
 
 const classes = cva(
-  'px-5 py-2 rounded-full flex items-center justify-center gap-2 transition-colors  ',
+  'px-7 py-3 rounded-lg flex items-center justify-center uppercase gap-2 transition-all font-mouse font-bold text-xl tracking-[1.5px] focus:outline-none focus:ring-2 focus:ring-orange-500 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed',
   {
     variants: {
       variant: {
         primary: "bg-orange-600 text-white hover:bg-orange-500",
-        secondary: "bg-gray-200 text-gray-700 hover:bg-gray-300",
+        secondary: "bg-yellow-300 text-orange-900 hover:bg-yellow-200",
         danger: "bg-red-600 text-white hover:bg-red-500",
         success: "bg-green-600 text-white hover:bg-green-500"
       },
