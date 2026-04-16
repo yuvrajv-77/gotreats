@@ -18,13 +18,7 @@ const Orders = lazy(() => import("./pages/Orders"));
 const AdminLayout = lazy(() => import("./pages/admin/AdminLayout"));
 const ManageProducts = lazy(() => import("./pages/admin/ManageProducts"));
 const ManageOrders = lazy(() => import("./pages/admin/ManageOrders"));
-const TermsConditions = lazy(() => import("./pages/TermsConditions"));
-const Concept = lazy(() => import("./pages/ConceptPage"));
-const About = lazy(() => import("./pages/About"));
 const ManageReview = lazy(() => import("./pages/admin/ManageReview"));
-const Customers = lazy(() => import("./pages/Customers"));
-const PrivacyPolicy = lazy(() => import("./pages/PrivacyPolicy"));
-const RefundPolicy = lazy(() => import("./pages/RefundPolicy"));
 const ManageVouchers = lazy(() => import("./pages/admin/ManageVouchers"));
 const ViewCustomers = lazy(() => import("./pages/admin/ViewCustomers"));
 const Payments = lazy(() => import("./pages/admin/Payments"));
@@ -44,26 +38,9 @@ export const router = createBrowserRouter([
         index: true,
         element: <Home />
       },
-      {
-        path: "/concept",
-        element: <Concept />
-      },
-      {
-        path: "/privacy-policy",
-        element: <PrivacyPolicy />
-      },
-      {
-        path: "/refund-policy",
-        element: <RefundPolicy />
-      },
-      {
-        path: "/about",
-        element: <About />
-      },
-      {
-        path: "/customers",
-        element: <Customers />
-      },
+     
+     
+     
       {
         path: "/shop",
         element: <Shop />
@@ -72,10 +49,7 @@ export const router = createBrowserRouter([
         path: "/contact",
         element: <Contact />
       },
-      {
-        path: "/terms-and-conditions",
-        element: <TermsConditions />
-      },
+     
       {
         element: <ProtectedRoute />,
         children: [

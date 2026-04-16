@@ -91,62 +91,74 @@ const VoucherModal = (
 
     return (
         <Modal isOpen={isOpen} placement="center" onOpenChange={onOpenChange} size='lg' scrollBehavior='inside' backdrop='blur'>
-            <ModalContent>
+            <ModalContent className="bg-[var(--brand-charcoal)] border border-[var(--brand-border)]">
                 {(onClose) => (
                     <>
-                        <ModalHeader className="flex items-center lancelot text-2xl gap-3"> <TicketPercent size={25} strokeWidth={1.6} />Apply Voucher</ModalHeader>
-                        <ModalBody>
-                            <p className="text-sm">Enter Voucher Code</p>
-                            <Input
-                                // label="Voucher Code"
-                                labelPlacement="outside"
-                                placeholder="EXAMPLEX20"
-                                variant="bordered" size="lg"
-                                required radius="full"
-                                autoFocus autoCapitalize="on"
-                                type="text" value={code} onChange={(e) => setCode(e.target.value.toLocaleUpperCase())}
-                                className="font-bold relative "
-                                startContent={<TicketPercent size={20} strokeWidth={1.6} />}
-                                endContent={<button className=" absolute right-0.5 rounded-full px-4 text-white  py-2 bg-orange-600 hover:bg-orange-700"
+                        <ModalHeader className="flex items-center font-heading text-[var(--brand-cream)] text-xl gap-2 pt-6">
+                            <TicketPercent size={20} className="text-[var(--brand-flame)]" /> Apply Voucher
+                        </ModalHeader>
+                        <ModalBody className="pb-6">
+                            <p className="font-mono text-xs text-[var(--brand-cream)]/40 uppercase tracking-widest mb-1 mt-2">Enter Code</p>
+                            <div className="relative flex items-center bg-[var(--brand-dark)] border border-[var(--brand-border)] rounded-xl overflow-hidden focus-within:border-[var(--brand-flame)]/50 transition-colors">
+                                <div className="pl-4 text-[var(--brand-flame)]">
+                                    <TicketPercent size={18} />
+                                </div>
+                                <input
+                                    type="text"
+                                    autoFocus
+                                    placeholder="EXAMPLEX20"
+                                    value={code}
+                                    onChange={(e) => setCode(e.target.value.toLocaleUpperCase())}
+                                    className="flex-1 bg-transparent px-3 py-3.5 text-sm text-[var(--brand-cream)] placeholder-[var(--brand-cream)]/20 focus:outline-none font-mono uppercase font-bold tracking-widest"
+                                />
+                                <button
                                     onClick={handleCheckVoucher}
                                     disabled={loading}
-                                    style={{ opacity: loading ? 0.5 : 1 }}
-                                >Check</button>}
-                            />
-
+                                    className="h-full px-5 bg-[var(--brand-flame)] text-white font-mono text-xs font-bold tracking-widest hover:bg-[#C94808] transition-colors disabled:opacity-50"
+                                >
+                                    {loading ? '...' : 'APPLY'}
+                                </button>
+                            </div>
 
                             <div>
-                                {error && <p className="text-red-500 mt-2 text-center">{error}</p>}
+                                {error && <p className="text-red-400 mt-3 text-xs font-mono text-center">{error}</p>}
                                 {
                                     voucher && (
                                         <>
-                                            {!error && <p className="mt-2 text-center text-green-600">You are eligible for this voucher</p>}
+                                            {!error && <p className="mt-3 text-center text-emerald-400 font-mono text-xs">You are eligible for this voucher</p>}
 
-                                            <div className="border-dashed border-2 border-orange-300 hover:border-green-500 rounded-xl p-4 mt-4 gap-y-2 flex flex-col ">
-                                                <span className="px-4 py-1 self-center rounded-lg border items-center inline-flex gap-2  font-semibold bg-green-100 text-green-800 border-green-400 ">
-                                                    {voucher.discountType === 'percentage' ? <BadgePercent size={20} strokeWidth={1.8} /> : <BadgeIndianRupee size={22} strokeWidth={1.8} />}
-                                                    {voucher.code}
-                                                </span>
-                                                <p className="font-semibold text-center text-gray-800 text-lg"> {voucher.name}</p>
-                                                <p className="text-sm text-gray-600">{`Use code "${voucher.code}" & get ${voucher.discountType === 'percentage' ? `${voucher.discountValue}%` : `₹${voucher.discountValue}`}  off on orders above ₹${voucher.minOrderValue}. `}</p>
-                                                <p className="text-sm text-gray-800">Terms & Conditions</p>
-                                                <ul className="list-disc list-inside text-xs text-gray-700">
-                                                    {voucher.singleUsePerCustomer && <li>Offer is valid for one time use only.</li>}
-                                                    <li>
-                                                        Offer valid till {
-                                                            (() => {
-                                                                let expiry = voucher.expiryDate;
-                                                                if (!expiry) return "N/A";
-                                                                if (typeof (expiry as any).toDate === "function") {
-                                                                    expiry = (expiry as any).toDate();
-                                                                } else {
-                                                                    expiry = new Date(expiry as any);
-                                                                }
-                                                                return expiry.toLocaleDateString('en-GB');
-                                                            })()
-                                                        }
-                                                    </li>
-                                                </ul>
+                                            <div className="border border-dashed border-[var(--brand-flame)]/30 rounded-xl p-5 mt-4 gap-y-3 flex flex-col bg-[var(--brand-flame)]/5">
+                                                <div className="flex justify-center">
+                                                    <span className="px-3 py-1.5 rounded-lg border items-center inline-flex gap-2 font-mono text-sm font-bold bg-emerald-500/10 text-emerald-400 border-emerald-500/20">
+                                                        {voucher.discountType === 'percentage' ? <BadgePercent size={16} /> : <BadgeIndianRupee size={16} />}
+                                                        {voucher.code}
+                                                    </span>
+                                                </div>
+                                                <p className="font-heading text-center text-[var(--brand-cream)] text-lg"> {voucher.name}</p>
+                                                <p className="text-sm font-body text-[var(--brand-cream)]/60 text-center leading-relaxed">
+                                                    {`Use code "${voucher.code}" & get ${voucher.discountType === 'percentage' ? `${voucher.discountValue}%` : `₹${voucher.discountValue}`} off on orders above ₹${voucher.minOrderValue}. `}
+                                                </p>
+                                                
+                                                <div className="mt-2 border-t border-[var(--brand-flame)]/10 pt-3">
+                                                    <p className="font-mono text-[10px] text-[var(--brand-cream)]/40 uppercase tracking-widest mb-2">Terms & Conditions</p>
+                                                    <ul className="list-disc list-inside text-xs font-body text-[var(--brand-cream)]/50 space-y-1">
+                                                        {voucher.singleUsePerCustomer && <li>Offer is valid for one time use only.</li>}
+                                                        <li>
+                                                            Offer valid till {
+                                                                (() => {
+                                                                    let expiry = voucher.expiryDate;
+                                                                    if (!expiry) return "N/A";
+                                                                    if (typeof (expiry as any).toDate === "function") {
+                                                                        expiry = (expiry as any).toDate();
+                                                                    } else {
+                                                                        expiry = new Date(expiry as any);
+                                                                    }
+                                                                    return expiry.toLocaleDateString('en-GB');
+                                                                })()
+                                                            }
+                                                        </li>
+                                                    </ul>
+                                                </div>
                                                 {
                                                     !error && (
 
@@ -155,9 +167,8 @@ const VoucherModal = (
                                                             onClose();
                                                             onOpenVoucherAppliedModal();
                                                         }} 
-                                                        className="w-full comfortaa font-bold  hover:shadow-lg transition-all duration-300 ease-in-out">
-                                                            <TicketPercent size={25} strokeWidth={1.6} />Apply
-                                                            <TicketPercent size={25} strokeWidth={1.6} />
+                                                        className="w-full mt-2">
+                                                            Select Voucher
                                                         </Button>
                                                     )
                                                 }
@@ -167,12 +178,6 @@ const VoucherModal = (
                                 }
                             </div>
                         </ModalBody>
-                        <ModalFooter>
-                            <Button color="danger" variant="secondary" className="w-full " onClick={onClose}>
-                                Close
-                            </Button>
-
-                        </ModalFooter>
                     </>
                 )}
             </ModalContent>

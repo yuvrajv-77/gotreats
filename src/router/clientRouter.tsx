@@ -11,8 +11,7 @@ const Checkout = lazy(() => import("../pages/Checkout"));
 const Register = lazy(() => import("../pages/Register"));
 const Profile = lazy(() => import("../pages/Profile"));
 const Orders = lazy(() => import("../pages/Orders"));
-const TermsConditions = lazy(() => import("../pages/TermsConditions"));
-const Customers = lazy(() => import("../pages/Customers"));
+
 
 
 
@@ -30,10 +29,7 @@ export const client_router = createBrowserRouter([
         element: <Home />
       },
       
-      {
-        path: "/customers",
-        element: <Customers />
-      },
+    
       {
         path: "/shop",
         element: <Shop />
@@ -42,10 +38,7 @@ export const client_router = createBrowserRouter([
         path: "/contact",
         element: <Contact />
       },
-      {
-        path: "/terms-and-conditions",
-        element: <TermsConditions />
-      },
+     
       {
         element: <ProtectedRoute />,
         children: [

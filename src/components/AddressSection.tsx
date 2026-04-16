@@ -67,14 +67,18 @@ const AddressSection: React.FC<AddressSectionProps> = ({ uid }) => {
             setLoading(false);
         }
     };
+    
+    // Custom input classes for reuse
+    const inputClass = "w-full bg-[var(--brand-dark)] border border-[var(--brand-border)] rounded-xl px-4 py-3 text-sm text-[var(--brand-cream)] placeholder-[var(--brand-cream)]/20 focus:outline-none focus:border-[var(--brand-flame)]/50 font-body transition-colors";
+    const labelClass = "font-mono text-xs text-[var(--brand-cream)]/40 uppercase tracking-widest block mb-2";
 
     return (
         <div className="">
-            <div className="flex justify-between items-center mb-3">
-                <h2 className="text-sm text-orange-500 font-semibold">Delivery Address</h2>
+            <div className="flex justify-between items-center mb-4">
+                <h2 className="text-sm text-[var(--brand-cream)]/50 font-mono tracking-widest uppercase">Delivery Address</h2>
                 <button
                     onClick={() => setIsEditing(true)}
-                    className=" text-sm text-orange-500 hover:text-orange-600 underline transition-colors font-medium"
+                    className="text-xs text-[var(--brand-flame)] hover:text-[#C94808] transition-colors font-mono uppercase tracking-widest"
                 >
                     Edit Address
                 </button>
@@ -82,7 +86,7 @@ const AddressSection: React.FC<AddressSectionProps> = ({ uid }) => {
             {isEditing ? (
                 <div className="space-y-4">
                     <div>
-                        <label className="block text-sm font-medium text-gray-700 mb-1">
+                        <label className={labelClass}>
                             Flat/House Number*
                         </label>
                         <input
@@ -91,14 +95,14 @@ const AddressSection: React.FC<AddressSectionProps> = ({ uid }) => {
                             onChange={(e) =>
                                 setAddress((prev) => ({ ...prev, flatNumber: e.target.value }))
                             }
-                            className="w-full p-2 border border-gray-300 rounded-xl focus:ring-2 focus:ring-green-500 focus:border-transparent"
+                            className={inputClass}
                             placeholder="e.g., Flat 123, Shop 45"
                             required
                         />
                     </div>
 
                     <div>
-                        <label className="block text-sm font-medium text-gray-700 mb-1">
+                        <label className={labelClass}>
                             Building/Society Name*
                         </label>
                         <input
@@ -107,14 +111,14 @@ const AddressSection: React.FC<AddressSectionProps> = ({ uid }) => {
                             onChange={(e) =>
                                 setAddress((prev) => ({ ...prev, buildingName: e.target.value }))
                             }
-                            className="w-full p-2 border border-gray-300 rounded-xl focus:ring-2 focus:ring-green-500 focus:border-transparent"
+                            className={inputClass}
                             placeholder="e.g., Sunshine Apartments"
                             required
                         />
                     </div>
 
                     <div>
-                        <label className="block text-sm font-medium text-gray-700 mb-1">
+                        <label className={labelClass}>
                             Street Address*
                         </label>
                         <input
@@ -123,14 +127,14 @@ const AddressSection: React.FC<AddressSectionProps> = ({ uid }) => {
                             onChange={(e) =>
                                 setAddress((prev) => ({ ...prev, streetAddress: e.target.value }))
                             }
-                            className="w-full p-2 border border-gray-300 rounded-xl focus:ring-2 focus:ring-green-500 focus:border-transparent"
+                            className={inputClass}
                             placeholder="e.g., MG Road, 4th Cross"
                             required
                         />
                     </div>
 
                     <div>
-                        <label className="block text-sm font-medium text-gray-700 mb-1">
+                        <label className={labelClass}>
                             Landmark
                         </label>
                         <input
@@ -139,13 +143,13 @@ const AddressSection: React.FC<AddressSectionProps> = ({ uid }) => {
                             onChange={(e) =>
                                 setAddress((prev) => ({ ...prev, landmark: e.target.value }))
                             }
-                            className="w-full p-2 border border-gray-300 rounded-xl focus:ring-2 focus:ring-green-500 focus:border-transparent"
+                            className={inputClass}
                             placeholder="e.g., Near Post Office"
                         />
                     </div>
 
                     <div>
-                        <label className="block text-sm font-medium text-gray-700 mb-1">
+                        <label className={labelClass}>
                             Area*
                         </label>
                         <input
@@ -154,14 +158,14 @@ const AddressSection: React.FC<AddressSectionProps> = ({ uid }) => {
                             onChange={(e) =>
                                 setAddress((prev) => ({ ...prev, area: e.target.value }))
                             }
-                            className="w-full p-2 border border-gray-300 rounded-xl focus:ring-2 focus:ring-green-500 focus:border-transparent"
+                            className={inputClass}
                             placeholder="e.g., Borivali West"
                             required
                         />
                     </div>
 
                     <div>
-                        <label className="block text-sm font-medium text-gray-700 mb-1">
+                        <label className={labelClass}>
                             Pincode*
                         </label>
                         <input
@@ -173,14 +177,14 @@ const AddressSection: React.FC<AddressSectionProps> = ({ uid }) => {
                                     pincode: e.target.value.replace(/\D/g, ""),
                                 }))
                             }
-                            className="w-full p-2 border border-gray-300 rounded-xl focus:ring-2 focus:ring-green-500 focus:border-transparent"
+                            className={inputClass}
                             placeholder="e.g., 400092"
                             maxLength={6}
                             required
                         />
                     </div>
 
-                    <div className="flex justify-end gap-3 mt-4">
+                    <div className="flex justify-end gap-3 mt-6">
                         <Button
                             onClick={() => {
                                 setIsEditing(false);
@@ -193,7 +197,7 @@ const AddressSection: React.FC<AddressSectionProps> = ({ uid }) => {
                         <Button
                             onClick={handleSaveAddress}
                             disabled={loading}
-                            variant="success"
+                            variant="primary"
                         >
                             {loading ? "Saving..." : "Save Address"}
                         </Button>
@@ -202,16 +206,17 @@ const AddressSection: React.FC<AddressSectionProps> = ({ uid }) => {
             ) : (
                 <div>
                     {address.flatNumber ? (
-                        <div className=" flex gap-3 ">
-                            <Home size={24}/>
-                            <p className="text-gray-800 text-sm  whitespace-pre-wrap">
-                                {`${address.flatNumber}, ${address.buildingName}, ${address.streetAddress}, ${address.landmark ? address.landmark + ", " : ""
-                                    }${address.area}, ${address.pincode}`}
+                        <div className="flex gap-4 p-4 rounded-xl border border-[var(--brand-border)] bg-[var(--brand-dark)]">
+                            <div className="mt-1 shrink-0">
+                                <Home size={18} className="text-[var(--brand-flame)]" />
+                            </div>
+                            <p className="text-[var(--brand-cream)]/70 text-sm font-body leading-relaxed whitespace-pre-wrap">
+                                {`${address.flatNumber}, ${address.buildingName}, ${address.streetAddress}, ${address.landmark ? address.landmark + ", " : ""}${address.area}, ${address.pincode}`}
                             </p>
                         </div>
                     ) : (
-                        <div>
-                            <p className="text-gray-600">No address found. Please add your address.</p>
+                        <div className="p-5 border border-dashed border-[var(--brand-border)] rounded-xl flex flex-col items-center gap-3">
+                            <p className="text-[var(--brand-cream)]/40 text-sm font-mono">No address found. Please add your delivery address.</p>
                             <Button
                                 onClick={() => setIsEditing(true)}
                                 variant="primary" size="sm"

@@ -1,270 +1,251 @@
-import { BadgePercent, ChevronRight,  Drumstick, Salad, Search } from 'lucide-react';
+import { BadgePercent, ChevronRight, Drumstick, Salad, Search, X } from 'lucide-react';
 import { useEffect, useState } from 'react';
 import ItemCards from '../components/ItemCards';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import { useProductStore } from '../store/productStore';
 import { useCartStore } from '../store/cartStore';
-import { motion, AnimatePresence, Variants } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
+
+const CATEGORIES = [
+    { tag: 'top-picks', label: 'Top Picks', icon: '🔥' },
+    { tag: 'meals', label: 'Meals', icon: '🍱' },
+    { tag: 'paav-bhaaji', label: 'Pav Bhaji', icon: '🧈' },
+    { tag: 'pasta', label: 'Pasta', icon: '🍝' },
+    { tag: 'maggi', label: 'Maggi', icon: '🍜' },
+    { tag: 'desserts', label: 'Desserts', icon: '🍮' },
+    { tag: 'snacks', label: 'Snacks', icon: '🥨' },
+    { tag: 'drinks', label: 'Drinks', icon: '🧃' },
+    { tag: 'pickles', label: 'Pickles', icon: '🫙' },
+];
 
 const Shop = () => {
     const navigate = useNavigate();
     const [searchParams, setSearchParams] = useSearchParams();
     const tag = searchParams.get('tag');
-    const [foodType, setFoodType] = useState('all'); // 'all', 'veg', 'non-veg'
+    const [foodType, setFoodType] = useState('all');
     const [searchQuery, setSearchQuery] = useState('');
-
     const products = useProductStore((state) => state.products);
-    const items = useCartStore((state) => state.items);
     const itemQuantity = useCartStore((state) => state.itemCount);
 
-
     useEffect(() => {
-        if (!tag) {
-            navigate('/shop/?tag=top-picks');
-        }
+        if (!tag) navigate('/shop/?tag=top-picks');
         window.scrollTo(0, 0);
     }, []);
 
-    const toggleFoodType = (type) => {
-        if (foodType === type) {
-            setFoodType('all'); // Toggle off if already selected
-        } else {
-            setFoodType(type); // Set to the selected type
-        }
+    const toggleFoodType = (type: string) => {
+        setFoodType(prev => prev === type ? 'all' : type);
     };
 
-    // Updated getFilteredProducts to include search functionality
     const getFilteredProducts = () => {
-        let filteredProducts = products;
+        let filtered = products;
+        if (foodType === 'veg') filtered = products?.filter(i => !i.isNonVeg);
+        else if (foodType === 'non-veg') filtered = products?.filter(i => i.isNonVeg);
 
-        // First filter by food type
-        if (foodType === 'veg') {
-            filteredProducts = products?.filter(item => !item.isNonVeg);
-        } else if (foodType === 'non-veg') {
-            filteredProducts = products?.filter(item => item.isNonVeg);
-        }
-
-        // Then filter by search query
         if (searchQuery.trim()) {
-            const query = searchQuery.toLowerCase().trim();
-            filteredProducts = filteredProducts?.filter(item =>
-                item.productName.toLowerCase().includes(query) ||
-                item.category.toLowerCase().includes(query) ||
-                item.productDescription.toLowerCase().includes(query)
+            const q = searchQuery.toLowerCase();
+            return filtered?.filter(i =>
+                i.productName.toLowerCase().includes(q) ||
+                i.category.toLowerCase().includes(q) ||
+                i.productDescription.toLowerCase().includes(q)
             );
         }
 
-        // Then filter by tag if no search query
-        else if (tag === 'top-picks') {
-            return filteredProducts;
-        } else if (tag === 'meals') {
-            return filteredProducts?.filter(item => item.category === 'Meals');
-        } else if (tag === 'pasta') {
-            return filteredProducts?.filter(item => item.category === 'Pasta');
-        } else if (tag === 'maggi') {
-            return filteredProducts?.filter(item => item.category === 'Maggi');
-        } else if (tag === 'paav-bhaaji') {
-            return filteredProducts?.filter(item => item.category === 'Paav Bhaaji');
-        } else if (tag === 'desserts') {
-            return filteredProducts?.filter(item => item.category === 'Desserts');
-        } else if (tag === 'snacks') {
-            return filteredProducts?.filter(item => item.category === 'Snacks');
-        } else if (tag === 'drinks') {
-            return filteredProducts?.filter(item => item.category === 'Drinks');
-        } else if (tag === 'pickles') {
-            return filteredProducts?.filter(item => item.category === 'Pickles');
-        }
-        return filteredProducts;
+        if (tag === 'top-picks') return filtered;
+        return filtered?.filter(i => {
+            const catMap: Record<string, string> = {
+                meals: 'Meals', pasta: 'Pasta', maggi: 'Maggi',
+                'paav-bhaaji': 'Paav Bhaaji', desserts: 'Desserts',
+                snacks: 'Snacks', drinks: 'Drinks', pickles: 'Pickles'
+            };
+            return catMap[tag!] ? i.category === catMap[tag!] : true;
+        });
     };
 
-    // Heading text animation variants
-    const headingVariants: Variants = {
-        initial: {
-            opacity: 0,
-            y: 30
-        },
-        animate: {
-            opacity: 1,
-            y: 0,
-            transition: {
-                duration: 0.8,
-                ease: "easeOut"
-            }
-        }
-    };
-
+    const currentCat = CATEGORIES.find(c => c.tag === tag);
 
     return (
-        <div className='bg-gradient-to-b from-amber-50/50 to-amber-100 flex'>
-            <div className='container mx-auto md:px-20 px-2'>
-                <div className='md:py-10'>
-                    <motion.div
-                        className="text-center my-16"
-                        initial="initial"
-                        animate="animate"
-                        variants={headingVariants}
-                    >
-                        <h1 className='text-4xl md:text-5xl lg:text-6xl font-bowlby uppercase '>
-                            Enjoy the{" "}
-                            <span className="inline-block text-orange-500"> Delicious</span> Bites
-                        </h1>
-                        
-                    </motion.div>
+        <div className="min-h-screen bg-[var(--brand-dark)] flex">
+            {/* ── Sidebar (desktop) ── */}
+            <aside className="hidden lg:flex flex-col w-56 shrink-0 border-r border-[var(--brand-border)] sticky top-16 h-[calc(100vh-64px)] pt-8 pb-6 px-4">
+                <p className="font-mono text-[10px] text-[var(--brand-cream)]/30 uppercase tracking-widest mb-4 px-2">Categories</p>
+                <nav className="flex flex-col gap-1">
+                    {CATEGORIES.map(({ tag: t, label, icon }) => (
+                        <button
+                            key={t}
+                            onClick={() => navigate(`/shop/?tag=${t}`)}
+                            className={`flex items-center gap-3 px-3 py-2.5 rounded-xl text-left transition-all ${tag === t
+                                    ? 'bg-[var(--brand-flame)]/15 text-[var(--brand-flame)] border border-[var(--brand-flame)]/25'
+                                    : 'text-[var(--brand-cream)]/50 hover:text-[var(--brand-cream)] hover:bg-white/4'
+                                }`}
+                        >
+                            <span className="text-base">{icon}</span>
+                            <span className="font-heading text-sm">{label}</span>
+                        </button>
+                    ))}
+                </nav>
 
-                    {/* Search Bar */}
-                    <div className="flex justify-center mb-6 px-4">
-                        <div className="relative w-full max-w-md">
+                <div className="mt-auto pt-6 border-t border-[var(--brand-border)]">
+                    <p className="font-mono text-[10px] text-[var(--brand-cream)]/30 uppercase tracking-widest mb-3 px-2">Diet</p>
+                    <div className="flex flex-col gap-1">
+                        <button
+                            onClick={() => toggleFoodType('veg')}
+                            className={`flex items-center gap-2 px-3 py-2 rounded-xl text-sm font-heading transition-colors ${foodType === 'veg' ? 'bg-green-500/15 text-green-400 border border-green-500/25' : 'text-[var(--brand-cream)]/50 hover:bg-white/4'}`}
+                        >
+                            <Salad size={14} /> Veg Only
+                        </button>
+                        <button
+                            onClick={() => toggleFoodType('non-veg')}
+                            className={`flex items-center gap-2 px-3 py-2 rounded-xl text-sm font-heading transition-colors ${foodType === 'non-veg' ? 'bg-red-500/15 text-red-400 border border-red-500/25' : 'text-[var(--brand-cream)]/50 hover:bg-white/4'}`}
+                        >
+                            <Drumstick size={14} /> Non-Veg
+                        </button>
+                    </div>
+                </div>
+            </aside>
+
+            {/* ── Main ── */}
+            <div className="flex-1 min-w-0">
+                {/* Top bar */}
+                <div className="sticky top-16 z-30 bg-[var(--brand-dark)]/95 backdrop-blur border-b border-[var(--brand-border)] px-4 md:px-8 py-4">
+                    <div className="flex items-center gap-4">
+                        {/* Search */}
+                        <div className="relative flex-1 max-w-sm">
+                            <Search size={15} className="absolute left-3 top-1/2 -translate-y-1/2 text-[var(--brand-cream)]/30" />
                             <input
                                 type="text"
                                 value={searchQuery}
                                 onChange={(e) => setSearchQuery(e.target.value)}
-                                placeholder="Search for meals, combos, or dishes..."
-                                className="w-full px-4 py-3 pl-12 pr-10 text-gray-700 bg-white border-2 border-orange-100 rounded-full focus:outline-none focus:border-orange-500 transition-colors duration-300"
+                                placeholder="Search dishes..."
+                                className="w-full pl-9 pr-8 py-2 bg-[var(--brand-charcoal)] border border-[var(--brand-border)] rounded-xl text-sm text-[var(--brand-cream)] placeholder-[var(--brand-cream)]/30 focus:outline-none focus:border-[var(--brand-flame)]/50 font-body transition-colors"
                             />
-                            <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 text-orange-400" size={20} />
                             {searchQuery && (
-                                <button
-                                    onClick={() => setSearchQuery('')}
-                                    className="absolute right-4 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-600 text-xl font-medium"
-                                >
-                                    ×
+                                <button onClick={() => setSearchQuery('')} className="absolute right-2.5 top-1/2 -translate-y-1/2 text-[var(--brand-cream)]/30 hover:text-[var(--brand-cream)]">
+                                    <X size={13} />
                                 </button>
                             )}
                         </div>
-                    </div>
 
-                    <div className=' justify-center flex items-center flex-wrap gap-2 lg:gap-10 mt-5 select-none'>
-                        <div className='flex gap-2'>
-                            <span
-                                className={`whitespace-nowrap cursor-pointer px-4 py-2 rounded-full ${foodType === 'veg' ? 'bg-green-600 text-white hover:text-white' : 'bg-white'}  hover:text-green-600 text-green-700 inline-flex items-center shadow-xs gap-2 transition-colors duration-100 ease-in`}
-                                onClick={() => toggleFoodType('veg')}>
-                                <Salad strokeWidth={1.5} />Veg
-                            </span>
-                            <span
-                                className={`whitespace-nowrap cursor-pointer px-4 py-2 rounded-full ${foodType === 'non-veg' ? 'bg-orange-800 text-white hover:text-white' : 'bg-white'}  hover:text-orange-700 text-orange-900 inline-flex items-center shadow-xs gap-2 transition-colors duration-100 ease-in`}
-                                onClick={() => toggleFoodType('non-veg')}>
-                                <Drumstick strokeWidth={1.5} />Non-Veg
-                            </span>
+                        {/* Mobile category pills */}
+                        <div className="flex lg:hidden gap-2 overflow-x-auto hide-scrollbar">
+                            {CATEGORIES.map(({ tag: t, label }) => (
+                                <button
+                                    key={t}
+                                    onClick={() => navigate(`/shop/?tag=${t}`)}
+                                    className={`shrink-0 px-3 py-1.5 rounded-full text-xs font-heading transition-colors ${tag === t ? 'bg-[var(--brand-flame)] text-white' : 'border border-[var(--brand-border)] text-[var(--brand-cream)]/60 hover:border-[var(--brand-flame)]/30'}`}
+                                >
+                                    {label}
+                                </button>
+                            ))}
                         </div>
-                    </div>
-                    <div className={` flex justify-center mx-4 mt-5 ${searchQuery ? 'opacity-50 pointer-events-none' : ''}`}>
 
-
-                        <div className=' flex items-center overflow-x-auto scrollbar-hide py-2 mx-auto font-mouse tracking-wider text-lg font-bold gap-2 lg:gap-5 select-none'>
-                            {/* -------Categories------- */}
-                            <span
-                                className={`whitespace-nowrap cursor-pointer px-4 py-2 rounded-lg ${tag == 'top-picks' ? 'bg-orange-600 text-white hover:text-white' : 'bg-white'}  hover:text-orange-600 inline-flex items-center shadow-xs transition-colors duration-100 ease-in gap-2`}
-                                onClick={() => navigate('/shop/?tag=top-picks')}>
-                                <BadgePercent strokeWidth={1.5} />Top Picks
-                            </span>
-
-                            {/* Only show relevant categories based on food type */}
-                            {(foodType === 'all' || foodType === 'veg') && (
-                                <>
-                                    <span
-                                        className={`whitespace-nowrap cursor-pointer px-4 py-2 rounded-lg ${tag == 'meals' ? 'bg-orange-600 text-white hover:text-white' : 'bg-white'}  hover:text-orange-600 inline-flex items-center shadow-xs gap-2 transition-colors duration-100 ease-in`}
-                                        onClick={() => navigate('/shop/?tag=meals')}>
-                                        {/* <Utensils strokeWidth={1.5} />  */}
-                                        Meals
-                                    </span>
-                                    <span
-                                        className={`whitespace-nowrap cursor-pointer px-4 py-2 rounded-lg ${tag == 'paav-bhaaji' ? 'bg-orange-600 text-white hover:text-white' : 'bg-white'}  hover:text-orange-600 inline-flex items-center shadow-xs gap-2 transition-colors duration-100 ease-in`}
-                                        onClick={() => navigate('/shop/?tag=paav-bhaaji')}>
-                                        Pav Bhaji
-                                    </span>
-                                    <span
-                                        className={`whitespace-nowrap cursor-pointer px-4 py-2 rounded-lg ${tag == 'pasta' ? 'bg-orange-600 text-white hover:text-white' : 'bg-white'}  hover:text-orange-600 inline-flex items-center shadow-xs gap-2 transition-colors duration-100 ease-in`}
-                                        onClick={() => navigate('/shop/?tag=pasta')}>
-                                        Pasta
-                                    </span>
-                                    <span
-                                        className={`whitespace-nowrap cursor-pointer px-4 py-2 rounded-lg ${tag == 'maggi' ? 'bg-orange-600 text-white hover:text-white' : 'bg-white'}  hover:text-orange-600 inline-flex items-center shadow-xs gap-2 transition-colors duration-100 ease-in`}
-                                        onClick={() => navigate('/shop/?tag=maggi')}>
-                                        {/* <Soup strokeWidth={1.5} /> */}
-                                        Maggi
-                                    </span>
-                                    <span
-                                        className={`whitespace-nowrap cursor-pointer px-4 py-2 rounded-lg ${tag == 'desserts' ? 'bg-orange-600 text-white hover:text-white' : 'bg-white'}  hover:text-orange-600 inline-flex items-center shadow-xs gap-2 transition-colors duration-100 ease-in`}
-                                        onClick={() => navigate('/shop/?tag=desserts')}>
-                                        {/* <Dessert strokeWidth={1.5} /> */}
-                                        Desserts
-                                    </span>
-                                    <span
-                                        className={`whitespace-nowrap cursor-pointer px-4 py-2 rounded-lg ${tag == 'snacks' ? 'bg-orange-600 text-white hover:text-white' : 'bg-white'}  hover:text-orange-600 inline-flex items-center shadow-xs gap-2 transition-colors duration-100 ease-in`}
-                                        onClick={() => navigate('/shop/?tag=snacks')}>
-                                        {/* <Cookie strokeWidth={1.5} /> */}
-                                        Snacks
-                                    </span>
-                                    <span
-                                        className={`whitespace-nowrap cursor-pointer px-4 py-2 rounded-lg ${tag == 'drinks' ? 'bg-orange-600 text-white hover:text-white' : 'bg-white'}  hover:text-orange-600 inline-flex items-center shadow-xs gap-2 transition-colors duration-100 ease-in`}
-                                        onClick={() => navigate('/shop/?tag=drinks')}>
-                                        {/* <Beer strokeWidth={1.5} /> */}
-                                        Drinks & Juices
-                                    </span>
-                                    <span
-                                        className={`whitespace-nowrap cursor-pointer px-4 py-2 rounded-lg ${tag == 'pickles' ? 'bg-orange-600 text-white hover:text-white' : 'bg-white'}  hover:text-orange-600 inline-flex items-center shadow-xs gap-2 transition-colors duration-100 ease-in`}
-                                        onClick={() => navigate('/shop/?tag=pickles')}>
-                                        Pickles
-                                    </span>
-                                </>
-                            )}
-
-                            {(foodType === 'non-veg') && (
-                                <>
-                                    <span
-                                        className={`whitespace-nowrap cursor-pointer px-4 py-2 rounded-lg ${tag == 'meals' ? 'bg-orange-600 text-white hover:text-white' : 'bg-white'}  hover:text-orange-600 inline-flex items-center shadow-xs gap-2 transition-colors duration-100 ease-in`}
-                                        onClick={() => navigate('/shop/?tag=meals')}>
-                                        {/* <Utensils strokeWidth={1.5} />  */}
-                                        Meals
-                                    </span>
-                                </>
-                            )}
-                        </div>
-                    </div>
-
-                    {/* No Results Message */}
-                    {getFilteredProducts()?.length === 0 && (
-                        <div className="text-center mt-10">
-                            <p className="text-gray-600 text-lg">No items found matching "{searchQuery}"</p>
+                        {/* Mobile diet filter */}
+                        <div className="hidden md:flex lg:hidden gap-2">
                             <button
-                                onClick={() => setSearchQuery('')}
-                                className="mt-4 text-orange-500 hover:text-orange-600 underline"
+                                onClick={() => toggleFoodType('veg')}
+                                className={`px-3 py-1.5 rounded-full text-xs font-heading transition-colors ${foodType === 'veg' ? 'bg-green-500/20 text-green-400 border border-green-500/30' : 'border border-[var(--brand-border)] text-[var(--brand-cream)]/50'}`}
                             >
-                                Clear search
+                                <Salad size={12} />
                             </button>
+                            <button
+                                onClick={() => toggleFoodType('non-veg')}
+                                className={`px-3 py-1.5 rounded-full text-xs font-heading transition-colors ${foodType === 'non-veg' ? 'bg-red-500/20 text-red-400 border border-red-500/30' : 'border border-[var(--brand-border)] text-[var(--brand-cream)]/50'}`}
+                            >
+                                <Drumstick size={12} />
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                {/* Content */}
+                <div className="px-4 md:px-8 py-8">
+                    {/* Heading */}
+                    {!searchQuery && (
+                        <div className="mb-8">
+                            <h1 className="font-heading text-3xl md:text-4xl text-[var(--brand-cream)]">
+                                {currentCat?.icon} {currentCat?.label ?? 'All Items'}
+                            </h1>
+                            <p className="text-[var(--brand-cream)]/40 text-sm font-mono mt-1">
+                                {getFilteredProducts()?.length ?? 0} items
+                                {foodType !== 'all' && ` · ${foodType} only`}
+                            </p>
                         </div>
                     )}
 
-                    {/* Items Container */}
-                    <div className='flex flex-col md:flex-row flex-wrap lg:gap-10 gap-4 mt-10 justify-center'>
-                        {getFilteredProducts()?.map((item, index) => (
-                            <ItemCards key={item.id} item={item} />
-                        ))}
+                    {searchQuery && (
+                        <div className="mb-8">
+                            <h2 className="font-heading text-2xl text-[var(--brand-cream)]">
+                                Results for "<span className="text-[var(--brand-flame)]">{searchQuery}</span>"
+                            </h2>
+                            <p className="text-[var(--brand-cream)]/40 text-sm font-mono mt-1">{getFilteredProducts()?.length ?? 0} found</p>
+                        </div>
+                    )}
+
+                    {/* Empty state */}
+                    {getFilteredProducts()?.length === 0 && (
+                        <div className="text-center py-24">
+                            <div className="text-5xl mb-4">🍽️</div>
+                            <p className="font-heading text-[var(--brand-cream)]/60 text-xl mb-2">Nothing found</p>
+                            <p className="font-mono text-[var(--brand-cream)]/30 text-sm">Try a different search or category</p>
+                            {searchQuery && (
+                                <button onClick={() => setSearchQuery('')} className="mt-6 text-[var(--brand-flame)] text-sm font-mono hover:underline">
+                                    Clear search
+                                </button>
+                            )}
+                        </div>
+                    )}
+
+                    {/* Desktop grid */}
+                    <div className="hidden md:grid grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5">
+                        <AnimatePresence mode="popLayout">
+                            {getFilteredProducts()?.map((item, i) => (
+                                <motion.div
+                                    key={item.id}
+                                    initial={{ opacity: 0, scale: 0.96 }}
+                                    animate={{ opacity: 1, scale: 1 }}
+                                    exit={{ opacity: 0, scale: 0.96 }}
+                                    transition={{ delay: i * 0.04, duration: 0.3 }}
+                                >
+                                    <ItemCards item={item} />
+                                </motion.div>
+                            ))}
+                        </AnimatePresence>
                     </div>
 
+                    {/* Mobile list */}
+                    <div className="md:hidden -mx-4">
+                        <AnimatePresence mode="popLayout">
+                            {getFilteredProducts()?.map((item, i) => (
+                                <motion.div
+                                    key={item.id}
+                                    initial={{ opacity: 0, x: -16 }}
+                                    animate={{ opacity: 1, x: 0 }}
+                                    exit={{ opacity: 0 }}
+                                    transition={{ delay: i * 0.04, duration: 0.25 }}
+                                >
+                                    <ItemCards item={item} />
+                                </motion.div>
+                            ))}
+                        </AnimatePresence>
+                    </div>
                 </div>
             </div>
-            {itemQuantity > 0 &&
-                <AnimatePresence >
 
-                    <motion.span
-                        initial={{ y: 200, opacity: 0 }}
+            {/* ── Floating cart CTA ── */}
+            <AnimatePresence>
+                {itemQuantity > 0 && (
+                    <motion.button
+                        initial={{ y: 100, opacity: 0 }}
                         animate={{ y: 0, opacity: 1 }}
-                        exit={{ y: 200, opacity: 0 }}
-                        onClick={() => {
-                            navigate('/checkout');
-                            window.scrollTo(0, 0);
-                        }}
-                        className="fixed w-full md:w-1/6 md:bottom-4 bottom-0 left-1/2  -translate-x-1/2 bg-green-700 cursor-pointer  text-white px-4 py-3  md:rounded-2xl  shadow-2xl hover:bg-gray-900 transition-all duration-300 z-50"
+                        exit={{ y: 100, opacity: 0 }}
+                        onClick={() => { navigate('/checkout'); window.scrollTo(0, 0); }}
+                        className="fixed bottom-6 left-1/2 -translate-x-1/2 z-50 flex items-center gap-3 px-6 py-3.5 rounded-2xl bg-[var(--brand-flame)] text-white shadow-[0_8px_32px_rgba(232,88,10,0.4)] hover:bg-[#C94808] transition-all active:scale-[0.97]"
                     >
-                        <button type='button' className="flex md:py-2 py-3 justify-between items-center gap-2 w-full">
-                            <p className="font-medium">{itemQuantity} Items Added</p>
-                            <span className="   flex items-center">View Cart <ChevronRight size={18} /></span>
-                        </button>
-                    </motion.span>
-
-                </AnimatePresence>
-            }
+                        <span className="w-6 h-6 rounded-full bg-white/20 flex items-center justify-center font-mono text-xs font-bold">{itemQuantity}</span>
+                        <span className="font-heading font-semibold">View Cart</span>
+                        <ChevronRight size={16} className="opacity-70" />
+                    </motion.button>
+                )}
+            </AnimatePresence>
         </div>
     );
 };

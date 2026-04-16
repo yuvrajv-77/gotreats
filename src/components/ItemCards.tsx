@@ -1,225 +1,227 @@
-import { Star, Triangle, X } from 'lucide-react'
+import { Star, Triangle, Plus, Minus } from 'lucide-react'
 import { Item } from '../types/ItemsTypes'
 import { useCartStore } from '../store/cartStore'
 import { useAuthStore } from '../store/authStore'
 import { useNavigate } from 'react-router-dom'
 import { motion } from 'framer-motion'
 import React, { useState } from 'react'
-import { Skeleton, Image } from '@heroui/react'
+import { Image } from '@heroui/react'
 import {
-    Drawer,
-    DrawerContent,
-    DrawerHeader,
-    DrawerBody,
-    DrawerFooter,
-    Button,
-    useDisclosure,
+    Drawer, DrawerContent, DrawerBody, DrawerFooter, useDisclosure,
 } from "@heroui/react";
+
+const VegDot = ({ isNonVeg }: { isNonVeg: boolean }) => (
+    <div className={`w-4 h-4 rounded-sm border flex items-center justify-center ${isNonVeg ? 'border-red-700 bg-red-950/40' : 'border-green-600 bg-green-950/40'}`}>
+        {isNonVeg
+            ? <Triangle size={7} className="text-red-500 fill-red-500" />
+            : <div className="w-2 h-2 rounded-full bg-green-500" />
+        }
+    </div>
+)
 
 const ItemCards = ({ item }: { item: Item }) => {
     const [imgLoaded, setImgLoaded] = useState(false);
-    const [imgLoadedMobile, setImgLoadedMobile] = useState(false);
     const { isOpen, onOpen, onOpenChange } = useDisclosure();
-
-    const veg = (
-        <div className='border-2 rounded-md border-green-700 flex items-center justify-center size-5 mb-1'>
-            <div className='p-1 bg-green-700 rounded-full size-2'></div>
-        </div>
-    )
-    const nonVeg = (
-        <div className='border-2 rounded-md border-red-900 flex items-center justify-center size-5 mb-1'>
-            <Triangle size={10} color='brown' fill='brown' />
-        </div>
-    )
-
     const { items, addItem, updateQuantity } = useCartStore()
     const { user } = useAuthStore();
     const navigate = useNavigate();
-
-    // Get quantity of this item from cart
     const cartItem = items.find(i => i.id === item.id)
     const quantity = cartItem?.quantity || 0
 
-    const handleIncrement = () => {
-        if (quantity === 0) {
-            addItem(item)
-        } else {
-            updateQuantity(item.id, quantity + 1)
-        }
+    const handleIncrement = (e?: React.MouseEvent) => {
+        e?.stopPropagation();
+        if (quantity === 0) addItem(item);
+        else updateQuantity(item.id, quantity + 1);
+    }
+    const handleDecrement = (e?: React.MouseEvent) => {
+        e?.stopPropagation();
+        if (quantity > 0) updateQuantity(item?.id, quantity - 1);
     }
 
-    const handleDecrement = () => {
-        if (quantity > 0) {
-            updateQuantity(item?.id, quantity - 1)
+    const discount = item.originalPrice > item.offerPrice
+        ? Math.round((1 - item.offerPrice / item.originalPrice) * 100)
+        : 0;
+
+    const QuantityControl = ({ compact = false }) => {
+        if (!user) {
+            return (
+                <button
+                    onClick={() => navigate('/register')}
+                    className="px-3 py-1.5 rounded-lg bg-[var(--brand-flame)]/10 border border-[var(--brand-flame)]/20 text-[var(--brand-flame)] text-xs font-mono hover:bg-[var(--brand-flame)]/20 transition-colors"
+                >
+                    Login to add
+                </button>
+            )
         }
+        if (quantity === 0) {
+            return (
+                <motion.button
+                    whileHover={{ scale: 1.03 }}
+                    whileTap={{ scale: 0.96 }}
+                    onClick={handleIncrement}
+                    className={`flex items-center gap-1 rounded-xl bg-[var(--brand-flame)] text-white font-heading font-semibold hover:bg-[#C94808] transition-colors shadow-[0_0_16px_rgba(232,88,10,0.3)] ${compact ? 'px-3 py-1.5 text-xs' : 'px-4 py-2 text-sm'}`}
+                >
+                    <Plus size={compact ? 12 : 14} />
+                    Add
+                </motion.button>
+            )
+        }
+        return (
+            <div className="flex items-center rounded-xl bg-[var(--brand-charcoal)] border border-[var(--brand-border)] overflow-hidden">
+                <motion.button
+                    whileTap={{ scale: 0.9 }}
+                    onClick={handleDecrement}
+                    className={`flex items-center justify-center text-[var(--brand-flame)] hover:bg-white/5 transition-colors ${compact ? 'px-2 py-1' : 'px-3 py-2'}`}
+                >
+                    <Minus size={compact ? 12 : 14} />
+                </motion.button>
+                <span className={`font-mono font-bold text-[var(--brand-cream)] min-w-[24px] text-center ${compact ? 'text-xs px-1' : 'text-sm px-2'}`}>{quantity}</span>
+                <motion.button
+                    whileTap={{ scale: 0.9 }}
+                    onClick={handleIncrement}
+                    className={`flex items-center justify-center text-[var(--brand-flame)] hover:bg-white/5 transition-colors ${compact ? 'px-2 py-1' : 'px-3 py-2'}`}
+                >
+                    <Plus size={compact ? 12 : 14} />
+                </motion.button>
+            </div>
+        )
     }
 
     return (
-        <div className='relative '>
-            <div className='md:flex flex-col justify-between hidden group lg:w-77 bg-white p-5 rounded-3xl shadow-xs cursor-pointer hover:bg-green-50 transition-color duration-500 border-orange-50 relative' >
-                
-                <div className="relative mb-5 ">
-                   
+        <div className="relative">
+            {/* ── Desktop card ── */}
+            <motion.div
+                whileHover={{ y: -4 }}
+                transition={{ duration: 0.25, ease: 'easeOut' }}
+                className="hidden md:flex flex-col w-64 lg:w-68 bg-[var(--brand-charcoal)] border border-[var(--brand-border)] rounded-2xl overflow-hidden hover:border-[var(--brand-flame)]/30 transition-all group cursor-pointer"
+            >
+                {/* Image */}
+                <div className="relative h-48 overflow-hidden" onClick={onOpen}>
                     {!imgLoaded && (
-                        <div className="absolute inset-0 bg-gray-200 animate-pulse flex items-center justify-center rounded-3xl" >
-                            <p className='font-bowlby text-4xl tracking-wide font-bold text-zinc-400'>bitebox</p>
+                        <div className="absolute inset-0 bg-[var(--brand-border)] animate-pulse flex items-center justify-center">
+                            <span className="font-heading text-2xl text-[var(--brand-cream)]/20">Bitebox</span>
                         </div>
                     )}
-                    {/* <img
+                    <Image
                         src={item.imageUrl}
-                        alt=""
+                        alt={item.productName}
                         loading="lazy"
                         onLoad={() => setImgLoaded(true)}
-                        className={`size-64 object-cover rounded-3xl group-hover:scale-102 transition-all duration-500 ${imgLoaded ? 'opacity-100' : 'opacity-0'}`}
-                    /> */}
-                    <Image src={item.imageUrl} alt=""  loading='lazy' disableSkeleton onLoad={() => setImgLoaded(true)} className={`w-full h-70 object-cover rounded-3xl group-hover:scale-102 group-hover:shadow-lg transition-all duration-500 ${imgLoaded ? 'opacity-100' : 'opacity-0'}`} />
-                </div>
-                {item.isNonVeg ? nonVeg : veg}
-                <h4 className='font-bowlby uppercase text-xl font-medium'>{item.productName}</h4>
-                <p className='comfortaa text-sm text-green-700 font-bold flex items-center gap-1 mb-2'><Star fill='green' size={13} />{item.rating}</p>
-
-                <p className='text-gray-500 text-lg lg:text:base leading-5 line-clamp-2 font-mouse'>{item.productDescription}</p>
-                <div className='flex justify-between items-center mt-5'>
-                    {
-                        user ?
-                            <div className='  h-9 flex justify-between items-center bg-green-100 rounded-lg text-lg' onClick={(e) => e.stopPropagation()}>
-                                <button
-                                    onClick={handleDecrement}
-                                    className='h-full flex items-center px-3 text-4xl text-green-600 cursor-pointer'
-                                >
-                                    -
-                                </button>
-                                <p className='px-2 text-green-600 font-semibold'>{quantity}</p>
-                                <button
-                                    onClick={handleIncrement}
-                                    className='h-full flex items-center px-3 text-3xl text-green-600 cursor-pointer hover:text-green-800'
-                                >
-                                    +
-                                </button>
-                            </div>
-                            :
-                            <button onClick={() => navigate('/register')} className=' h-9 flex justify-between items-center bg-green-100 rounded-lg text-lg'>
-                                <p className='px-2 text-green-600 text-sm font-semibold'>Login to add</p>
-                            </button>
-                    }
-                    <div className='inline-flex items-center gap-2 font-bowlby'>
-                        <p className=' text-lg line-through '> ₹{item.originalPrice} </p>
-                        <span className='px-[3px] py-[1px] flex items-center text-lg shadow-3xl bg-yellow-500 '>₹{item.offerPrice}</span>
-                    </div>
-                </div>
-            </div>
-
-            <div className='flex md:hidden justify-between mx-2 p-4 gap-1 rounded-xl shadow-xs cursor-pointer bg-white transition-color duration-500 w-full relative' >
-                {/* Most Ordered Tag for Mobile */}
-                {(item.productName.toLowerCase().includes('combo') ||
-                    item.productName.toLowerCase().includes('poori bhaji')) && (
-                        <motion.div
-                            initial={{ scale: 0.9, opacity: 0 }}
-                            animate={{ scale: 1, opacity: 1 }}
-                            className="absolute -top-2 right-2 z-10"
-                        >
-                            <div className="tag-container bg-gradient-to-r from-orange-600 to-orange-500 text-white text-[10px] font-medium px-1.5 py-0.5 rounded-md shadow-md transform rotate-2 whitespace-nowrap">
-                                <span className="glowing-text">Most Ordered</span> ⭐
-                            </div>
-                        </motion.div>
+                        className={`w-full h-48 object-cover group-hover:scale-105 transition-transform duration-500 ${imgLoaded ? 'opacity-100' : 'opacity-0'}`}
+                        disableSkeleton
+                    />
+                    {discount > 0 && (
+                        <div className="absolute top-3 left-3 px-2 py-0.5 rounded-full bg-[var(--brand-flame)] text-white text-xs font-mono font-bold">
+                            -{discount}%
+                        </div>
                     )}
-                <div className=' w-3/5'>
-                    {item.isNonVeg ? nonVeg : veg}
-                    <h4 className='font-bowlby  text- mb-2'>{item.productName}</h4>
-                    <div className='inline-flex items-center gap-2 mb-2'>
-                        <p className='comfortaa text-lg line-through '> ₹{item.originalPrice} </p>
-                        <span className='px-[3px] py-[1px] flex items-center text-lg shadow-3xl bg-yellow-500 '>₹{item.offerPrice}</span>
+                    <div className="absolute top-3 right-3">
+                        <VegDot isNonVeg={item.isNonVeg} />
                     </div>
-                    <p className='comfortaa text-sm text-green-700 font-bold flex items-center gap-1 mb-3'><Star fill='green' size={13} />{item.rating}</p>
-                    <p className=' text-gray-500 text-sm line-clamp-2 tracking-tight'>{item.productDescription}</p>
                 </div>
-                <div className='flex flex-col justify-between items-end  w-2/5'>
-                    <div className="relative size-30 mb-3" onClick={onOpen}>
-                        {!imgLoadedMobile && (
-                            <div className="absolute inset-0 bg-gray-200 animate-pulse flex items-center justify-center rounded-3xl" >
-                                <p className='comfortaa text-2xl tracking-wider font-bold text-zinc-400'>Bitebox</p>
-                            </div>
+
+                {/* Content */}
+                <div className="p-4 flex flex-col gap-3 flex-1">
+                    <div>
+                        <h4 className="font-heading text-[var(--brand-cream)] text-base leading-tight mb-1 line-clamp-1">{item.productName}</h4>
+                        <div className="flex items-center gap-1 mb-2">
+                            <Star size={11} fill="var(--brand-amber)" stroke="none" />
+                            <span className="font-mono text-xs text-[var(--brand-cream)]/50">{item.rating}</span>
+                        </div>
+                        <p className="text-[var(--brand-cream)]/40 text-xs leading-relaxed line-clamp-2">{item.productDescription}</p>
+                    </div>
+
+                    <div className="flex items-center justify-between mt-auto">
+                        <div className="flex items-baseline gap-1.5">
+                            <span className="font-heading text-[var(--brand-cream)] text-base">₹{item.offerPrice}</span>
+                            {item.originalPrice > item.offerPrice && (
+                                <span className="text-[var(--brand-cream)]/30 text-xs line-through font-mono">₹{item.originalPrice}</span>
+                            )}
+                        </div>
+                        <QuantityControl compact />
+                    </div>
+                </div>
+            </motion.div>
+
+            {/* ── Mobile card ── */}
+            <div className="flex md:hidden items-center gap-3 px-4 py-4 bg-[var(--brand-charcoal)] border-b border-[var(--brand-border)] w-full">
+                {/* Text */}
+                <div className="flex-1 min-w-0">
+                    <div className="flex items-center gap-2 mb-1">
+                        <VegDot isNonVeg={item.isNonVeg} />
+                        <h4 className="font-heading text-[var(--brand-cream)] text-sm leading-tight line-clamp-1">{item.productName}</h4>
+                    </div>
+                    <div className="flex items-center gap-1 mb-1.5">
+                        <Star size={10} fill="var(--brand-amber)" stroke="none" />
+                        <span className="font-mono text-[10px] text-[var(--brand-cream)]/40">{item.rating}</span>
+                    </div>
+                    <p className="text-[var(--brand-cream)]/40 text-xs line-clamp-2 leading-relaxed">{item.productDescription}</p>
+                    <div className="flex items-baseline gap-1.5 mt-2">
+                        <span className="font-heading text-[var(--brand-cream)] text-sm">₹{item.offerPrice}</span>
+                        {item.originalPrice > item.offerPrice && (
+                            <span className="text-[var(--brand-cream)]/30 text-xs line-through font-mono">₹{item.originalPrice}</span>
                         )}
+                    </div>
+                </div>
+
+                {/* Right — image + qty */}
+                <div className="flex flex-col items-center gap-2 shrink-0">
+                    <div className="relative w-28 h-24 rounded-xl overflow-hidden" onClick={onOpen}>
                         <img
                             src={item.imageUrl}
-                            alt=""
+                            alt={item.productName}
                             loading="lazy"
-                            onLoad={() => setImgLoadedMobile(true)}
-                            className={`size-30 rounded-2xl object-cover transition-all duration-500 ${imgLoadedMobile ? 'opacity-100' : 'opacity-0'}`}
+                            className="w-full h-full object-cover"
                         />
-                    </div>
-                    {
-                        user ?
-                            <div className=' h-9 flex justify-between mr-2 items-center bg-green-100 rounded-lg text-lg'>
-                                <button
-                                    onClick={handleDecrement}
-                                    className='h-full flex items-center px-3 text-4xl text-green-600 cursor-pointer'
-                                >
-                                    -
-                                </button>
-                                <p className='px-2 text-green-600 font-semibold'>{quantity}</p>
-                                <button
-                                    onClick={handleIncrement}
-                                    className='h-full flex items-center px-3 text-3xl text-green-600 cursor-pointer hover:text-green-800'
-                                >
-                                    +
-                                </button>
+                        {discount > 0 && (
+                            <div className="absolute bottom-1 left-1 px-1.5 py-px rounded-full bg-[var(--brand-flame)] text-white text-[9px] font-mono font-bold">
+                                -{discount}%
                             </div>
-                            :
-                            <button onClick={() => navigate('/register')} className=' h-9 flex justify-between items-center bg-green-100 rounded-lg text-lg'>
-                                <p className='px-2 text-green-600 text-sm font-semibold'>Login to add</p>
-                            </button>
-                    }
+                        )}
+                    </div>
+                    <QuantityControl compact />
                 </div>
             </div>
 
-            <Drawer isOpen={isOpen} placement='bottom'  size='lg' hideCloseButton onOpenChange={onOpenChange}>
-                <DrawerContent>
+            {/* ── Image Detail Drawer ── */}
+            <Drawer isOpen={isOpen} placement='bottom' size='lg' hideCloseButton onOpenChange={onOpenChange}>
+                <DrawerContent className="bg-[var(--brand-dark)] border-t border-[var(--brand-border)]">
                     {(onClose) => (
                         <>
-                        {/* <DrawerHeader><span className='absolute -top-1 right-3 bg-gray-800 text-white rounded-full p-3'><X onClick={onClose} /></span></DrawerHeader> */}
-                            <DrawerBody className='pt-5'>
-                                <div className=' rounded-lg w-full h-[1200px] overflow-hidden'>
-                                    <img className='w-full h-full  object-cover' src={item.imageUrl} alt="" />
+                            <DrawerBody className="pt-0 px-0">
+                                <div className="relative h-64 md:h-80">
+                                    <img className="w-full h-full object-cover" src={item.imageUrl} alt={item.productName} />
+                                    <div className="absolute inset-0 bg-gradient-to-t from-[var(--brand-dark)] to-transparent" />
+                                    <button
+                                        onClick={onClose}
+                                        className="absolute top-4 right-4 w-8 h-8 rounded-full bg-[var(--brand-dark)]/80 flex items-center justify-center text-[var(--brand-cream)] hover:bg-[var(--brand-charcoal)] transition-colors"
+                                    >
+                                        ✕
+                                    </button>
                                 </div>
-
-                                <div className='mt-4 mb-2 space-y-2'>
-                                    {item.isNonVeg ? nonVeg : veg}
-                                    <div className='flex items-center justify-between '>
-                                        <h4 className='lancelot text-xl lg:text-3xl font-bold'>{item.productName}</h4>
-                                        <p className='comfortaa text-sm text-green-700 font-bold flex items-center gap-1 mb-2'><Star fill='green' size={13} />{item.rating}</p>
+                                <div className="px-5 py-4 space-y-3">
+                                    <div className="flex items-center gap-2">
+                                        <VegDot isNonVeg={item.isNonVeg} />
+                                        {discount > 0 && <span className="pill pill-flame text-[10px]">-{discount}% off</span>}
                                     </div>
-                                    <p className='text-gray-500 text-sm lg:text:base leading-5 line-clamp-2'>{item.productDescription}</p>
-                                </div>
-
-                            </DrawerBody>
-                            <DrawerFooter className='flex justify-between items-center'>
-                                <div className='inline-flex items-center gap-2 mb-2'>
-                                    <p className='comfortaa text-lg line-through '> ₹{item.originalPrice} </p>
-                                    <span className='px-[3px] py-[1px] flex items-center text-lg shadow-3xl bg-yellow-500 '>₹{item.offerPrice}</span>
-                                </div>
-                                {
-                                    user ?
-                                        <div className='outline outline-green-500 h-10 flex justify-between gap-2 mr-2 items-center bg-green-100 rounded-lg text-lg'>
-                                            <button
-                                                onClick={handleDecrement}
-                                                className='h-full flex items-center px-3 text-4xl text-green-600 cursor-pointer'
-                                            >
-                                                -
-                                            </button>
-                                            <p className='px-2 text-green-600 font-semibold'>{quantity}</p>
-                                            <button
-                                                onClick={handleIncrement}
-                                                className='h-full flex items-center px-3 text-3xl text-green-600 cursor-pointer hover:text-green-800'
-                                            >
-                                                +
-                                            </button>
+                                    <div className="flex items-start justify-between">
+                                        <h4 className="font-display italic text-[var(--brand-cream)] text-2xl">{item.productName}</h4>
+                                        <div className="flex items-center gap-1">
+                                            <Star size={14} fill="var(--brand-amber)" stroke="none" />
+                                            <span className="font-mono text-sm text-[var(--brand-cream)]/60">{item.rating}</span>
                                         </div>
-                                        :
-                                        <button onClick={() => navigate('/register')} className=' h-9 flex justify-between items-center bg-green-100 rounded-lg text-lg'>
-                                            <p className='px-2 text-green-600 text-sm font-semibold'>Login to add</p>
-                                        </button>
-                                }
+                                    </div>
+                                    <p className="text-[var(--brand-cream)]/50 text-sm leading-relaxed">{item.productDescription}</p>
+                                </div>
+                            </DrawerBody>
+                            <DrawerFooter className="border-t border-[var(--brand-border)] flex items-center justify-between px-5">
+                                <div className="flex items-baseline gap-2">
+                                    <span className="font-heading text-[var(--brand-cream)] text-xl">₹{item.offerPrice}</span>
+                                    {item.originalPrice > item.offerPrice && (
+                                        <span className="font-mono text-sm text-[var(--brand-cream)]/30 line-through">₹{item.originalPrice}</span>
+                                    )}
+                                </div>
+                                <QuantityControl />
                             </DrawerFooter>
                         </>
                     )}

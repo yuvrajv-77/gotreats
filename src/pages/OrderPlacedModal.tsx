@@ -2,22 +2,16 @@ import React, { useEffect, useState } from 'react'
 import {
     Modal,
     ModalContent,
-    ModalHeader,
     ModalBody,
     ModalFooter,
-    Input
 } from "@heroui/react";
 import { motion } from 'framer-motion'
-import Button from '@/components/Button'
-
-import { BadgePercent, CircleCheck, CircleCheckBig } from 'lucide-react';
-import { Voucher } from '@/types/voucherTypes';
+import { CircleCheck, Clock } from 'lucide-react';
 import { useOrderPlacedModalStore } from '@/store/orderPlacedModalStore';
-const OrderPlacedModal = (
-    
-) => {
 
- const { isOpen, close } = useOrderPlacedModalStore();
+const OrderPlacedModal = () => {
+
+    const { isOpen, close } = useOrderPlacedModalStore();
     const [timer, setTimer] = useState(5);
 
     useEffect(() => {
@@ -34,33 +28,37 @@ const OrderPlacedModal = (
 
     return (
         <Modal isOpen={isOpen} placement="center" onOpenChange={close} size='lg' hideCloseButton shadow='none' className='relative' scrollBehavior='inside' backdrop='blur'>
-            <ModalContent className='bg-green-500'>
+            <ModalContent className='bg-[var(--brand-dark)] border border-[var(--brand-border)]'>
                 {(onClose) => (
                     <>
-                        {/* <ModalHeader className="flex  items-center lancelot text-2xl gap-3">
-                            <div className=' flex items-center justify-center w-full'>
-                            </div>
-                             </ModalHeader> */}
-                        <ModalBody className=' my-20 flex flex-col items-center gap-10'>
-                            <motion.span
-                            initial={{ scale: 0, opacity: 0 }}
-                            animate={{ scale: 1, opacity: 1, transition: { duration: 0.3, ease: "easeInOut", } }}
-                            >
-                                <CircleCheck size={90} strokeWidth={1.5} className='fill-green-700 stroke-white' />
-                            </motion.span>
+                        <ModalBody className='my-16 flex flex-col items-center gap-8 px-8'>
                             <motion.div
-                                initial={{ y: -50, opacity: 0 }}
-                                animate={{ y: 0, opacity: 1, transition: { duration: 0.4, ease: "easeInOut",delay: 0.3  } }}
+                                initial={{ scale: 0, opacity: 0 }}
+                                animate={{ scale: 1, opacity: 1, transition: { duration: 0.3, ease: "easeInOut" } }}
+                                className="w-24 h-24 rounded-full bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center"
                             >
-                                <p className='text-2xl font-bold text-white text-center'>Order Placed Successfully</p>
+                                <CircleCheck size={50} strokeWidth={1.5} className='text-emerald-400' />
                             </motion.div>
-                            <motion.p 
-                            initial={{ scale: 0, opacity: 0 }}
-                            animate={{ scale: 1, opacity: 1, transition: { duration: 0.4, ease: "easeInOut", delay: 0.4  } }}
-                            className='text-center  text-white'>Thank you for your order! We’re preparing your delicious meal.</motion.p>
+                            
+                            <motion.div
+                                initial={{ y: 20, opacity: 0 }}
+                                animate={{ y: 0, opacity: 1, transition: { duration: 0.4, ease: "easeInOut", delay: 0.2 } }}
+                                className="text-center space-y-3"
+                            >
+                                <p className='font-heading text-3xl text-[var(--brand-cream)]'>Order Placed</p>
+                                <p className='font-body text-[var(--brand-cream)]/60 text-sm leading-relaxed max-w-sm'>
+                                    Thank you for your order! We’re preparing your delicious meal.
+                                </p>
+                            </motion.div>
                         </ModalBody>
-                        <ModalFooter className='overflow-hidden border-t border- border-white cursor-pointer transition-all duration-100 ease-in-out hover:bg-green-500' onClick={onClose}>
-                            <p className=' text-lg text-center text-white group-hover:scale-110  w-full font-black '> Relax ({timer})</p>
+                        <ModalFooter className='border-t border-[var(--brand-border)] p-0'>
+                            <button 
+                                className='w-full py-4 bg-[var(--brand-charcoal)] hover:bg-white/5 transition-colors flex items-center justify-center gap-2'
+                                onClick={onClose}
+                            >
+                                <span className='text-[var(--brand-cream)]/50 font-mono text-xs uppercase tracking-widest'>Relax</span>
+                                <span className='w-5 h-5 rounded-full bg-[var(--brand-flame)]/20 text-[var(--brand-flame)] font-mono text-[10px] flex items-center justify-center'>{timer}</span>
+                            </button>
                         </ModalFooter>
                     </>
                 )}

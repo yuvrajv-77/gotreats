@@ -1,24 +1,18 @@
-import { useState, useEffect } from 'react'
-
-import { ArrowRight, Flame } from 'lucide-react'
+import { useState, useEffect, useRef } from 'react'
+import { ArrowRight, Flame, Star, Clock, Shield, ChevronRight } from 'lucide-react'
 import ItemCards from '../components/ItemCards';
 import { Swiper, SwiperSlide } from 'swiper/react';
-import { Autoplay, Navigation, Pagination } from 'swiper/modules';
+import { Autoplay, Navigation } from 'swiper/modules';
 import { useAuthStore } from '../store/authStore';
 import { useProductStore } from '../store/productStore';
-import CountUp from 'react-countup';
 import NavigationButton from '../components/NavigationButton';
 import { Link, useNavigate } from 'react-router-dom';
 import { collection, getDocs } from 'firebase/firestore';
 import { db } from '../config/firebaseConfig';
 import { useQuery } from '@tanstack/react-query';
-import TypewriterText from '../components/TypewriterText';
 import ScrollingBanner from '../components/ScrollingBanner';
-import { Image } from '@heroui/react';
-import { deleteOrdersByCustomerUid } from '@/services/orderService';
-import Button from '@/components/Button';
+import { motion, useInView } from 'framer-motion';
 
-// Define the Review interface
 interface Review {
   id: string;
   name: string;
@@ -37,305 +31,370 @@ const fetchReviews = async (): Promise<Review[]> => {
   })) as Review[];
 };
 
+const FadeUp = ({ children, delay = 0, className = '' }: any) => {
+  const ref = useRef(null);
+  const inView = useInView(ref, { once: true, margin: '-80px' });
+  return (
+    <motion.div
+      ref={ref}
+      initial={{ opacity: 0, y: 40 }}
+      animate={inView ? { opacity: 1, y: 0 } : {}}
+      transition={{ duration: 0.7, delay, ease: [0.22, 1, 0.36, 1] }}
+      className={className}
+    >
+      {children}
+    </motion.div>
+  );
+};
+
 const Home = () => {
   const userDetails = useAuthStore((state) => state.userDetails)
   const navigate = useNavigate()
   const products = useProductStore((state) => state.products)
   const [swiperRef, setSwiperRef] = useState(null);
 
-
-  const { data: reviews = [], isLoading, error } = useQuery({
+  const { data: reviews = [] } = useQuery({
     queryKey: ['reviews'],
     queryFn: fetchReviews,
-    staleTime: 5 * 60 * 1000, // 5 minutes
+    staleTime: 5 * 60 * 1000,
     refetchOnWindowFocus: false
   });
 
-
   const varieties = [
-    {
-      id: 1,
-      name: "Paav Bhaaji",
-      img: "/varities/pav2.png",
-      link: "/shop/?tag=paav-bhaaji"
-    },
-    {
-      id: 2,
-      name: "Egg Curry",
-      img: "/varities/egg.png",
-      link: "/shop/?tag=meals"
-    },
-    {
-      id: 3,
-      name: "Pasta",
-      img: "/varities/pasta.png",
-      link: "/shop/?tag=pasta"
-    },
-    {
-      id: 4,
-      name: "Meals",
-      img: "/varities/thali.png",
-      link: "/shop/?tag=meals"
-    },
-    {
-      id: 5,
-      name: "Paav Bhaaji",
-      img: "/varities/pav2.png",
-      link: "/shop/?tag=paav-bhaaji"
-    },
-    {
-      id: 6,
-      name: "Egg Curry",
-      img: "/varities/egg.png",
-      link: "/shop/?tag=meals"
-    },
-    {
-      id: 7,
-      name: "Pasta",
-      img: "/varities/pasta.png",
-      link: "/shop/?tag=pasta"
-    },
-    {
-      id: 8,
-      name: "Meals",
-      img: "/varities/thali.png",
-      link: "/shop/?tag=meals"
-    }
+    { id: 1, name: "Paav Bhaaji", img: "/varities/pav2.png", link: "/shop/?tag=paav-bhaaji" },
+    { id: 2, name: "Egg Curry", img: "/varities/egg.png", link: "/shop/?tag=meals" },
+    { id: 3, name: "Pasta", img: "/varities/pasta.png", link: "/shop/?tag=pasta" },
+    { id: 4, name: "Thali", img: "/varities/thali.png", link: "/shop/?tag=meals" },
   ];
 
-  const colorPalette = ['bg-yellow-300', 'bg-red-300', 'bg-green-300', 'bg-sky-300'];
-  // useEffect(() => {
-  //   const deleteOrders = async () => {
-  //     await deleteOrdersByCustomerUid('3IIckUCL9tXmr96y4QxHegYtoas2');
-  //   };
-  //   deleteOrders();
-  // }, []);
+  const stats = [
+    { value: '500+', label: 'Happy Customers', icon: '😊' },
+    { value: '50+', label: 'Menu Items', icon: '🍱' },
+    { value: '1 hr', label: 'Delivery Time', icon: '⚡' },
+    { value: '4.9★', label: 'Avg Rating', icon: '⭐' },
+  ];
+
   return (
-    <main className="min-h-[calc(100vh-64px)] bg-gradient-to-b from-white to-amber-100  w-full">
+    <main className="min-h-screen bg-[var(--brand-dark)] overflow-hidden">
 
+      {/* ── Hero ── */}
+      <section className="relative min-h-[90vh] flex items-center">
+        {/* Background gradient */}
+        <div className="absolute inset-0 bg-gradient-to-br from-[var(--brand-dark)] via-[#1a1007] to-[var(--brand-dark)]" />
+        <div className="absolute top-0 right-0 w-[600px] h-[600px] bg-[var(--brand-flame)]/10 rounded-full blur-[120px] pointer-events-none" />
+        <div className="absolute bottom-0 left-0 w-[400px] h-[400px] bg-[var(--brand-amber)]/8 rounded-full blur-[100px] pointer-events-none" />
 
-      {/* <Link to={'https://zomato.onelink.me/xqzv/ut3cavr1'} target='_blank' className='flex justify-center items-center bg-[#D94148] h-14'>
-        <span className='size-2 mr-4 block bg-white animate-pulse rounded-full'></span>
-        <p className='text-white inline-flex items-center gap-2 '> We Are Now Available on</p>
-        <Image className='w-40 h-10 ' isBlurred
-          src='https://cdn.brandfetch.io/idEql8nEWn/theme/light/logo.svg?c=1dxbfHSJFAPEGdCLU4o5B' />
-        <span className='size-2 block bg-white animate-pulse rounded-full'></span>
-      </Link> */}
+        <div className="relative z-10 max-w-7xl mx-auto px-4 md:px-8 w-full py-20">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
 
-      <section className=' '>
-        <div className="container mx-auto md:px-20 px-2 md:justify-between gap-10 md:gap-0   flex flex-col md:flex-row items-center  ">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 w-full  animate-[fadeIn_0.7s_ease-in]">
-            <div className=' h-100 md:h-150 bg-[url(/hero1.jpg)] bg-cover bg-center bg-no-repeat rounded-xl '>
+            {/* Left copy */}
+            <div>
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5 }}
+                className="pill pill-flame mb-6 inline-flex"
+              >
+                <span className="w-1.5 h-1.5 rounded-full bg-[var(--brand-flame)] animate-pulse" />
+                Now delivering in Borivali
+              </motion.div>
 
+              <motion.h1
+                initial={{ opacity: 0, y: 30 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.7, delay: 0.1, ease: [0.22, 1, 0.36, 1] }}
+                className="font-heading text-5xl md:text-6xl lg:text-7xl text-[var(--brand-cream)] leading-[1.05] mb-6"
+              >
+                Real food,
+                <br />
+                <span className="text-[var(--brand-flame)]">cooked with</span>
+                <br />
+                <span className="font-display italic">love.</span>
+              </motion.h1>
+
+              <motion.p
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6, delay: 0.25 }}
+                className="text-[var(--brand-cream)]/50 text-lg leading-relaxed mb-10 max-w-md"
+              >
+                Homemade tiffins, hearty curries, and comfort food — delivered fresh to your door in under an hour.
+              </motion.p>
+
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6, delay: 0.35 }}
+                className="flex flex-wrap gap-3"
+              >
+                <button
+                  onClick={() => navigate('/shop')}
+                  className="group flex items-center gap-2 px-6 py-3.5 rounded-xl bg-[var(--brand-flame)] text-white font-heading font-semibold hover:bg-[#C94808] transition-all shadow-[0_0_30px_rgba(232,88,10,0.3)] hover:shadow-[0_0_40px_rgba(232,88,10,0.5)] active:scale-[0.97]"
+                >
+                  Order Now
+                  <ArrowRight size={18} className="group-hover:translate-x-1 transition-transform" />
+                </button>
+                <button
+                  onClick={() => navigate('/concept')}
+                  className="px-6 py-3.5 rounded-xl border border-[var(--brand-border)] text-[var(--brand-cream)]/70 font-heading font-semibold hover:border-[var(--brand-flame)]/40 hover:text-[var(--brand-cream)] transition-colors"
+                >
+                  Our Story
+                </button>
+              </motion.div>
+
+              {/* Trust signals */}
+              <motion.div
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ delay: 0.5, duration: 0.6 }}
+                className="flex items-center gap-6 mt-10"
+              >
+                <div className="flex items-center gap-2 text-[var(--brand-cream)]/40 text-sm font-mono">
+                  <Clock size={14} className="text-[var(--brand-amber)]" />
+                  <span>Under 1 hour</span>
+                </div>
+                <div className="w-px h-4 bg-[var(--brand-border)]" />
+                <div className="flex items-center gap-2 text-[var(--brand-cream)]/40 text-sm font-mono">
+                  <Shield size={14} className="text-[var(--brand-amber)]" />
+                  <span>FSSAI Certified</span>
+                </div>
+                <div className="w-px h-4 bg-[var(--brand-border)]" />
+                <div className="flex -space-x-2">
+                  {[...Array(4)].map((_, i) => (
+                    <div key={i} className="w-7 h-7 rounded-full bg-gradient-to-br from-[var(--brand-flame)] to-[var(--brand-amber)] border-2 border-[var(--brand-dark)] flex items-center justify-center text-[10px] font-bold text-white">
+                      {String.fromCharCode(65 + i)}
+                    </div>
+                  ))}
+                  <div className="w-7 h-7 rounded-full bg-[var(--brand-charcoal)] border-2 border-[var(--brand-dark)] flex items-center justify-center text-[10px] font-mono text-[var(--brand-cream)]/60">
+                    +
+                  </div>
+                </div>
+              </motion.div>
             </div>
-            <div className=' h-100 md:h-150 bg-sky-300 rounded-xl flex flex-col p-12  justify-between '>
 
-              <div className='flex -space-x-3'>
-                {
-                  [...Array(4)].map((_, index) => (
-                    <div key={index} className='size-10 md:size-12 bg-pink-500 border rounded-full '></div>
-                  ))
-                }
+            {/* Right — hero image collage */}
+            <motion.div
+              initial={{ opacity: 0, scale: 0.95 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 0.8, delay: 0.2, ease: [0.22, 1, 0.36, 1] }}
+              className="relative hidden lg:block"
+            >
+              <div className="relative h-[520px]">
+                <div className="absolute inset-0 bg-[url(/hero1.jpg)] bg-cover bg-center rounded-2xl overflow-hidden">
+                  <div className="absolute inset-0 bg-gradient-to-t from-[var(--brand-dark)]/60 to-transparent" />
+                </div>
+                {/* Floating card */}
+                <div className="absolute bottom-6 left-6 right-6 card-glass rounded-xl p-4 flex items-center gap-4">
+                  <div className="w-10 h-10 rounded-xl bg-[var(--brand-flame)]/20 flex items-center justify-center text-xl">
+                    🍱
+                  </div>
+                  <div>
+                    <p className="text-[var(--brand-cream)] text-sm font-heading font-semibold">Fresh Tiffin Ready</p>
+                    <p className="text-[var(--brand-cream)]/50 text-xs font-mono">Arriving in ~45 min</p>
+                  </div>
+                  <div className="ml-auto">
+                    <span className="pill pill-green text-xs">Live</span>
+                  </div>
+                </div>
               </div>
-              <h1 className='font-bowlby text-4xl text-sky-950 sm:text-5xl lg:text-7xl '>
-                Fuel up your day with out platter!
-              </h1>
-              <div className='flex gap-3'>
-                <Button variant='secondary'>Explore Menu <ArrowRight /></Button>
-                <Button
-                  variant='primary' >
-                  Order Now <ArrowRight className='animate-[shake_0.5s_ease-in-out_infinite]' /></Button>
-              </div>
-            </div>
+            </motion.div>
+
           </div>
-
         </div>
       </section>
-      <div className='my-20'>
+
+      {/* ── Scrolling Banner ── */}
+      <div className="border-y border-[var(--brand-border)]">
         <ScrollingBanner />
       </div>
 
-      <section className='mt-20 md:mt-40'>
-        <div className="container mx-auto md:px-20 px-2">
+      {/* ── Stats ── */}
+      <FadeUp>
+        <section className="py-16 max-w-7xl mx-auto px-4 md:px-8">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+            {stats.map((stat, i) => (
+              <motion.div
+                key={i}
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: i * 0.1, duration: 0.5 }}
+                className="rounded-2xl border border-[var(--brand-border)] p-6 text-center hover:border-[var(--brand-flame)]/30 transition-colors group"
+              >
+                <div className="text-3xl mb-2">{stat.icon}</div>
+                <div className="font-heading text-2xl text-[var(--brand-cream)] mb-1">{stat.value}</div>
+                <div className="font-mono text-xs text-[var(--brand-cream)]/40 uppercase tracking-widest">{stat.label}</div>
+              </motion.div>
+            ))}
+          </div>
+        </section>
+      </FadeUp>
 
-          <div className='flex item-center justify-center'>
-            <span className='bg-yellow-300 uppercase font-bowlby px-4 py-2 rounded-lg text-orange-900'>
-              Green Living
-            </span>
+      {/* ── Why us ── */}
+      <FadeUp>
+        <section className="py-20 max-w-7xl mx-auto px-4 md:px-8">
+          <div className="text-center mb-16">
+            <span className="pill pill-amber mb-4 inline-flex">Farm to Table</span>
+            <h2 className="font-heading text-4xl md:text-5xl text-[var(--brand-cream)] mt-4">
+              Nurture your body with
+              <br />
+              <span className="font-display italic text-[var(--brand-flame)]">farm-fresh</span> ingredients
+            </h2>
           </div>
 
-          <div className='px-4 md:px-30'>
-            <h1 className='font-bowlby uppercase text-3xl sm:text-4xl lg:text-7xl text-center  my-15'>
-              NURTURE THE BODY WITH <span className='text-orange-500'>farm-fresh</span> INGREDIENTS
-            </h1>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-10 md:gap-30">
-            <div className=''>
-              {
-                [...Array(2)].map((_, index) => (
-                  <div key={index} className='mb-10 flex flex-col items-center md:items-start gap-y-4'>
-                    <Flame size={40} color='green' />
-                    <h3 className='font-bowlby uppercase text-2xl text-orange-900'>High In Richness</h3>
-                    <p className='text-yellow-900 font-mouse text-justify  text-xl'>BiteBox offers delightful side of healthy
-                      living. Our meals prove that nutritional
-                      food also can be really tasty.</p>
-                  </div>
-                ))
-              }
-            </div>
-            <div className='hidden md:block'>
-              <div className='bg-[url(/hero2.jpg)] bg-cover bg-center bg-no-repeat h-100 '>
-
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <div className="relative overflow-hidden rounded-2xl border border-[var(--brand-border)] h-72 hidden md:block">
+              <div className="absolute inset-0 bg-[url(/hero2.jpg)] bg-cover bg-center" />
+              <div className="absolute inset-0 bg-gradient-to-t from-[var(--brand-dark)]/80 to-transparent" />
+              <div className="absolute bottom-4 left-4">
+                <span className="pill pill-green text-[10px]">100% Fresh</span>
               </div>
             </div>
-            <div>
-              {
-                [...Array(2)].map((_, index) => (
-                  <div key={index} className='mb-10 flex flex-col items-center md:items-start gap-y-4'>
-                    <Flame size={40} color='green' />
-                    <h3 className='font-bowlby uppercase text-2xl text-orange-900 '>High In Richness</h3>
-                    <p className='text-yellow-900  font-mouse text-justify  text-xl'>BiteBox offers delightful side of healthy
-                      living. Our meals prove that nutritional
-                      food also can be really tasty.</p>
-                  </div>
-                ))
-              }
-            </div>
-          </div>
-        </div>
-      </section>
 
-      {/* ------varieties------ */}
-      <section className='mt-20 md:mt-40 bg-amber-950 py-30'>
-        <div className=''>
-          <h1 className='text-white text-center font-bowlby text-5xl md:text-6xl mb-15'>Explore Our Varities</h1>
+            {[0, 1].map((col) => (
+              <div key={col} className="flex flex-col gap-6">
+                {[0, 1].map((row) => (
+                  <div
+                    key={row}
+                    className="flex gap-4 p-5 rounded-2xl border border-[var(--brand-border)] hover:border-[var(--brand-flame)]/30 transition-colors group"
+                  >
+                    <div className="w-10 h-10 rounded-xl bg-[var(--brand-flame)]/10 flex items-center justify-center shrink-0 group-hover:bg-[var(--brand-flame)]/20 transition-colors">
+                      <Flame size={18} className="text-[var(--brand-flame)]" />
+                    </div>
+                    <div>
+                      <h3 className="font-heading text-[var(--brand-cream)] text-base mb-1">
+                        {['High in Nutrition', 'Zero Preservatives', 'Made Fresh Daily', 'Chef\'s Recipes'][col * 2 + row]}
+                      </h3>
+                      <p className="text-[var(--brand-cream)]/40 text-sm leading-relaxed">
+                        BiteBox proves that nutritious food can be genuinely delicious.
+                      </p>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            ))}
+          </div>
+        </section>
+      </FadeUp>
+
+      {/* ── Varieties ── */}
+      <section className="py-24 bg-[var(--brand-charcoal)] border-y border-[var(--brand-border)]">
+        <div className="max-w-7xl mx-auto px-4 md:px-8">
+          <FadeUp>
+            <div className="flex items-end justify-between mb-12">
+              <div>
+                <span className="pill pill-flame mb-3 inline-flex">Our Menu</span>
+                <h2 className="font-heading text-4xl md:text-5xl text-[var(--brand-cream)] mt-3">
+                  Explore our varieties
+                </h2>
+              </div>
+              <button
+                onClick={() => navigate('/shop')}
+                className="hidden md:flex items-center gap-2 text-[var(--brand-flame)] font-mono text-sm uppercase tracking-widest hover-underline"
+              >
+                View all <ChevronRight size={14} />
+              </button>
+            </div>
+          </FadeUp>
+
           <Swiper
             modules={[Autoplay, Navigation]}
-            spaceBetween={60}
+            spaceBetween={24}
             loop={true}
-            navigation={{
-              prevEl: '.swiper-button-prev-custom',
-              nextEl: '.swiper-button-next-custom',
-            }}
-            autoplay={{
-              delay: 2000,
-              disableOnInteraction: false,
-            }}
+            autoplay={{ delay: 2500, disableOnInteraction: false }}
             breakpoints={{
-              640: { slidesPerView: 1 },
-              768: { slidesPerView: 2 },
+              640: { slidesPerView: 2 },
+              768: { slidesPerView: 3 },
               1024: { slidesPerView: 4 },
             }}
-            className='flex items-center justify-center'
           >
-            {
-              varieties.map(variety => (
-                <SwiperSlide
-                  key={variety.id}
-                  onClick={() => navigate(variety.link)}
-                  className=' '
+            {[...varieties, ...varieties].map((v, i) => (
+              <SwiperSlide key={i}>
+                <button
+                  onClick={() => navigate(v.link)}
+                  className="group w-full flex flex-col items-center gap-4 p-6 rounded-2xl border border-[var(--brand-border)] hover:border-[var(--brand-flame)]/40 bg-[var(--brand-dark)] hover:bg-[var(--brand-flame)]/5 transition-all"
                 >
-                  <div className='cursor-pointer flex flex-col items-center justify-center'>
-
-                    <img className='rounded-full object-cover size-60 md:size-70' src={variety.img} alt={variety.name} />
-                    <p className='text-2xl font-semibold font-mouse text-center mt-10 text-white'>{variety.name}</p>
+                  <div className="w-36 h-36 rounded-full overflow-hidden ring-2 ring-[var(--brand-border)] group-hover:ring-[var(--brand-flame)]/40 transition-all">
+                    <img src={v.img} alt={v.name} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
                   </div>
-
-                </SwiperSlide>
-              ))
-            }
-
+                  <span className="font-heading text-[var(--brand-cream)]/80 group-hover:text-[var(--brand-cream)] text-base transition-colors">{v.name}</span>
+                </button>
+              </SwiperSlide>
+            ))}
           </Swiper>
-
         </div>
       </section>
 
-
-      <section className='mt-20 md:mt-40'>\
-        <div className="">
-          <div className='flex item-center justify-center'>
-            <span className='bg-yellow-300 uppercase font-bowlby px-4 py-2 rounded-lg text-orange-900'>
-              Customer Reviews
-            </span>
+      {/* ── Reviews ── */}
+      <FadeUp>
+        <section className="py-24 max-w-7xl mx-auto px-4 md:px-8">
+          <div className="text-center mb-14">
+            <span className="pill pill-amber mb-4 inline-flex">Testimonials</span>
+            <h2 className="font-heading text-4xl md:text-5xl text-[var(--brand-cream)] mt-4">
+              Our customers <span className="font-display italic text-[var(--brand-flame)]">love us</span>
+            </h2>
           </div>
 
-          <div className='px-4 md:px-30'>
-            <h1 className='font-bowlby uppercase  text-3xl sm:text-4xl lg:text-7xl text-center  my-15'>
-              Our Customers <span className='text-orange-500'>Loves us</span>
-            </h1>
-          </div>
-
-          <div className="overflow-hidden whitespace-nowrap">
-            <div className="animate-scroll flex py-4">
-              {reviews.map((review, index) => (
-                <div key={index} className={`${colorPalette[index % colorPalette.length]} rounded-2xl p-6 md:p-10 min-h-60 md:min-h-100 max-h-80 md:max-h-120 min-w-80 md:min-w-100 flex flex-col transition-transform duration-300 mr-10`} >
-                  <div className='flex flex-col items-center justify-between h-full mb-6'>
-                    <p className='font-mouse capitalize text-center font-semibold text-3xl md:text-5xl text-wrap'>
-                      "{review.review}"
-                    </p>
-                    <h3 className='text-lg  font-bold text-orange-900'>{review.name}</h3>
+          <div className="overflow-hidden">
+            <div className="animate-scroll flex gap-6 py-2">
+              {[...reviews, ...reviews].map((review, i) => (
+                <div
+                  key={i}
+                  className="flex-none w-72 md:w-80 rounded-2xl border border-[var(--brand-border)] p-6 bg-[var(--brand-charcoal)] hover:border-[var(--brand-flame)]/30 transition-colors"
+                >
+                  <div className="flex items-center gap-1 mb-4">
+                    {[...Array(5)].map((_, j) => (
+                      <Star key={j} size={12} fill="var(--brand-amber)" stroke="none" />
+                    ))}
+                  </div>
+                  <p className="font-display italic text-[var(--brand-cream)]/80 text-base leading-relaxed mb-6 line-clamp-4">
+                    "{review.review}"
+                  </p>
+                  <div className="flex items-center gap-3">
+                    <img
+                      src={review.avatarUrl}
+                      alt={review.name}
+                      className="w-9 h-9 rounded-full object-cover border border-[var(--brand-border)]"
+                    />
+                    <div>
+                      <p className="font-heading text-[var(--brand-cream)] text-sm">{review.name}</p>
+                      <p className="font-mono text-[var(--brand-cream)]/40 text-xs">{review.place}</p>
+                    </div>
                   </div>
                 </div>
               ))}
             </div>
           </div>
-        </div>
-      </section>
+        </section>
+      </FadeUp>
 
-      <section className='mt-20 md:mt-40 bg-[#123a14] py-30 '>
-        <h1 className='text-[#97c93a] text-center font-bowlby text-4xl md:text-6xl mb-15 leading-15 md:leading-20'>
-          Prebiotic protein <img src='/varities/thali2.png' className='inline-block size-20 ' alt='' /> platter <br />
-          support <img src='/varities/thali.png' className='inline-block size-20 ' alt='' /> digestion, and energy<br />
-          with fiber-rich foods <img src='/varities/pav2.png' className='inline-block size-20 ' alt='' />
-        </h1>
-        <div className='flex gap-3  items-center justify-center'>
-          <Button variant='secondary'>Explore Menu <ArrowRight /></Button>
-          <Button variant='primary'>Order Bitebox <ArrowRight /></Button>
-        </div>
-      </section>
-
-      {/* -----popular dishes----- */}
-      {/* <section className='bg-[#fff9f2] py-10 md:py-20 mt-10'>
-        <h1 className='text-center my-10 lancelot text-5xl sm:text-6xl lg:text-7xl flex items-center justify-center'>Popular Dishes</h1>
-        <div className='mx-2 md:mx-40'>
-          <Swiper className=''
-            spaceBetween={40}
-            modules={[Navigation, Autoplay]}
-            autoplay={{
-              delay: 3500,
-              disableOnInteraction: true,
-            }}
-            loop={true}
-            breakpoints={{
-              // when window width is >= 768px (md)
-              768: {
-                slidesPerView: 3
-              },
-              // when window width is < 768px
-              0: {
-                slidesPerView: 1
-              }
-            }}
-            onSwiper={setSwiperRef}>
-
-            {products?.slice(0, 9).map((item, index) => (
-              <SwiperSlide key={index}>
-                <ItemCards item={item} key={index} />
-              </SwiperSlide>
-            ))}
-          </Swiper>
-          <div className='flex justify-center my-5'>
-            <NavigationButton swiper={swiperRef} />
-          </div>
-          <div className="flex justify-center w-full">
-            <button onClick={() => navigate('/shop')} className="shop-all-btn w-1/2 md:w-36">
-              Check All
+      {/* ── CTA Banner ── */}
+      <section className="relative overflow-hidden">
+        <div className="absolute inset-0 bg-[var(--brand-flame)]" />
+        <div className="absolute inset-0 bg-[url(/varities/thali2.png)] bg-cover bg-center opacity-10" />
+        <div className="relative z-10 max-w-7xl mx-auto px-4 md:px-8 py-24 text-center">
+          <h2 className="font-heading text-4xl md:text-6xl text-white mb-4">
+            Ready to eat well?
+          </h2>
+          <p className="text-white/70 text-lg mb-10 max-w-md mx-auto">
+            Fresh homemade meals, delivered hot and on time.
+          </p>
+          <div className="flex flex-wrap items-center justify-center gap-4">
+            <button
+              onClick={() => navigate('/shop')}
+              className="flex items-center gap-2 px-8 py-4 rounded-xl bg-white text-[var(--brand-flame)] font-heading font-bold text-base hover:bg-[var(--brand-cream)] transition-colors active:scale-[0.97]"
+            >
+              Browse Menu <ArrowRight size={18} />
+            </button>
+            <button
+              onClick={() => navigate('/contact')}
+              className="px-8 py-4 rounded-xl border border-white/30 text-white font-heading font-semibold hover:bg-white/10 transition-colors"
+            >
+              Contact Us
             </button>
           </div>
-
         </div>
-      </section> */}
+      </section>
+
     </main>
   )
 }

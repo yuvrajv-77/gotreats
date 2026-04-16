@@ -3,11 +3,10 @@ import { useAuthStore } from '../store/authStore';
 import Button from '../components/Button';
 import { useNavigate } from 'react-router-dom';
 import { handleLogout, updateUserAddress, updateUserPhone } from '../services/authService';
-import { Mail, Phone } from 'lucide-react';
+import { Mail, Phone, LogOut, Package } from 'lucide-react';
 import toast from 'react-hot-toast';
 import AddressSection from '../components/AddressSection';
 import Modal from '../components/Modal';
-import { Chip } from '@heroui/react';
 
 
 const Profile = () => {
@@ -76,63 +75,88 @@ const Profile = () => {
     }
 
     return (
-        <div className='min-h-screen bg-gray-100'>
-            <div className=' md:w-2/3 w-full md:pt-10 pt-5 mx-auto'>
-            
-                <section className='md:p-9 p-7 m-2 bg-white rounded-2xl'>
-                    <div className='flex flex-col gap-1'>
-                        <h1 className='text-xl text-center md:text-start md:text-2xl flex items-center gap-2 font-bold'>{userDetails?.displayName} </h1>
-                        <p className='text-sm  text-gray-500 inline-flex items-center gap-3 mt-2'>
-                            <Mail size={16} /> {userDetails?.email}
-                        </p>
-                        <div className='flex items-center gap-3'>
+        <div className="min-h-screen bg-[var(--brand-dark)]">
+            <div className="max-w-2xl mx-auto px-4 py-8">
+                <div className="mb-8">
+                    <h1 className="font-heading text-3xl text-[var(--brand-cream)]">Profile</h1>
+                    <p className="font-mono text-xs text-[var(--brand-cream)]/30 mt-2 tracking-widest uppercase">Manage your account details and address</p>
+                </div>
+
+                <section className="bg-[var(--brand-charcoal)] border border-[var(--brand-border)] rounded-2xl p-6 md:p-8 mb-6">
+                    <div className="flex flex-col gap-6">
+                        <div className="flex items-center gap-5">
+                            <div className="w-16 h-16 shrink-0 rounded-full bg-gradient-to-br from-[var(--brand-flame)] to-[var(--brand-amber)] flex items-center justify-center text-white font-heading text-3xl shadow-[0_0_20px_rgba(232,88,10,0.3)] border border-[var(--brand-border)]">
+                                {userDetails?.displayName?.charAt(0)?.toUpperCase() || 'U'}
+                            </div>
+                            <div>
+                                <h1 className="font-heading text-[var(--brand-cream)] text-2xl">{userDetails?.displayName}</h1>
+                                <p className="text-[var(--brand-cream)]/50 text-sm font-mono mt-1 inline-flex items-center gap-2">
+                                    <Mail size={13} className="text-[var(--brand-flame)]" /> {userDetails?.email}
+                                </p>
+                            </div>
+                        </div>
+
+                        <div className="h-px w-full bg-[var(--brand-border)] my-1" />
+
+                        <div className="flex flex-col gap-2">
+                            <p className="font-mono text-[10px] text-[var(--brand-cream)]/30 uppercase tracking-widest">Phone Number</p>
                             {!isEditingPhone ? (
-                                <div className='flex items-center justify-between w-full'>
-                                    <p className='text-sm  text-gray-500 inline-flex items-center gap-3'><Phone size={16} />
+                                <div className="flex items-center justify-between w-full">
+                                    <p className="text-[var(--brand-cream)]/70 text-sm font-mono inline-flex items-center gap-2">
+                                        <Phone size={14} className="text-[var(--brand-flame)]" />
                                         {userDetails?.phoneNumber || 'No phone number added'}
                                     </p>
-                                    {/* <p className='text-orange-500 hover:underline hover:cursor-pointer text-sm ' onClick={() => setIsEditingPhone(true)}>
-                                        {userDetails?.phoneNumber ? 'Edit Phone Number' : 'Add A Phone Number'}
-                                    </p> */}
                                 </div>
                             ) : (
-                                <div className='flex items-center w-full justify-between '>
-                                    <input
-                                        type="tel"
-                                        value={phoneNumber}
-                                        onChange={(e) => setPhoneNumber(e.target.value)}
-                                        className='border border-gray-300 rounded-xl p-2'
-                                        placeholder='Enter phone number'
-                                    />
-                                    <div className='flex gap-3'>
+                                <div className="flex flex-col sm:flex-row items-center w-full justify-between gap-3">
+                                    <div className="relative flex-1 w-full flex items-center bg-[var(--brand-dark)] border border-[var(--brand-border)] rounded-xl overflow-hidden focus-within:border-[var(--brand-flame)]/50 transition-colors">
+                                        <div className="pl-4 text-[var(--brand-cream)]/30">
+                                            <Phone size={14} />
+                                        </div>
+                                        <input
+                                            type="tel"
+                                            value={phoneNumber}
+                                            onChange={(e) => setPhoneNumber(e.target.value)}
+                                            className="w-full bg-transparent p-3 text-sm text-[var(--brand-cream)] focus:outline-none font-mono tracking-widest placeholder-[var(--brand-cream)]/20"
+                                            placeholder="Enter phone number"
+                                        />
+                                    </div>
+                                    <div className="flex gap-2 shrink-0 w-full sm:w-auto">
+                                        <Button
+                                            onClick={() => setIsEditingPhone(false)}
+                                            variant="secondary"
+                                            className="flex-1 sm:flex-none"
+                                        >
+                                            Cancel
+                                        </Button>
                                         <Button
                                             onClick={handlePhoneSubmit}
                                             disabled={loading}
-                                            variant='success'
+                                            variant="primary"
+                                            className="flex-1 sm:flex-none"
                                         >
                                             Save
-                                        </Button>
-                                        <Button onClick={() => setIsEditingPhone(false)}
-                                            variant='secondary'>
-                                            Cancel
                                         </Button>
                                     </div>
                                 </div>
                             )}
                         </div>
                     </div>
-
-                    <div className='mt-8 md:mt-7'>
-                        <AddressSection uid={userDetails?.uid || ""} />
-                    </div>
                 </section>
 
-                <section className='flex justify-center gap-3 mt-10'>
-                    <Button variant='primary' onClick={() => navigate('/orders')}>Go To Orders</Button>
-                    <Button variant='danger' onClick={() => setShowLogoutModal(true)}>Log Out</Button>
+                <section className="bg-[var(--brand-charcoal)] border border-[var(--brand-border)] rounded-2xl p-6 md:p-8">
+                    <AddressSection uid={userDetails?.uid || ""} />
+                </section>
+
+                <section className="grid grid-cols-2 gap-4 mt-8">
+                    <Button variant="secondary" onClick={() => navigate('/orders')} className="w-full bg-[var(--brand-charcoal)] border-[var(--brand-border)]">
+                        <Package size={16} /> My Orders
+                    </Button>
+                    <Button variant="secondary" onClick={() => setShowLogoutModal(true)} className="w-full border-red-500/30 text-red-400 hover:bg-red-500/10 hover:border-red-500/50">
+                        <LogOut size={16} /> Log Out
+                    </Button>
                 </section>
             </div>
-
 
             {/* Logout Confirmation Modal */}
             <Modal
@@ -144,7 +168,6 @@ const Profile = () => {
                 onConfirm={handleLogoutClick}
                 onCancel={() => setShowLogoutModal(false)}
             />
-            
         </div>
     )
 }

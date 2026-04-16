@@ -1,30 +1,28 @@
-import React from 'react';
-import { ChefHat, Zap,IndianRupee, Truck, Clock, Star, UtensilsCrossed, ShieldCheck } from 'lucide-react';
+import { IndianRupee, Truck, Star, UtensilsCrossed, ShieldCheck } from 'lucide-react';
 
 const ScrollingBanner = () => {
     const bannerItems = [
-        { text: "Affordable", icon: <IndianRupee size={20} strokeWidth={3} /> },
-        { text: "Order Delivery in 1 Hour", icon: <Truck size={20}  strokeWidth={3}/> },
-        { text: "Best Quality", icon: <Star size={20}  strokeWidth={3}/> },
-        { text: "Fresh Food", icon: <UtensilsCrossed size={20}  strokeWidth={3}/> },
-        { text: "Hygienic Preparation", icon: <ShieldCheck size={20}  strokeWidth={3}/> },
-        { text: "Free Delivery upto 500 meters", icon: <Truck size={20}  strokeWidth={3}/> },
+        { text: "Affordable Pricing", icon: <IndianRupee size={14} strokeWidth={2.5} /> },
+        { text: "Delivered in 1 Hour", icon: <Truck size={14} strokeWidth={2.5} /> },
+        { text: "Best Quality", icon: <Star size={14} strokeWidth={2.5} /> },
+        { text: "Fresh Every Day", icon: <UtensilsCrossed size={14} strokeWidth={2.5} /> },
+        { text: "FSSAI Certified", icon: <ShieldCheck size={14} strokeWidth={2.5} /> },
+        { text: "Free Delivery nearby", icon: <Truck size={14} strokeWidth={2.5} /> },
     ];
 
-    // Triple the items for even more seamless scrolling
-    const tripledItems = [...bannerItems, ...bannerItems, ...bannerItems];
+    const tripled = [...bannerItems, ...bannerItems, ...bannerItems];
 
     return (
-        <div className="bg-yellow-300 text-orange-800 py- overflow-hidden whitespace-nowrap">
-            <div className="animate-scroll flex py-4">
-                {tripledItems.map((item, index) => (
-                    <span 
-                        key={index} 
-                        className="inline-flex items-center gap-3 font-mouse uppercase tracking-widest font-bold text-2xl mx-6"
+        <div className="bg-[var(--brand-charcoal)] overflow-hidden whitespace-nowrap py-3">
+            <div className="animate-scroll flex">
+                {tripled.map((item, i) => (
+                    <span
+                        key={i}
+                        className="inline-flex items-center gap-2.5 text-[var(--brand-cream)]/50 font-mono text-xs uppercase tracking-widest mx-8"
                     >
-                        <span className="">{item.icon}</span>
+                        <span className="text-[var(--brand-flame)]">{item.icon}</span>
                         {item.text}
-                        
+                        <span className="w-1 h-1 rounded-full bg-[var(--brand-border)] ml-4" />
                     </span>
                 ))}
             </div>
@@ -32,4 +30,4 @@ const ScrollingBanner = () => {
     );
 };
 
-export default ScrollingBanner; 
+export default ScrollingBanner;

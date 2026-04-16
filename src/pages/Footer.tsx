@@ -1,113 +1,129 @@
-import React from 'react';
 import { Link } from 'react-router-dom';
-import { Instagram, MapPin, Mail, Phone, Clock, PartyPopper, Bike, Home, ShoppingBag, ScrollText, Lightbulb, Info, PhoneCall } from 'lucide-react';
+import { Instagram, MapPin, Mail, Phone, Clock, PartyPopper, Home, ScrollText, Lightbulb, Info, PhoneCall } from 'lucide-react';
 import { BrandLogo } from '@/components/Navbar';
 
 const Footer = () => {
-  
-  return (
-    <footer className="bg-[#3d1313] text-white mt-20 pt-12 pb-8  translate-y-5 animate-fade-in">
-      <div className="container mx-auto md:px-20 px-2">
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
+    const year = new Date().getFullYear();
 
-          {/* Company Info */}
-          <div>
-            <BrandLogo/>
-            <p className="text-gray-400 font-mouse text-2xl dark:text-gray-300 mt-4">
-              Ghar ka khana just the way you want.
-            </p>
-          </div>
+    return (
+        <footer className="bg-[var(--brand-charcoal)] border-t border-[var(--brand-border)] mt-20">
+            <div className="max-w-7xl mx-auto px-4 md:px-8 py-16">
+                <div className="grid grid-cols-1 md:grid-cols-4 gap-12">
 
-          {/* Quick Links */}
-          <div>
-            <h4 className="text-lg font-semibold mb-4">Quick Links</h4>
-            <ul className="space-y-2 text-sm">
-              {[
-                { to: '/', label: 'Home', Icon: Home },
-                // { to: '/shop', label: 'Products', Icon: ShoppingBag },
-                { to: '/terms-and-conditions', label: 'Terms & Conditions', Icon: ScrollText },
-                { to: '/concept', label: 'Concept', Icon: Lightbulb },
-                { to: '/about', label: 'About', Icon: Info },
-                { to: '/contact', label: 'Contact', Icon: PhoneCall },
-              ].map(({ to, label, Icon }) => (
-                <li key={label}>
-                  <Link
-                    to={to}
-                    className="text-gray-400 dark:text-gray-300 hover:text-white transition-all duration-300 hover:translate-x-1 inline-flex items-center gap-4 group"
-                  >
-                    <Icon className="text-orange-500 group-hover:scale-110 transition-transform" size={20} />
-                    {label}
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </div>
+                    {/* Brand */}
+                    <div className="md:col-span-1">
+                        <BrandLogo />
+                        <p className="font-mono text-[var(--brand-cream)]/40 text-sm mt-4 leading-relaxed">
+                            Ghar ka khana,<br />just the way you want.
+                        </p>
+                        <div className="flex gap-3 mt-6">
+                            <a
+                                href="https://wa.me/917045617506"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="w-9 h-9 rounded-xl border border-[var(--brand-border)] flex items-center justify-center text-[var(--brand-cream)]/40 hover:border-[var(--brand-flame)]/40 hover:text-[var(--brand-flame)] transition-colors"
+                            >
+                                <svg width="15" height="15" fill="currentColor" viewBox="0 0 448 512">
+                                    <path d="M380.9 97.1C339 55.1 283.2 32 223.9 32c-122.4 0-222 99.6-222 222 0 39.1 10.2 77.3 29.6 111L0 480l117.7-30.9c32.4 17.7 68.9 27 106.1 27h.1c122.3 0 224.1-99.6 224.1-222 0-59.3-25.2-115-67.1-157z" />
+                                </svg>
+                            </a>
+                        </div>
+                    </div>
 
-          {/* Contact Info */}
-          <div>
-            <h4 className="text-lg font-semibold mb-4">Contact Us</h4>
-            <ul className="space-y-2 text-sm">
-              <li className="flex items-start gap-4 group transition-all duration-300 hover:translate-x-1">
-                <MapPin className="text-orange-500 mt-1 group-hover:scale-110 transition-transform" size={20} />
-                <span className="text-gray-400 dark:text-gray-300 group-hover:text-white transition-colors leading-relaxed">
-                  <strong className="text-white">Office Address:</strong><br />
+                    {/* Quick Links */}
+                    <div>
+                        <p className="font-mono text-[10px] text-[var(--brand-cream)]/30 uppercase tracking-widest mb-5">Navigation</p>
+                        <ul className="space-y-3">
+                            {[
+                                { to: '/', label: 'Home' },
+                                { to: '/terms-and-conditions', label: 'Terms & Conditions' },
+                                { to: '/concept', label: 'Concept' },
+                                { to: '/about', label: 'About' },
+                                { to: '/contact', label: 'Contact' },
+                            ].map(({ to, label }) => (
+                                <li key={label}>
+                                    <Link
+                                        to={to}
+                                        className="text-[var(--brand-cream)]/50 hover:text-[var(--brand-cream)] text-sm font-body transition-colors hover-underline inline-block"
+                                    >
+                                        {label}
+                                    </Link>
+                                </li>
+                            ))}
+                        </ul>
+                    </div>
 
-                  Saibaba Nagar<br />
-                  Borivali West, Mumbai,<br />
-                  Maharashtra – 400092
-                </span>
-              </li>
-              <li className="flex items-center gap-4 group hover:translate-x-1 transition-all duration-300">
-                <Mail className="text-orange-500 group-hover:scale-110 transition-transform" size={20} />
-                <a href="mailto:govindashah603@gmail.com" className="text-gray-400 dark:text-gray-300 group-hover:text-white transition-colors">
-                  govindashah603@gmail.com
-                </a>
-              </li>
-              <li className="flex items-center gap-4 group hover:translate-x-1 transition-all duration-300">
-                <Phone className="text-orange-500 group-hover:scale-110 transition-transform" size={20} />
-                <a href="tel:+917045617506" className="text-gray-400 dark:text-gray-300 group-hover:text-white transition-colors">
-                  +91 7045617506
-                </a>
-              </li>
-            </ul>
-          </div>
+                    {/* Contact */}
+                    <div>
+                        <p className="font-mono text-[10px] text-[var(--brand-cream)]/30 uppercase tracking-widest mb-5">Contact</p>
+                        <ul className="space-y-4">
+                            <li className="flex items-start gap-3">
+                                <MapPin size={14} className="text-[var(--brand-flame)] mt-0.5 shrink-0" />
+                                <span className="text-[var(--brand-cream)]/50 text-sm leading-relaxed">
+                                    Saibaba Nagar, Borivali West,<br />Mumbai — 400092
+                                </span>
+                            </li>
+                            <li>
+                                <a href="mailto:govindashah603@gmail.com" className="flex items-center gap-3 text-[var(--brand-cream)]/50 hover:text-[var(--brand-cream)] text-sm transition-colors group">
+                                    <Mail size={14} className="text-[var(--brand-flame)] shrink-0" />
+                                    govindashah603@gmail.com
+                                </a>
+                            </li>
+                            <li>
+                                <a href="tel:+917045617506" className="flex items-center gap-3 text-[var(--brand-cream)]/50 hover:text-[var(--brand-cream)] text-sm transition-colors">
+                                    <Phone size={14} className="text-[var(--brand-flame)] shrink-0" />
+                                    +91 7045617506
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
 
-          {/* Timing & Party Orders */}
-          <div>
-            <h4 className="text-lg font-semibold mb-4">Business Hours</h4>
-            <ul className="space-y-5 text-sm">
-              <li className="flex items-start gap-4 group transition-all duration-300">
-                <Clock className="text-orange-500 mt-1 group-hover:scale-110 transition-transform" size={20} />
-                <div className="text-gray-400 dark:text-gray-300 leading-relaxed">
-                  <p className="text-white font-semibold mb-2">Delivery Timings:</p>
-                  <p>Morning: 11:00 AM - 2:00 PM</p>
-                  <p>Evening: 8:00 PM - 12:00 AM</p>
+                    {/* Hours */}
+                    <div>
+                        <p className="font-mono text-[10px] text-[var(--brand-cream)]/30 uppercase tracking-widest mb-5">Hours</p>
+                        <div className="space-y-4">
+                            <div className="flex items-start gap-3">
+                                <Clock size={14} className="text-[var(--brand-flame)] mt-0.5 shrink-0" />
+                                <div>
+                                    <p className="text-[var(--brand-cream)]/70 text-sm font-heading mb-1">Delivery Windows</p>
+                                    <p className="text-[var(--brand-cream)]/40 text-xs font-mono">Morning · 11 AM – 2 PM</p>
+                                    <p className="text-[var(--brand-cream)]/40 text-xs font-mono">Evening · 8 PM – 12 AM</p>
+                                </div>
+                            </div>
+                            <div className="flex items-start gap-3">
+                                <PartyPopper size={14} className="text-[var(--brand-flame)] mt-0.5 shrink-0" />
+                                <div>
+                                    <p className="text-[var(--brand-cream)]/70 text-sm font-heading mb-1">Party Orders</p>
+                                    <a href="tel:+917045617506" className="text-[var(--brand-flame)] text-xs font-mono hover:underline">
+                                        Call for bulk orders →
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
                 </div>
-              </li>
-              <li className="flex items-start gap-4 group transition-all duration-300">
-                <PartyPopper className="text-orange-500 mt-1 group-hover:scale-110 transition-transform" size={20} />
-                <div className="text-gray-400 dark:text-gray-300 leading-relaxed">
-                  <p className="text-white font-semibold mb-2">Party Orders:</p>
-                  <p>We accept bulk & party orders!</p>
-                  <a
-                    href="tel:+917045617506"
-                    className="inline-block mt-1 text-orange-500 hover:text-orange-400 transition-colors"
-                  >
-                    Contact us for details →
-                  </a>
-                </div>
-              </li>
-            </ul>
-          </div>
-        </div>
 
-        {/* Copyright */}
-        <div className="border-t border-gray-800 mt-8 pt-8 text-center text-gray-400 dark:text-gray-500 text-sm">
-          <p>&copy; {new Date().getFullYear()} BITEBOX. No rights reserved.</p>
-        </div>
-      </div>
-    </footer>
-  );
+                {/* Bottom bar */}
+                <div className="border-t border-[var(--brand-border)] mt-12 pt-6 flex flex-col md:flex-row items-center justify-between gap-4">
+                    <p className="font-mono text-[var(--brand-cream)]/25 text-xs">
+                        © {year} Bitebox · No rights reserved.
+                    </p>
+                    <div className="flex gap-6">
+                        {[
+                            { to: '/privacy-policy', label: 'Privacy' },
+                            { to: '/refund-policy', label: 'Refunds' },
+                            { to: '/terms-and-conditions', label: 'Terms' },
+                        ].map(({ to, label }) => (
+                            <Link key={to} to={to} className="font-mono text-xs text-[var(--brand-cream)]/25 hover:text-[var(--brand-cream)]/50 transition-colors">
+                                {label}
+                            </Link>
+                        ))}
+                    </div>
+                </div>
+            </div>
+        </footer>
+    );
 };
 
 export default Footer;
